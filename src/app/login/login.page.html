@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'appName' | translate}}</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <form (submit)="doLogin()">
+    <h1>
+      {{ 'login' | translate}}
+    </h1>
+    <ion-list>
+      <ion-item>
+        <ion-label  position="stacked">{{ 'email' | translate }}</ion-label>
+        <ion-input type="email" [(ngModel)]="request.username" name="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{ 'password' | translate }}</ion-label>
+        <ion-input type="password" [(ngModel)]="request.password" name="password"></ion-input>
+      </ion-item>
+
+      <div padding>
+        <ion-button type="submit" >
+          {{ 'login_button' | translate }}
+        </ion-button>
+      </div>
+
+
+    </ion-list>
+  </form>
+</ion-content>

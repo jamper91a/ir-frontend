@@ -1,0 +1,21 @@
+{
+  "appName": "Inventario Real",
+  "consulting": "Consultando",
+  "current_dealers": "Distribuidores actuaes",
+  "create": "Crear",
+  "creating": "Creando",
+  "dealers": "Distribuidores",
+  "dealer_created": "Distribuido creado",
+  "dealer_name": "Nombre distribuidora",
+  "delete": "Eliminar",
+  "email": "Correo",
+  "fields_empty": "Campos vacios",
+  "login": "Ingresar",
+  "login_button": "Ingresar",
+  "new_dealer": "Nuevo distribuidor",
+  "password": "Contrasena",
+  "password_do_not_match": "Contrasenas no coinciden",
+  "repeat_password": "Repetir contrasena",
+  "user_name": "Nombre del usuario",
+  "update": "Actualizar"
+}
