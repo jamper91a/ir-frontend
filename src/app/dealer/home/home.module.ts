@@ -13,14 +13,15 @@ const routes: Routes = [
     path: 'a',
     component: HomePage,
     children: [
-      { path: 'clients/create', loadChildren: '../clients/clients-create/clients-create.module#ClientsCreatePageModule' },
+      { path: 'companies/create', loadChildren: '../companies/companies-create/companies-create.module#CompaniesCreatePageModule' },
+      { path: 'companies/list', loadChildren: '../companies/companies-list/companies-list.module#CompaniesListPageModule' },
       // { path: 'dealers/details/:id', loadChildren: './dealers/dealers-detail/dealers-detail.module#DealersDetailPageModule' },
       // { path: 'dealers/list', loadChildren: './dealers/dealers-list/dealers-list.module#DealersListPageModule' }
     ]
   },
   {
     path: '',
-    redirectTo: '/dealer/a/clients/create',
+    redirectTo: '/dealer/a/companies/create',
     pathMatch: 'full'
   }
 ];

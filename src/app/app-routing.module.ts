@@ -7,8 +7,7 @@ const routes: Routes = [
   { path: 'superAdmin', loadChildren: './superAdmin/home.module#HomePageModule', canActivate: [SuperAdminGuard]},
   { path: 'login', loadChildren: './login/login.module#LoginPageModule'},
   { path: 'admin', loadChildren: './admin/home/home.module#HomePageModule', canActivate: [AdminGuard]},
-  { path: 'dealer', loadChildren: './dealer/home/home.module#HomePageModule' },
-  { path: 'clients-create', loadChildren: './dealer/clients/clients-create/clients-create.module#ClientsCreatePageModule' }
+  { path: 'dealer', loadChildren: './dealer/home/home.module#HomePageModule' }
 ];
 
 @NgModule({

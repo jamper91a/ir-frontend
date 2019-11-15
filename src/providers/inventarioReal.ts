@@ -10,6 +10,8 @@ import {CreateDealerRequest} from '../webServices/request/CreateDealerRequest';
 import {UpdateDealerRequest} from '../webServices/request/UpdateDealerRequest';
 import {AllDealersRequest} from '../webServices/request/AllDealersRequest';
 import {CreateAdminRequest} from '../webServices/request/CreateAdminRequest';
+import {GetAllCompaniesByDealerResponse} from '../webServices/response/GetAllCompaniesByDealerResponse';
+import {GetAllCompaniesByDealerRequest} from '../webServices/request/GetAllCompaniesByDealerRequest';
 
 
 
@@ -166,6 +168,28 @@ export class InventarioReal {
             console.log('catch');
             await dialog.dismiss();
             self.util.showToast('error_updating_data');
+            throw e;
+        }
+    }
+
+    public async getAllCompaniesByDealer(justActiveDealers: boolean = false): Promise<GetAllCompaniesByDealerResponse> {
+        this.get_translation();
+        const request: GetAllCompaniesByDealerRequest = new GetAllCompaniesByDealerRequest();
+        request.justActiveDealers = justActiveDealers;
+        const self = this;
+        console.log(this.messages);
+        const dialog = await this.util.showDialog(this.messages.consulting);
+        try {
+            // @ts-ignore
+            const response: GetAllCompaniesByDealerResponse = await this.api.post(
+                'companies/getCompaniesByDealer',
+                request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            console.log('catch');
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
             throw e;
         }
     }

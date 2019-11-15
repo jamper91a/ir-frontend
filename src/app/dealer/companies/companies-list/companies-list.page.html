@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-progress-bar type="indeterminate" *ngIf="!dealer"></ion-progress-bar>
+
+    <ng-container *ngIf="dealer">
+      <ion-searchbar placeholder="{{ 'clients' | translate}}" debounce="500" (ionChange)="filterItems($event)"></ion-searchbar>
+      <ion-virtual-scroll [items]="dealer.data" approxItemHeight="320px" >
+        <!--<ion-item-sliding *ngFor="let dealer of dealers.data">-->
+        <ion-item-sliding *virtualItem="let dealer" (click)="goToCompany(dealer)">
+          <ion-item color="{{dealer.user.active ? '' : 'light'}}">
+            <ion-label>{{dealer.name}}</ion-label>
+            <ion-note slot="end">{{dealer.user.name}}</ion-note>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-virtual-scroll>
+    </ng-container>
+  </ion-list>
+</ion-content>
