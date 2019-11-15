@@ -12,6 +12,7 @@ import {AllDealersRequest} from '../webServices/request/AllDealersRequest';
 import {CreateAdminRequest} from '../webServices/request/CreateAdminRequest';
 import {GetAllCompaniesByDealerResponse} from '../webServices/response/GetAllCompaniesByDealerResponse';
 import {GetAllCompaniesByDealerRequest} from '../webServices/request/GetAllCompaniesByDealerRequest';
+import {UpdateAdminRequest} from '../webServices/request/UpdateAdminRequest';
 
 
 
@@ -190,6 +191,23 @@ export class InventarioReal {
             console.log('catch');
             await dialog.dismiss();
             self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async updateAdmin(request: UpdateAdminRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.updating);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('updateAdmin', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            console.log('catch');
+            await dialog.dismiss();
+            self.util.showToast('error_updating_data');
             throw e;
         }
     }

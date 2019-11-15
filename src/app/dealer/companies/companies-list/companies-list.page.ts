@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {InventarioReal} from '../../../../providers/inventarioReal';
 import {Events, NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
@@ -64,7 +64,7 @@ export class CompaniesListPage {
         company
       }
     };
-    this.navCtrl.navigateForward(['dealer/a/company/details/' + company.id], navigationExtras);
+    this.navCtrl.navigateForward(['dealer/a/companies/details/' + company.id], navigationExtras);
   }
 
 }

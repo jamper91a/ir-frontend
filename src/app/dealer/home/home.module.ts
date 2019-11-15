@@ -15,7 +15,7 @@ const routes: Routes = [
     children: [
       { path: 'companies/create', loadChildren: '../companies/companies-create/companies-create.module#CompaniesCreatePageModule' },
       { path: 'companies/list', loadChildren: '../companies/companies-list/companies-list.module#CompaniesListPageModule' },
-      // { path: 'dealers/details/:id', loadChildren: './dealers/dealers-detail/dealers-detail.module#DealersDetailPageModule' },
+      { path: 'companies/details/:id', loadChildren: '../companies/companies-details/companies-details.module#CompaniesDetailsPageModule' },
       // { path: 'dealers/list', loadChildren: './dealers/dealers-list/dealers-list.module#DealersListPageModule' }
     ]
   },
