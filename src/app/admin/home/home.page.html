@@ -1,0 +1,33 @@
+<ion-app>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{tittle}}</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button (click)="logOut()">
+          <ion-icon name="log-out" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    admin
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-content>
+  <ion-tabs >
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button tab="dealers/create">
+        <ion-icon name="contacts"></ion-icon>
+        <ion-label>{{'create' | translate}}</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="dealers/list">
+        <ion-icon name="contacts"></ion-icon>
+        <ion-label>{{'list' | translate}}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-app>
+

@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import {Util} from '../providers/util';
+import {User} from '../pojo/User';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class DealerGuard implements CanActivate {
   constructor(
       private util: Util
   ) {
@@ -17,12 +18,8 @@ export class AuthGuard implements CanActivate {
       next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    const token = this.util.getPreference('token');
+    const user: User = this.util.getPreference('user');
 
-    if (token) {
-      return true;
-    } else {
-      return false;
-    }
+    return user.group.id === 5;
   }
 }

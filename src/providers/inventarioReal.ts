@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Api } from './api';
 import { Util } from './util';
 import {TranslateService} from '@ngx-translate/core';
-import {AlertController} from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import {LoginRequest} from '../webServices/request/LoginRequest';
 import {LoginResponse} from '../webServices/response/LoginResponse';
@@ -10,6 +9,7 @@ import {AllDealersResponse} from '../webServices/response/AllDealersResponse';
 import {CreateDealerRequest} from '../webServices/request/CreateDealerRequest';
 import {UpdateDealerRequest} from '../webServices/request/UpdateDealerRequest';
 import {AllDealersRequest} from '../webServices/request/AllDealersRequest';
+import {CreateAdminRequest} from '../webServices/request/CreateAdminRequest';
 
 
 
@@ -22,7 +22,6 @@ export class InventarioReal {
     private api: Api,
     private util: Util,
     private translate: TranslateService,
-    private alertCtrl: AlertController,
     public platform: Platform
   ) {
 
@@ -107,6 +106,24 @@ export class InventarioReal {
         try {
             // @ts-ignore
             const response: any = await this.api.post('dealers/create', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            console.log('catch');
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async createAdmin(request: CreateAdminRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        console.log(this.messages);
+        const dialog = await this.util.showDialog(this.messages.creating);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('createAdmin', request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
