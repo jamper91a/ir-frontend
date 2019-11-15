@@ -9,6 +9,7 @@ import {LoginResponse} from '../webServices/response/LoginResponse';
 import {AllDealersResponse} from '../webServices/response/AllDealersResponse';
 import {CreateDealerRequest} from '../webServices/request/CreateDealerRequest';
 import {UpdateDealerRequest} from '../webServices/request/UpdateDealerRequest';
+import {AllDealersRequest} from '../webServices/request/AllDealersRequest';
 
 
 
@@ -60,11 +61,13 @@ export class InventarioReal {
       const dialog = await this.util.showDialog(this.messages.consulting);
       try {
       // @ts-ignore
-        const response: LoginResponse = await this.api.post('login', request.getBody()).toPromise();
+        const response: LoginResponse = await this.api.post('loginWeb', request.getBody()).toPromise();
         await dialog.dismiss();
         if (response) {
           this.util.savePreference('token', response.data.token);
           this.util.savePreference('employee', JSON.stringify(response.data.employee));
+          this.util.savePreference('user', JSON.stringify(response.data.user));
+          this.util.savePreference('dealer', JSON.stringify(response.data.dealer));
       }
       // @ts-ignore
         return response;
@@ -76,14 +79,16 @@ export class InventarioReal {
       }
   }
 
-    public async allDealers(): Promise<AllDealersResponse> {
+    public async allDealers(justActiveDealers: boolean = false): Promise<AllDealersResponse> {
       this.get_translation();
+      const request: AllDealersRequest = new AllDealersRequest();
+      request.justActiveDealers = justActiveDealers;
       const self = this;
       console.log(this.messages);
       const dialog = await this.util.showDialog(this.messages.consulting);
       try {
             // @ts-ignore
-            const response: AllDealersResponse = await this.api.post('dealers/getAllDealers', {}).toPromise();
+            const response: AllDealersResponse = await this.api.post('dealers/getAllDealers', request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {

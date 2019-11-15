@@ -13,8 +13,8 @@ import {Router} from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  private request: LoginRequest = new LoginRequest();
-  private loginErrorString: string;
+  public request: LoginRequest = new LoginRequest();
+  public loginErrorString: string;
   constructor(
       private translate: TranslateService,
       private inventarioReal: InventarioReal,
@@ -32,8 +32,20 @@ export class LoginPage implements OnInit {
 
   async doLogin() {
     try {
-      await this.inventarioReal.login(this.request);
-      this.router.navigateByUrl('/home');
+      let redirectUrl = '';
+      const response: LoginResponse  = await this.inventarioReal.login(this.request);
+      switch (response.data.user.group.id) {
+        case 1:
+          redirectUrl = 'superAdmin';
+          break
+        case 2:
+          redirectUrl = 'admin';
+          break;
+        case 5:
+          redirectUrl = 'dealer';
+          break;
+      }
+      this.router.navigateByUrl(redirectUrl);
     } catch (e) {
       console.error(e);
     }

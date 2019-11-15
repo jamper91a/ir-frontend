@@ -19,6 +19,7 @@
   "password_do_not_match": "Contrasenas no coinciden",
   "repeat_password": "Repetir contrasena",
   "state": "Estado",
+  "tags": "Tags",
   "user_name": "Nombre del usuario",
   "update": "Actualizar",
   "updating": "Actualizando"

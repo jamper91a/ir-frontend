@@ -9,16 +9,17 @@ import {TranslateModule} from '@ngx-translate/core';
 
 const routes: Routes = [
   {
-    path: 'admin',
+    path: '',
     component: HomePage,
     children: [
       { path: 'dealers', loadChildren: './dealers/dealers.module#DealersPageModule' },
       { path: 'dealers/details/:id', loadChildren: './dealers/dealers-detail/dealers-detail.module#DealersDetailPageModule' },
+      { path: 'tags', loadChildren: './tags/tags.module#TagsPageModule' },
     ]
   },
   {
     path: '',
-    redirectTo: '/home/admin/dealers',
+    redirectTo: '/superAdmin/dealers',
     pathMatch: 'full'
   }
 ];

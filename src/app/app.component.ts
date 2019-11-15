@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {Util} from '../providers/util';
 import { TranslateService } from '@ngx-translate/core';
 import {Router} from '@angular/router';
+import {User} from '../pojo/User';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -31,8 +32,21 @@ export class AppComponent {
       this.splashScreen.hide();
     });
 
-    if ( this.util.getPreference('token')) {
-      this.router.navigateByUrl('/home');
+    if ( this.util.getPreference('user')) {
+      let redirectUrl = '';
+      const user: User = JSON.parse(this.util.getPreference('user'));
+      switch (user.group.id) {
+        case 1:
+          redirectUrl = 'superAdmin';
+          break
+        case 2:
+          redirectUrl = 'admin';
+          break;
+        case 5:
+          redirectUrl = 'dealer';
+          break;
+      }
+      this.router.navigateByUrl(redirectUrl);
     }
   }
 }

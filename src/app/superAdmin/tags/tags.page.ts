@@ -1,64 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import {AllDealersResponse} from '../../../webServices/response/AllDealersResponse';
+import {Dealer} from '../../../pojo/Dealer';
+import {CreateDealerRequest} from '../../../webServices/request/CreateDealerRequest';
 import {InventarioReal} from '../../../providers/inventarioReal';
 import {NavController, Platform} from '@ionic/angular';
-import {CreateDealerRequest} from '../../../webServices/request/CreateDealerRequest';
 import {Util} from '../../../providers/util';
-import {Dealer} from '../../../pojo/Dealer';
-import {NavigationExtras, Router} from '@angular/router';
+import {NavigationExtras} from '@angular/router';
 
 @Component({
-  selector: 'app-dealers',
-  templateUrl: './dealers.page.html',
-  styleUrls: ['./dealers.page.scss'],
+  selector: 'app-tags',
+  templateUrl: './tags.page.html',
+  styleUrls: ['./tags.page.scss'],
 })
-export class DealersPage implements OnInit {
-
-  private dealers: AllDealersResponse;
-  private allDealers: Dealer[];
-  private request: CreateDealerRequest;
+export class TagsPage implements OnInit {
+  public dealers: AllDealersResponse;
+  public allDealers: Dealer[];
   constructor(
       private inventarioReal: InventarioReal,
       public platform: Platform,
       public util: Util,
-      private router: Router,
       private navCtrl: NavController
-  ) {
-    this.request = new CreateDealerRequest();
-  }
+  ) { }
 
-  async ngOnInit() {
-
-  }
-
-  async ionViewDidEnter() {
-    this.platform.ready().then(async () => {
-      await this.getDealers();
-    });
+  ngOnInit() {
+    this.getDealers();
   }
 
   async getDealers() {
     try {
       this.dealers = null;
-      this.dealers = await this.inventarioReal.allDealers();
+      this.dealers = await this.inventarioReal.allDealers(true);
       this.allDealers = this.dealers.data;
     } catch (e) {
       console.error(e);
     }
   }
-
-  async create() {
-    try {
-      this.request.validate();
-      this.dealers = await this.inventarioReal.createDealer(this.request);
-      this.util.showToast('dealer_created');
-      this.request.clean();
-      await this.getDealers();
-    } catch (e) {
-      this.util.showToast(e.toString());
-    }
-  }
-
   filterItems(ev: CustomEvent) {
     const val = ev.detail.value;
 
