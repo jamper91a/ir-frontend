@@ -25,7 +25,7 @@ export class CreateAdminRequest implements InventarioRealRequest {
     getBody() {
         return {
             user: this.user,
-            dealer: this.employee
+            employee: this.employee
 
         };
     }
