@@ -1,5 +1,20 @@
 <ion-app>
-  <ion-router-outlet id="main-content"></ion-router-outlet>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{tittle}}</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button (click)="logOut()">
+          <ion-icon name="log-out" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-content>
   <ion-tabs >
     <ion-tab-bar slot="bottom">
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AllDealersResponse} from '../../../../webServices/response/AllDealersResponse';
 import {Dealer} from '../../../../pojo/Dealer';
 import {InventarioReal} from '../../../../providers/inventarioReal';
-import {NavController, Platform} from '@ionic/angular';
+import {Events, NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
 import {NavigationExtras, Router} from '@angular/router';
 
@@ -19,8 +19,11 @@ export class DealersListPage implements OnInit {
       public platform: Platform,
       public util: Util,
       private router: Router,
-      private navCtrl: NavController
-  ) { }
+      private navCtrl: NavController,
+      public events: Events,
+  ) {
+    this.events.publish('tittle', 'current_dealers');
+  }
 
   ngOnInit() {
   }
@@ -61,7 +64,7 @@ export class DealersListPage implements OnInit {
         dealer
       }
     };
-    this.navCtrl.navigateForward(['home/admin/dealers/details/' + dealer.id], navigationExtras);
+    this.navCtrl.navigateForward(['superAdmin/a/dealers/details/' + dealer.id], navigationExtras);
   }
 
 }

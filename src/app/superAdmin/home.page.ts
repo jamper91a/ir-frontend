@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import {InventarioReal} from '../../providers/inventarioReal';
+import {AlertController, Events} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
-import {Employee} from '../../pojo/Employee';
 import {Util} from '../../providers/util';
 
 @Component({
@@ -11,17 +10,48 @@ import {Util} from '../../providers/util';
 })
 export class HomePage {
 
+  tittle = '';
   constructor(
-      private inventarioReal: InventarioReal,
-      private translate: TranslateService,
-      private util: Util
+      public events: Events,
+      public translate: TranslateService,
+      public alertController: AlertController,
+      public util: Util
   ) {
-    console.log('homepage');
+    this.events.subscribe('tittle', (tittle) => {
+      translate.get(tittle).subscribe(
+          value => {
+            this.tittle = value;
+          }
+      );
+    });
   }
 
-  private getUserType() {
-    const employee: Employee = JSON.parse(this.util.getPreference('employee'));
-    return employee.user.group.id;
+  async logOut() {
+    console.log('logOut');
+    this.translate.get(['log_out', 'are_you_sure' , 'confirm', 'cancel']).subscribe(
+        async (values) => {
+          console.log(values);
+          const alert = await this.alertController.create({
+            header: values.log_out,
+            message: values.are_you_sure,
+            buttons: [
+              {
+                text: values.cancel,
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                }
+              }, {
+                text: values.confirm,
+                handler: () => {
+                  this.util.logOut();
+                }
+              }
+            ]
+          });
+          await alert.present();
+        }
+    );
   }
 
 }

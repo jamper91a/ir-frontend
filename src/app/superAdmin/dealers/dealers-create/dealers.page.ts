@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {InventarioReal} from '../../../../providers/inventarioReal';
-import {Platform} from '@ionic/angular';
+import {Events, Platform} from '@ionic/angular';
 import {CreateDealerRequest} from '../../../../webServices/request/CreateDealerRequest';
 import {Util} from '../../../../providers/util';
 
@@ -15,9 +15,11 @@ export class DealersPage implements OnInit {
   constructor(
       private inventarioReal: InventarioReal,
       public platform: Platform,
-      public util: Util
+      public util: Util,
+      public events: Events,
   ) {
     this.request = new CreateDealerRequest();
+    this.events.publish('tittle', 'new_dealer');
   }
 
   async ngOnInit() {

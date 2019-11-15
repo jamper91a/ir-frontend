@@ -4,7 +4,7 @@ import {Dealer} from '../../../../pojo/Dealer';
 import {UpdateDealerRequest} from '../../../../webServices/request/UpdateDealerRequest';
 import {Util} from '../../../../providers/util';
 import {InventarioReal} from '../../../../providers/inventarioReal';
-import {NavController} from '@ionic/angular';
+import {Events, NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-dealers-detail',
@@ -20,12 +20,14 @@ export class DealersDetailPage implements OnInit {
       private router: Router,
       private util: Util,
       private inventarioReal: InventarioReal,
-      private navCtrl: NavController
+      private navCtrl: NavController,
+      public events: Events,
   ) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.data = this.router.getCurrentNavigation().extras.state.dealer;
         this.request.putData(this.data);
+        this.events.publish('tittle', this.data.name);
       }
       this.dealerId = this.route.snapshot.paramMap.get('id');
       if (!this.data) {

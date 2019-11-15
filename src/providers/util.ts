@@ -1,6 +1,7 @@
 import {LoadingController, ToastController} from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {Router} from '@angular/router';
 
 
 /**
@@ -12,6 +13,7 @@ export class Util {
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     public loadingCtrl: LoadingController,
+    public router: Router
   ) {
 
       this.constants = {
@@ -131,5 +133,10 @@ export class Util {
 
   public getLogs() {
     return this.getPreference(this.constants.logs);
+  }
+
+  public logOut() {
+      this.clearAllData();
+      this.router.navigateByUrl('/');
   }
 }
