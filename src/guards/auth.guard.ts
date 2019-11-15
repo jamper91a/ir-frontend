@@ -7,7 +7,7 @@ import {User} from '../pojo/User';
 @Injectable({
   providedIn: 'root'
 })
-export class DealerGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(
       private util: Util,
       private router: Router,
@@ -20,10 +20,20 @@ export class DealerGuard implements CanActivate {
       state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
     const data = this.util.getPreference('user');
+    console.log(data);
     if (data) {
       const user: User = JSON.parse(data);
-      return user.group.id === 5;
+      console.log(user.group.id);
+      switch (user.group.id) {
+        case 1:
+          return this.router.navigateByUrl('/superAdmin');
+        case 2:
+          return this.router.navigateByUrl('/admin');
+        case 5:
+          return this.router.navigateByUrl('/dealer');
+      }
     }
-    this.router.navigateByUrl('/');
+    return true;
+
   }
 }

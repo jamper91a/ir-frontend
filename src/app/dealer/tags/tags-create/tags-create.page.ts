@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import {InventarioReal} from '../../../../providers/inventarioReal';
 import {Events, NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
-import {NavigationExtras, Router} from '@angular/router';
 import {GetAllCompaniesByDealerResponse} from '../../../../webServices/response/GetAllCompaniesByDealerResponse';
 import {Company} from '../../../../pojo/Company';
+import {NavigationExtras, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-companies-list',
-  templateUrl: './companies-list.page.html',
-  styleUrls: ['./companies-list.page.scss'],
+  selector: 'app-tags-create',
+  templateUrl: './tags-create.page.html',
+  styleUrls: ['./tags-create.page.scss'],
 })
-export class CompaniesListPage {
+export class TagsCreatePage {
 
   public dealer: GetAllCompaniesByDealerResponse;
   public companies: Company[];
@@ -24,7 +24,7 @@ export class CompaniesListPage {
       private navCtrl: NavController,
       public events: Events,
   ) {
-    this.events.publish('tittle', 'current_dealers');
+    this.events.publish('tittle', 'tags');
   }
 
   async ionViewDidEnter() {
@@ -36,7 +36,7 @@ export class CompaniesListPage {
   async getCompanies() {
     try {
       this.dealer = null;
-      this.dealer = await this.inventarioReal.getAllCompaniesByDealer();
+      this.dealer = await this.inventarioReal.getAllCompaniesByDealer(true);
       this.companies = this.dealer.data.companies;
       this.allCompanies = this.dealer.data.companies;
     } catch (e) {
@@ -64,7 +64,7 @@ export class CompaniesListPage {
         company
       }
     };
-    this.navCtrl.navigateForward(['dealer/companies/details/' + company.id], navigationExtras);
+    this.navCtrl.navigateForward(['dealer/tags/create/step-2/' + company.id], navigationExtras);
   }
 
 }

@@ -1,14 +1,14 @@
 export class GetAllCompaniesByDealerRequest implements InventarioRealRequest {
-    public justActiveDealers: boolean;
+    public justActive: boolean;
 
 
     constructor() {
-        this.justActiveDealers = false;
+        this.justActive = false;
     }
 
     getBody() {
         return {
-            justActiveDealers: this.justActiveDealers
+            justActive: this.justActive
         };
     }
 

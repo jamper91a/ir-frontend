@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {Util} from '../providers/util';
 import { TranslateService } from '@ngx-translate/core';
-import {Router} from '@angular/router';
-import {User} from '../pojo/User';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -18,8 +16,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private util: Util,
-    private translate: TranslateService,
-    private router: Router
+    private translate: TranslateService
   ) {
     this.initializeApp();
   }
@@ -31,22 +28,5 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-
-    if ( this.util.getPreference('user')) {
-      let redirectUrl = '';
-      const user: User = JSON.parse(this.util.getPreference('user'));
-      switch (user.group.id) {
-        case 1:
-          redirectUrl = 'superAdmin';
-          break
-        case 2:
-          redirectUrl = 'admin';
-          break;
-        case 5:
-          redirectUrl = 'dealer';
-          break;
-      }
-      this.router.navigateByUrl(redirectUrl);
-    }
   }
 }

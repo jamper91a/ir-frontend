@@ -10,18 +10,23 @@ import {TranslateModule} from '@ngx-translate/core';
 
 const routes: Routes = [
   {
-    path: 'a',
+    path: '',
     component: HomePage,
     children: [
       { path: 'companies/create', loadChildren: '../companies/companies-create/companies-create.module#CompaniesCreatePageModule' },
       { path: 'companies/list', loadChildren: '../companies/companies-list/companies-list.module#CompaniesListPageModule' },
       { path: 'companies/details/:id', loadChildren: '../companies/companies-details/companies-details.module#CompaniesDetailsPageModule' },
+      { path: 'tags/create/step-1', loadChildren: '../tags/tags-create/tags-create.module#TagsCreatePageModule' },
+      {
+        path: 'tags/create/step-2/:id',
+        loadChildren: '../tags/tags-create-step-two/tags-create-step-two.module#TagsCreateStepTwoPageModule'
+      },
       // { path: 'dealers/list', loadChildren: './dealers/dealers-list/dealers-list.module#DealersListPageModule' }
     ]
   },
   {
     path: '',
-    redirectTo: '/dealer/a/companies/create',
+    redirectTo: '/companies/create',
     pathMatch: 'full'
   }
 ];

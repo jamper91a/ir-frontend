@@ -61,11 +61,10 @@ export class UpdateAdminRequest implements InventarioRealRequest {
     }
 
     clean() {
-        this.user.id = '';
+        this.user.id = 0;
         this.user.username = '';
         this.user.password = '';
         this.user.name = '';
-        this.user.active = '';
         this.employee.company.name = '';
     }
 

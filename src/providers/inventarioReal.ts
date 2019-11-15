@@ -173,10 +173,10 @@ export class InventarioReal {
         }
     }
 
-    public async getAllCompaniesByDealer(justActiveDealers: boolean = false): Promise<GetAllCompaniesByDealerResponse> {
+    public async getAllCompaniesByDealer(justActive: boolean = false): Promise<GetAllCompaniesByDealerResponse> {
         this.get_translation();
         const request: GetAllCompaniesByDealerRequest = new GetAllCompaniesByDealerRequest();
-        request.justActiveDealers = justActiveDealers;
+        request.justActive = justActive;
         const self = this;
         console.log(this.messages);
         const dialog = await this.util.showDialog(this.messages.consulting);
