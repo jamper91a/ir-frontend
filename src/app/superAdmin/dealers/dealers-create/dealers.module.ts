@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { DealersPage } from './dealers.page';
 import {TranslateModule} from '@ngx-translate/core';
-import {HomePage} from '../home.page';
 
 
 const routes: Routes = [

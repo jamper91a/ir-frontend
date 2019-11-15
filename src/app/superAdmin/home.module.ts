@@ -9,17 +9,17 @@ import {TranslateModule} from '@ngx-translate/core';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'a',
     component: HomePage,
     children: [
-      { path: 'dealers', loadChildren: './dealers/dealers.module#DealersPageModule' },
+      { path: 'dealers/create', loadChildren: './dealers/dealers-create/dealers.module#DealersPageModule' },
       { path: 'dealers/details/:id', loadChildren: './dealers/dealers-detail/dealers-detail.module#DealersDetailPageModule' },
-      { path: 'tags', loadChildren: './tags/tags.module#TagsPageModule' },
+      { path: 'dealers/list', loadChildren: './dealers/dealers-list/dealers-list.module#DealersListPageModule' }
     ]
   },
   {
     path: '',
-    redirectTo: '/superAdmin/dealers',
+    redirectTo: '/superAdmin/a/dealers/create',
     pathMatch: 'full'
   }
 ];

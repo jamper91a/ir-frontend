@@ -1,19 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{'tags' | translate}}</ion-title>
+    <ion-title>{{'current_dealers' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-list-header>
-      <ion-label>{{'choose_dealer' | translate}}</ion-label>
-    </ion-list-header>
     <ion-progress-bar type="indeterminate" *ngIf="!dealers"></ion-progress-bar>
 
     <ng-container *ngIf="dealers">
       <ion-searchbar placeholder="{{ 'dealers' | translate}}" debounce="500" (ionChange)="filterItems($event)"></ion-searchbar>
       <ion-virtual-scroll [items]="dealers.data" approxItemHeight="320px" >
+        <!--<ion-item-sliding *ngFor="let dealer of dealers.data">-->
         <ion-item-sliding *virtualItem="let dealer" (click)="goToDealer(dealer)">
           <ion-item color="{{dealer.user.active ? '' : 'light'}}">
             <ion-label>{{dealer.name}}</ion-label>

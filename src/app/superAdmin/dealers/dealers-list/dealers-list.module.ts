@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TagsPage } from './tags.page';
+import { DealersListPage } from './dealers-list.page';
 import {TranslateModule} from '@ngx-translate/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: TagsPage
+    component: DealersListPage
   }
 ];
 
@@ -23,6 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule.forChild()
   ],
-  declarations: [TagsPage]
+  declarations: [DealersListPage]
 })
-export class TagsPageModule {}
+export class DealersListPageModule {}
