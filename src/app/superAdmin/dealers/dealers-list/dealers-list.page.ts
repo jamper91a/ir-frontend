@@ -64,7 +64,7 @@ export class DealersListPage implements OnInit {
         dealer
       }
     };
-    this.navCtrl.navigateForward(['superAdmin/a/dealers/details/' + dealer.id], navigationExtras);
+    this.navCtrl.navigateForward(['superAdmin/dealers/details/' + dealer.id], navigationExtras);
   }
 
 }

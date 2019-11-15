@@ -25,6 +25,10 @@ export class CompaniesCreatePage implements OnInit {
   async ngOnInit() {
 
   }
+
+  async ionViewDidEnter() {
+    this.events.publish('tittle', 'new_cliente');
+  }
   async create() {
     try {
       this.request.validate();

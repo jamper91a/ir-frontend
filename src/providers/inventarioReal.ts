@@ -13,6 +13,8 @@ import {CreateAdminRequest} from '../webServices/request/CreateAdminRequest';
 import {GetAllCompaniesByDealerResponse} from '../webServices/response/GetAllCompaniesByDealerResponse';
 import {GetAllCompaniesByDealerRequest} from '../webServices/request/GetAllCompaniesByDealerRequest';
 import {UpdateAdminRequest} from '../webServices/request/UpdateAdminRequest';
+import {GetByIdRequest} from '../webServices/request/GetByIdRequest';
+import {GetCompanyByIdResponse} from '../webServices/response/GetCompanyByIdResponse';
 
 
 
@@ -208,6 +210,25 @@ export class InventarioReal {
             console.log('catch');
             await dialog.dismiss();
             self.util.showToast('error_updating_data');
+            throw e;
+        }
+    }
+
+    public async getCompanyById(id: string): Promise<GetCompanyByIdResponse> {
+        this.get_translation();
+        const request: GetByIdRequest = new GetByIdRequest();
+        request.id = id;
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting);
+        try {
+            // @ts-ignore
+            const response: GetCompanyByIdResponse = await this.api.post('companies/getCompaniesById', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            console.log('catch');
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
             throw e;
         }
     }

@@ -13,6 +13,7 @@ const routes: Routes = [
     path: '',
     component: HomePage,
     children: [
+      { path: '', loadChildren: '../companies/companies-create/companies-create.module#CompaniesCreatePageModule' },
       { path: 'companies/create', loadChildren: '../companies/companies-create/companies-create.module#CompaniesCreatePageModule' },
       { path: 'companies/list', loadChildren: '../companies/companies-list/companies-list.module#CompaniesListPageModule' },
       { path: 'companies/details/:id', loadChildren: '../companies/companies-details/companies-details.module#CompaniesDetailsPageModule' },
@@ -23,11 +24,6 @@ const routes: Routes = [
       },
       // { path: 'dealers/list', loadChildren: './dealers/dealers-list/dealers-list.module#DealersListPageModule' }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/companies/create',
-    pathMatch: 'full'
   }
 ];
 

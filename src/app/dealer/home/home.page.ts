@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, Events} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {Util} from '../../../providers/util';
+import {Router, RouterEvent} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +11,14 @@ import {Util} from '../../../providers/util';
 })
 export class HomePage {
 
-  tittle = '';
+  public tittle = '';
+  public selectedPath = '';
   constructor(
       public events: Events,
       public translate: TranslateService,
       public alertController: AlertController,
-      public util: Util
+      public util: Util,
+      private router: Router
   ) {
     this.events.subscribe('tittle', (tittle) => {
       translate.get(tittle).subscribe(
@@ -23,11 +26,15 @@ export class HomePage {
             this.tittle = value;
           }
       );
+      this.router.events.subscribe((event: RouterEvent) => {
+        if (event && event.url) {
+          this.selectedPath = event.url;
+        }
+      });
     });
   }
 
   async logOut() {
-    console.log('logOut');
     this.translate.get(['log_out', 'are_you_sure' , 'confirm', 'cancel']).subscribe(
         async (values) => {
           console.log(values);

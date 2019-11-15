@@ -31,6 +31,7 @@ export class CompaniesListPage {
     this.platform.ready().then(async () => {
       await this.getCompanies();
     });
+    this.events.publish('tittle', 'current_dealers');
   }
 
   async getCompanies() {

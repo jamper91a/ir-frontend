@@ -17,12 +17,7 @@ const routes: Routes = [
       { path: 'dealers/details/:id', loadChildren: './dealers/dealers-detail/dealers-detail.module#DealersDetailPageModule' },
       { path: 'dealers/list', loadChildren: './dealers/dealers-list/dealers-list.module#DealersListPageModule' }
     ]
-  },
-  // {
-  //   path: '',
-  //   redirectTo: '/dealers/create',
-  //   pathMatch: 'full'
-  // }
+  }
 ];
 
 

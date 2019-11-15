@@ -1,9 +1,26 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>tags-create-step-two</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="data">
+  <form (submit)="addTags()">
 
+  <ion-item>
+    <ion-label position="stacked">{{'tags' | translate}}</ion-label>
+    <ion-textarea
+            autofocus
+            rows="15"
+            [disabled]="disabled"
+            [(ngModel)]="tags"
+            name="tags">
+
+    </ion-textarea>
+  </ion-item>
+  <div padding>
+    <ion-button type="submit">{{'add' | translate}}</ion-button>
+  </div>
+  </form>
 </ion-content>
+

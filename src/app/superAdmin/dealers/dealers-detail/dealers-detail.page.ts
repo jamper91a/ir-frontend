@@ -47,7 +47,7 @@ export class DealersDetailPage implements OnInit {
       this.request.validate();
       await this.inventarioReal.updateDealer(this.request);
       this.util.showToast('dealer_updated');
-      this.navCtrl.navigateBack('home/admin/dealers');
+      this.navCtrl.navigateBack('/superAdmin');
     } catch (e) {
       this.util.showToast(e.toString());
     }

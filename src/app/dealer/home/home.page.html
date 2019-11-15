@@ -18,15 +18,15 @@
   <ion-tabs >
     <ion-tab-bar slot="bottom">
 
-      <ion-tab-button tab="companies/create">
+      <ion-tab-button tab="companies/create" [selected]="selectedPath.includes('companies/create')">
         <ion-icon name="contacts"></ion-icon>
         <ion-label>{{'create' | translate}}</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="companies/list">
+      <ion-tab-button tab="companies/list" [selected]="selectedPath.includes('companies/list')">
         <ion-icon name="contacts"></ion-icon>
         <ion-label>{{'companies' | translate}}</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="tags/create/step-1">
+      <ion-tab-button tab="tags/create/step-1" [selected]="selectedPath.includes('tags/create/step-1')">
         <ion-icon name="contacts"></ion-icon>
         <ion-label>{{'tags' | translate}}</ion-label>
       </ion-tab-button>

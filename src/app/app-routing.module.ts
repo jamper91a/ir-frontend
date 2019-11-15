@@ -9,12 +9,6 @@ const routes: Routes = [
   {
     path: 'superAdmin',
     loadChildren: './superAdmin/home.module#HomePageModule',
-    // children: [
-    //   { path: '', loadChildren: './superAdmin/home.module#HomePageModule' },
-    //   { path: 'dealers/create', loadChildren: './superAdmin/dealers/dealers-create/dealers.module#DealersPageModule' },
-    //   { path: 'dealers/details/:id', loadChildren: './superAdmin/dealers/dealers-detail/dealers-detail.module#DealersDetailPageModule' },
-    //   { path: 'dealers/list', loadChildren: './superAdmin/dealers/dealers-list/dealers-list.module#DealersListPageModule' }
-    // ],
     canActivate: [SuperAdminGuard]
   },
   {

@@ -31,6 +31,7 @@ export class TagsCreatePage {
     this.platform.ready().then(async () => {
       await this.getCompanies();
     });
+    this.events.publish('tittle', 'tags');
   }
 
   async getCompanies() {
