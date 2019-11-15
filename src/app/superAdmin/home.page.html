@@ -17,12 +17,11 @@
   </ion-content>
   <ion-tabs >
     <ion-tab-bar slot="bottom">
-
-      <ion-tab-button tab="dealers/create">
+      <ion-tab-button tab="dealers/create" [selected]="selectedPath.includes('dealers/create')">
         <ion-icon name="contacts"></ion-icon>
         <ion-label>{{'create' | translate}}</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="dealers/list">
+      <ion-tab-button tab="dealers/list" [selected]="selectedPath.includes('dealers/list')">
         <ion-icon name="contacts"></ion-icon>
         <ion-label>{{'list' | translate}}</ion-label>
       </ion-tab-button>
