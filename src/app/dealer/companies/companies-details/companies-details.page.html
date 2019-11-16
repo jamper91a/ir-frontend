@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (submit)="doUpdate()">
+    <ion-list>
+      <ion-item>
+        <ion-label  position="stacked">{{ 'email' | translate }}</ion-label>
+        <ion-input type="email" [(ngModel)]="request.user.username" name="email" clearInput="true" readonly disabled></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{ 'password' | translate }}</ion-label>
+        <ion-input type="password" [(ngModel)]="request.user.password" name="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{ 'repeat_password' | translate }}</ion-label>
+        <ion-input type="password" [(ngModel)]="request.user.rpassword" name="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{ 'user_name' | translate }}</ion-label>
+        <ion-input type="text" [(ngModel)]="request.user.name" name="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{ 'company_name' | translate }}</ion-label>
+        <ion-input type="text" [(ngModel)]="request.employee.company.name" name="company_name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'state' | translate}}</ion-label>
+        <ion-toggle [(ngModel)]="request.user.active" name="state"></ion-toggle>
+      </ion-item>
+
+      <div padding>
+        <ion-button type="submit" >
+          {{ 'update' | translate }}
+        </ion-button>
+      </div>
+
+
+    </ion-list>
+  </form>
+</ion-content>

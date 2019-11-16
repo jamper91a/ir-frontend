@@ -15,6 +15,7 @@ import {GetAllCompaniesByDealerRequest} from '../webServices/request/GetAllCompa
 import {UpdateAdminRequest} from '../webServices/request/UpdateAdminRequest';
 import {GetByIdRequest} from '../webServices/request/GetByIdRequest';
 import {GetCompanyByIdResponse} from '../webServices/response/GetCompanyByIdResponse';
+import {CreateEpcsRequest} from '../webServices/request/CreateEpcsRequest';
 
 
 
@@ -223,6 +224,23 @@ export class InventarioReal {
         try {
             // @ts-ignore
             const response: GetCompanyByIdResponse = await this.api.post('companies/getCompaniesById', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            console.log('catch');
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async createEpc(request: CreateEpcsRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('epcs/create', request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {

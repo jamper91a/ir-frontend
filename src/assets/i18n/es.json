@@ -1,4 +1,6 @@
 {
+  "add_tags_tittle": "Agregar tags",
+  "add_tags_message": "Leiste {tags} tags, de los cuales {finalTags} se asignaran a la empresa {company}. Estas seguro?",
   "appName": "Inventario Real",
   "are_you_sure": "Estas seguro?",
   "cancel": "Cancelar",
