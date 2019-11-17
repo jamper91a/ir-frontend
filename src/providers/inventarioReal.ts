@@ -18,6 +18,7 @@ import {GetCompanyByIdResponse} from '../webServices/response/GetCompanyByIdResp
 import {CreateEpcsRequest} from '../webServices/request/CreateEpcsRequest';
 import {TagsByDealerByMonthResponse} from '../webServices/response/TagsByDealerByMonthResponse';
 import {UpdateCompanyRequest} from '../webServices/request/UpdateCompanyRequest';
+import {CreateShopRequest} from '../webServices/request/CreateShopRequest';
 
 
 
@@ -301,6 +302,22 @@ export class InventarioReal {
         } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async createShop(request: CreateShopRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('shops', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
             throw e;
         }
     }
