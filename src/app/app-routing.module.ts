@@ -28,7 +28,9 @@ const routes: Routes = [
   },
   { path: 'zones', loadChildren: './admin/zones/zones.module#ZonesPageModule' },
   { path: 'create-zone', loadChildren: './admin/zones/create-zone/create-zone.module#CreateZonePageModule' },
-  { path: 'edit-zone', loadChildren: './admin/zones/edit-zone/edit-zone.module#EditZonePageModule' }
+  { path: 'edit-zone', loadChildren: './admin/zones/edit-zone/edit-zone.module#EditZonePageModule' },
+  { path: 'users', loadChildren: './admin/users/users.module#UsersPageModule' },
+  { path: 'edit-user', loadChildren: './admin/users/edit-user/edit-user.module#EditUserPageModule' }
 ];
 
 @NgModule({
