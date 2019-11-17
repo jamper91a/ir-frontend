@@ -26,7 +26,8 @@ const routes: Routes = [
     canActivate: [DealerGuard],
     loadChildren: './dealer/home/home.module#HomePageModule'
   },
-  { path: 'zones', loadChildren: './admin/zones/zones.module#ZonesPageModule' }
+  { path: 'zones', loadChildren: './admin/zones/zones.module#ZonesPageModule' },
+  { path: 'create-zone', loadChildren: './admin/zones/create-zone/create-zone.module#CreateZonePageModule' }
 ];
 
 @NgModule({

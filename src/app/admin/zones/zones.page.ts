@@ -74,7 +74,7 @@ export class ZonesPage implements OnInit {
         shop
       }
     };
-    this.navCtrl.navigateForward(['admin/shops/edit/' + shop.id], navigationExtras);
+    this.navCtrl.navigateForward(['admin/zones/create/' + shop.id], navigationExtras);
   }
 
 }

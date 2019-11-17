@@ -21,6 +21,8 @@ import {UpdateCompanyRequest} from '../webServices/request/UpdateCompanyRequest'
 import {CreateShopRequest} from '../webServices/request/CreateShopRequest';
 import {GetShopsByCompanyResponse} from '../webServices/response/GetShopsByCompanyResponse';
 import {UpdateShopRequest} from '../webServices/request/UpdateShopRequest';
+import {GetZonesByShopRequest} from '../webServices/request/GetZonesByShopRequest';
+import {GetZonesByShopResponse} from '../webServices/response/GetZonesByShopResponse';
 
 
 
@@ -353,6 +355,24 @@ export class InventarioReal {
             console.error(e);
             await dialog.dismiss();
             self.util.showToast('error_updating_data');
+            throw e;
+        }
+    }
+
+    public async getZonesByShop(id: string): Promise<GetZonesByShopResponse> {
+        this.get_translation();
+        const request: GetByIdRequest = new GetByIdRequest();
+        request.id = id;
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetZonesByShopResponse = await this.api.post('zones', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
             throw e;
         }
     }

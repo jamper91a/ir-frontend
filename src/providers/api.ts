@@ -47,7 +47,8 @@ export class Api {
         return this.http.post(this.util.url + endpoint, body, httpOptions);
     }
 
-    get(endpoint: string): any {
+    get(endpoint: string, params: any): any {
+        let fields = '';
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json'
@@ -58,7 +59,18 @@ export class Api {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
         }
-        return this.http.get(this.util.url + endpoint, httpOptions);
+
+        //
+        // // Support easy query params for GET requests
+        if (params) {
+            const p = new URLSearchParams();
+            for (const k in params) {
+                p.set(k, params[k]);
+            }
+            fields = '?' + p.toString();
+        }
+        console.log(this.util.url + endpoint + fields);
+        return this.http.get(this.util.url + endpoint + fields, httpOptions);
     }
 
     patch(endpoint: string, body: any): any {
