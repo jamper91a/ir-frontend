@@ -19,16 +19,20 @@
     <ion-tab-bar slot="bottom">
 
       <ion-tab-button tab="companies/create" [selected]="selectedPath.includes('companies/create')">
-        <ion-icon name="contacts"></ion-icon>
-        <ion-label>{{'create' | translate}}</ion-label>
+        <ion-icon name="person-add"></ion-icon>
+        <ion-label>{{'create_company' | translate}}</ion-label>
       </ion-tab-button>
       <ion-tab-button tab="companies/list" [selected]="selectedPath.includes('companies/list')">
-        <ion-icon name="contacts"></ion-icon>
+        <ion-icon name="list"></ion-icon>
         <ion-label>{{'companies' | translate}}</ion-label>
       </ion-tab-button>
       <ion-tab-button tab="tags/create/step-1" [selected]="selectedPath.includes('tags/create/step-1')">
-        <ion-icon name="contacts"></ion-icon>
+        <ion-icon name="pricetag"></ion-icon>
         <ion-label>{{'tags' | translate}}</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="reports" [selected]="selectedPath.includes('reports')">
+        <ion-icon name="analytics"></ion-icon>
+        <ion-label>{{'reports' | translate}}</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

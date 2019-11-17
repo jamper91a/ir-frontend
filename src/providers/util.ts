@@ -81,8 +81,6 @@ export class Util {
   public showToast(message: string) {
     this.translateService.get(message).subscribe(async (value) => {
 
-        console.log(message);
-        console.log(value);
         const toast = await this.toastCtrl.create({
             message: value,
             duration: 3000,
@@ -94,12 +92,15 @@ export class Util {
 
   }
 
-  public async showDialog(msg: string) {
+  public async showDialog(msg: string, showDialog = true) {
     const loading = await this.loadingCtrl.create({
         message: msg,
         keyboardClose: false
     });
-    await loading.present();
+    if (showDialog) {
+
+        await loading.present();
+    }
     return loading;
 
   }

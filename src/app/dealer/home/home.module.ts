@@ -22,7 +22,7 @@ const routes: Routes = [
         path: 'tags/create/step-2/:id',
         loadChildren: '../tags/tags-create-step-two/tags-create-step-two.module#TagsCreateStepTwoPageModule'
       },
-      // { path: 'dealers/list', loadChildren: './dealers/dealers-list/dealers-list.module#DealersListPageModule' }
+      { path: 'reports', loadChildren: '../reports/reports.module#ReportsPageModule' }
     ]
   }
 ];

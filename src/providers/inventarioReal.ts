@@ -16,6 +16,7 @@ import {UpdateAdminRequest} from '../webServices/request/UpdateAdminRequest';
 import {GetByIdRequest} from '../webServices/request/GetByIdRequest';
 import {GetCompanyByIdResponse} from '../webServices/response/GetCompanyByIdResponse';
 import {CreateEpcsRequest} from '../webServices/request/CreateEpcsRequest';
+import {TagsByDealerByMonthResponse} from '../webServices/response/TagsByDealerByMonthResponse';
 
 
 
@@ -24,6 +25,7 @@ export class InventarioReal {
 
 
   private messages: any;
+  public showDialog = true;
   constructor(
     private api: Api,
     private util: Util,
@@ -50,7 +52,6 @@ export class InventarioReal {
               ]
             ).subscribe(
               (values) => {
-                  console.log(values);
                   self.messages = values;
               });
           });
@@ -63,7 +64,7 @@ export class InventarioReal {
       this.get_translation();
       const self = this;
       console.log(this.messages);
-      const dialog = await this.util.showDialog(this.messages.consulting);
+      const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
       try {
       // @ts-ignore
         const response: LoginResponse = await this.api.post('loginWeb', request.getBody()).toPromise();
@@ -90,7 +91,7 @@ export class InventarioReal {
       request.justActiveDealers = justActiveDealers;
       const self = this;
       console.log(this.messages);
-      const dialog = await this.util.showDialog(this.messages.consulting);
+      const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
       try {
             // @ts-ignore
             const response: AllDealersResponse = await this.api.post('dealers/getAllDealers', request.getBody()).toPromise();
@@ -182,7 +183,7 @@ export class InventarioReal {
         request.justActive = justActive;
         const self = this;
         console.log(this.messages);
-        const dialog = await this.util.showDialog(this.messages.consulting);
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
             const response: GetAllCompaniesByDealerResponse = await this.api.post(
@@ -220,7 +221,7 @@ export class InventarioReal {
         const request: GetByIdRequest = new GetByIdRequest();
         request.id = id;
         const self = this;
-        const dialog = await this.util.showDialog(this.messages.consulting);
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
             const response: GetCompanyByIdResponse = await this.api.post('companies/getCompaniesById', request.getBody()).toPromise();
@@ -241,6 +242,42 @@ export class InventarioReal {
         try {
             // @ts-ignore
             const response: any = await this.api.post('epcs/create', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            console.log('catch');
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async tagsByDealerByMonth(): Promise<TagsByDealerByMonthResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: TagsByDealerByMonthResponse = await this.api.post('epcs/tagsByDealerByMonth', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            console.log('catch');
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async tagsByCompanyByMonth(companyId: string): Promise<TagsByDealerByMonthResponse> {
+        this.get_translation();
+        const request: GetByIdRequest = new GetByIdRequest();
+        request.id = companyId;
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: TagsByDealerByMonthResponse = await this.api.post('epcs/tagsByCompanyByMonth', request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {

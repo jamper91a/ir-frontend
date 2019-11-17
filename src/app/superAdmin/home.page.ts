@@ -35,10 +35,8 @@ export class HomePage {
   }
 
   async logOut() {
-    console.log('logOut');
     this.translate.get(['log_out', 'are_you_sure' , 'confirm', 'cancel']).subscribe(
         async (values) => {
-          console.log(values);
           const alert = await this.alertController.create({
             header: values.log_out,
             message: values.are_you_sure,

@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>reports</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid style="height: 100%" *ngIf="!inventarioReal.showDialog">
+      <ion-row justify-content-center align-items-center style="height: 100%">
+        <!-- Crescent -->
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-row>
+    </ion-grid>
+  <div class="ion-padding" *ngIf="inventarioReal.showDialog">
+
+    <ion-row>
+      <ion-col sizeLg="4" sizeMd="6" sizeSm="12">
+        <ion-card>
+          <ion-card-header>
+            {{'tags_sold' | translate}}
+          </ion-card-header>
+          <ion-card-content>
+            <canvas #barCanvas></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col sizeLg="6" sizeMd="6" sizeSm="12">
+        <ion-card *ngIf="company">
+          <ion-card-header>
+            {{company.name}}
+          </ion-card-header>
+          <ion-card-content>
+            <canvas #barCanvas2></canvas>
+          </ion-card-content>
+        </ion-card>
+        <ion-card *ngIf="!company">
+          <ion-card-header>
+            {{'select_a_company' | translate}}
+          </ion-card-header>
+          <ion-card-content>
+            {{'no_data_available' | translate}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col sizeLg="6" sizeMd="6" sizeSm="12">
+        <ion-list>
+          <ion-progress-bar type="indeterminate" *ngIf="!companies"></ion-progress-bar>
+          <ng-container *ngIf="companies">
+            <ion-searchbar placeholder="{{ 'companies' | translate}}" debounce="500" (ionChange)="filterItems($event)"></ion-searchbar>
+            <!--<ion-virtual-scroll [items]="companies" approxItemHeight="320px" >-->
+              <ion-item-sliding *ngFor="let company of companies"(click)="getReportByCompany(company)">
+                <ion-item color="{{company.user.active ? '' : 'light'}}">
+                  <ion-label>{{company.name}}</ion-label>
+                  <ion-note slot="end">{{company.user.name}}</ion-note>
+                </ion-item>
+              </ion-item-sliding>
+            <!--</ion-virtual-scroll>-->
+          </ng-container>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+
+    <!--<ion-card>-->
+      <!--<ion-card-header>-->
+        <!--Doughnut Chart-->
+      <!--</ion-card-header>-->
+      <!--<ion-card-content>-->
+        <!--<canvas #doughnutCanvas></canvas>-->
+      <!--</ion-card-content>-->
+    <!--</ion-card>-->
+
+    <!--<ion-card>-->
+      <!--<ion-card-header>-->
+        <!--Line Chart-->
+      <!--</ion-card-header>-->
+      <!--<ion-card-content>-->
+        <!--<canvas #lineCanvas></canvas>-->
+      <!--</ion-card-content>-->
+    <!--</ion-card>-->
+  </div>
+</ion-content>
