@@ -30,7 +30,7 @@ export class CreateZonePage implements OnInit {
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.shop = this.router.getCurrentNavigation().extras.state.shop;
-        console.log('shop');
+        this.request.shop = this.shop.id;
         if (!this.shop) {
           this.navCtrl.navigateBack(['admin/zones' ]);
         }
@@ -57,7 +57,7 @@ export class CreateZonePage implements OnInit {
   async doCreate() {
     try {
       this.request.validate();
-      await this.inventarioReal.createShop(this.request);
+      await this.inventarioReal.createZone(this.request);
       this.util.showToast('zone_created');
       this.getZones();
     } catch (e) {

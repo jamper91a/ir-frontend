@@ -21,8 +21,8 @@ import {UpdateCompanyRequest} from '../webServices/request/UpdateCompanyRequest'
 import {CreateShopRequest} from '../webServices/request/CreateShopRequest';
 import {GetShopsByCompanyResponse} from '../webServices/response/GetShopsByCompanyResponse';
 import {UpdateShopRequest} from '../webServices/request/UpdateShopRequest';
-import {GetZonesByShopRequest} from '../webServices/request/GetZonesByShopRequest';
 import {GetZonesByShopResponse} from '../webServices/response/GetZonesByShopResponse';
+import {CreateZoneRequest} from '../webServices/request/CreateZoneRequest';
 
 
 
@@ -367,12 +367,28 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetZonesByShopResponse = await this.api.post('zones', request.getBody()).toPromise();
+            const response: GetZonesByShopResponse = await this.api.post('zones/find', request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async createZone(request: CreateZoneRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('zones', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
             throw e;
         }
     }

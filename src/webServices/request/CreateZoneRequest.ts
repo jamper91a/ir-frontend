@@ -1,11 +1,13 @@
 export class CreateZoneRequest implements InventarioRealRequest {
-    public name;
+    public name: string;
+    public shop: number;
     constructor() {
     }
 
     getBody() {
         return {
-            name: this.name
+            name: this.name,
+            shop: this.shop
         };
     }
 
