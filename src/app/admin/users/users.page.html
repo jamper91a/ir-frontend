@@ -1,9 +1,107 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>users</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-row>
+    <ion-col>
+      <form (submit)="doCreate()">
+        <ion-list>
+          <ion-title>{{'new_user' | translate}}</ion-title>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label  position="stacked">{{ 'email' | translate }}</ion-label>
+                <ion-input type="email" [(ngModel)]="request.user.username" name="username"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col >
+              <ion-item>
+                <ion-label  position="stacked">{{ 'name' | translate }}</ion-label>
+                <ion-input type="text" [(ngModel)]="request.user.name" name="name"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label  position="stacked">{{ 'password' | translate }}</ion-label>
+                <ion-input type="password" [(ngModel)]="request.user.password" name="password"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label  position="stacked">{{ 'repeat_password' | translate }}</ion-label>
+                <ion-input type="password" [(ngModel)]="request.user.rpassword" name="rpassword"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">{{'user_type' | translate}}</ion-label>
+                <ion-select
+                        interface="popover"
+                        name="group"
+                        [(ngModel)]="request.user.group"
+                        value="6"
+                        okText="{{'confirm' | translate}}"
+                        cancelText="{{'cancel' | translate}}">
+                  <ion-select-option value="6">{{'shop_manager' | translate}}</ion-select-option>
+                  <ion-select-option value="3">{{'cashier' | translate}}</ion-select-option>
+                  <ion-select-option value="4">{{'warehouse' | translate}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">{{'shop' | translate}}</ion-label>
+                <ion-select
+                        interface="action-sheet"
+                        name="shop"
+                        [(ngModel)]="request.employee.shop"
+                        okText="{{'confirm' | translate}}"
+                        cancelText="{{'cancel' | translate}}">
+                  <ion-select-option value="{{shop.id}}" *ngFor="let shop of shops">{{shop.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div padding>
+                <ion-button type="submit" >
+                  {{ 'create' | translate }}
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </form>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-title>{{'employees' | translate}}</ion-title>
+        <ion-progress-bar type="indeterminate" *ngIf="!employees"></ion-progress-bar>
+        <ng-container *ngIf="employees">
+          <ion-searchbar placeholder="{{ 'search' | translate}}" debounce="500" (ionChange)="filterItems($event)"></ion-searchbar>
+          <ion-item-sliding *ngFor="let employee of employees" (click)="goToEmployee(employee)">
+            <ion-item>
+              <ion-label>
+                {{employee.user.name}}
+                <p>{{employee.user.username}}</p>
+              </ion-label>
+              <ion-note slot="end">{{employee.user.group.name}}</ion-note>
+            </ion-item>
+          </ion-item-sliding>
+        </ng-container>
+      </ion-list>
+    </ion-col>
+  </ion-row>
 
 </ion-content>

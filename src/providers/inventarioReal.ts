@@ -24,6 +24,8 @@ import {UpdateShopRequest} from '../webServices/request/UpdateShopRequest';
 import {GetZonesByShopResponse} from '../webServices/response/GetZonesByShopResponse';
 import {CreateZoneRequest} from '../webServices/request/CreateZoneRequest';
 import {UpdateZoneRequest} from '../webServices/request/UpdateZoneRequest';
+import {GetEmployeesByCompanyResponse} from '../webServices/response/GetEmployeesByCompanyResponse';
+import {CreateEmployeeRequest} from '../webServices/request/CreateEmployeeRequest';
 
 
 
@@ -407,6 +409,38 @@ export class InventarioReal {
             console.error(e);
             await dialog.dismiss();
             self.util.showToast('error_updating_data');
+            throw e;
+        }
+    }
+
+    public async getEmployeesByCompany(): Promise<GetEmployeesByCompanyResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetEmployeesByCompanyResponse = await this.api.post('users/listEmployeesByCompany', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async createEmployee(request: CreateEmployeeRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('users', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
             throw e;
         }
     }
