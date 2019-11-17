@@ -19,15 +19,15 @@
   <ion-tabs >
     <ion-tab-bar slot="bottom">
 
-      <ion-tab-button tab="admin/company">
+      <ion-tab-button tab="company" [selected]="selectedPath.includes('companies/create')">
         <ion-icon name="apps"></ion-icon>
         <ion-label>{{'company' | translate}}</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="admin/shops">
+      <ion-tab-button tab="shops" [selected]="selectedPath.includes('companies/create')">
         <ion-icon name="business"></ion-icon>
         <ion-label>{{'shops' | translate}}</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="admin/products">
+      <ion-tab-button tab="products" [selected]="selectedPath.includes('companies/create')">
         <ion-icon name="pricetags"></ion-icon>
         <ion-label>{{'products' | translate}}</ion-label>
       </ion-tab-button>

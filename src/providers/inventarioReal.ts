@@ -17,6 +17,7 @@ import {GetByIdRequest} from '../webServices/request/GetByIdRequest';
 import {GetCompanyByIdResponse} from '../webServices/response/GetCompanyByIdResponse';
 import {CreateEpcsRequest} from '../webServices/request/CreateEpcsRequest';
 import {TagsByDealerByMonthResponse} from '../webServices/response/TagsByDealerByMonthResponse';
+import {UpdateCompanyRequest} from '../webServices/request/UpdateCompanyRequest';
 
 
 
@@ -216,7 +217,7 @@ export class InventarioReal {
         }
     }
 
-    public async getCompanyById(id: string): Promise<GetCompanyByIdResponse> {
+    public async getCompanyById(id: string = ''): Promise<GetCompanyByIdResponse> {
         this.get_translation();
         const request: GetByIdRequest = new GetByIdRequest();
         request.id = id;
@@ -282,6 +283,22 @@ export class InventarioReal {
             return response;
         } catch (e) {
             console.log('catch');
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async updateCompany(request: UpdateCompanyRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: TagsByDealerByMonthResponse = await this.api.postWithFiles('companies/update', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_getting_data');
             throw e;

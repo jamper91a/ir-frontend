@@ -9,7 +9,6 @@ import { Util } from './util';
 @Injectable()
 export class Api {
 
-    private timeOut = 15000;
     constructor(
         private http: HttpClient,
         public util: Util,
@@ -33,8 +32,22 @@ export class Api {
         }
         return this.http.post(this.util.url + endpoint, body, httpOptions);
     }
+    postWithFiles( endpoint: string, body: FormData) {
 
-    get(endpoint: string, params?: any): any {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                // 'Content-Type':  'multipart/form-data'
+            })
+        };
+        const token = this.util.getPreference('token');
+        if (token) {
+            httpOptions.headers =
+                httpOptions.headers.set('Authorization', 'Bearer ' + token);
+        }
+        return this.http.post(this.util.url + endpoint, body, httpOptions);
+    }
+
+    get(endpoint: string): any {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json'

@@ -4,6 +4,7 @@ import {User} from './User';
 
 export class Company extends InventarioRealPojo {
     public name: string;
+    public photo: string;
     public dealer: Dealer;
     public user: User;
 
