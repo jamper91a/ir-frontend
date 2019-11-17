@@ -68,7 +68,6 @@ export class CreateZonePage implements OnInit {
   async getZones() {
     try {
       const response: GetZonesByShopResponse = await this.inventarioReal.getZonesByShop(this.shop.id + '');
-      console.log(response);
       this.zones = response.data;
       this.allZones = response.data;
     } catch (e) {
@@ -88,13 +87,13 @@ export class CreateZonePage implements OnInit {
       this.allZones = this.zones;
     }
   }
-  goToZone(shop: Shop) {
+  goToZone(zone: Zone) {
     const navigationExtras: NavigationExtras = {
       state: {
-        shop
+          zone
       }
     };
-    this.navCtrl.navigateForward(['admin/zone/edit/' + shop.id], navigationExtras);
+    this.navCtrl.navigateForward(['admin/zones/edit/' + zone.id], navigationExtras);
   }
 
 }

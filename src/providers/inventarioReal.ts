@@ -23,6 +23,7 @@ import {GetShopsByCompanyResponse} from '../webServices/response/GetShopsByCompa
 import {UpdateShopRequest} from '../webServices/request/UpdateShopRequest';
 import {GetZonesByShopResponse} from '../webServices/response/GetZonesByShopResponse';
 import {CreateZoneRequest} from '../webServices/request/CreateZoneRequest';
+import {UpdateZoneRequest} from '../webServices/request/UpdateZoneRequest';
 
 
 
@@ -348,9 +349,9 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
             // @ts-ignore
-            const response: TagsByDealerByMonthResponse = await this.api.patch('shops/' + request.id, request.getBody()).toPromise();
+            await this.api.patch('shops/' + request.id, request.getBody()).toPromise();
             await dialog.dismiss();
-            return response;
+            return;
         } catch (e) {
             console.error(e);
             await dialog.dismiss();
@@ -389,6 +390,23 @@ export class InventarioReal {
         } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+
+    public async updateZone(request: UpdateZoneRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
+        try {
+            // @ts-ignore
+            await this.api.patch('zones/' + request.id, request.getBody()).toPromise();
+            await dialog.dismiss();
+            return;
+        } catch (e) {
+            console.error(e);
+            await dialog.dismiss();
+            self.util.showToast('error_updating_data');
             throw e;
         }
     }
