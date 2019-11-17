@@ -10,10 +10,13 @@ import {TranslateModule} from '@ngx-translate/core';
 
 const routes: Routes = [
   {
-    path: 'b',
+    path: '',
     component: HomePage,
     children: [
-      // { path: 'dealers/create', loadChildren: './dealers/dealers-create/dealers.module#DealersPageModule' },
+      { path: '', loadChildren: './company/company.module#CompanyPageModule' },
+      { path: 'company', loadChildren: './company/company.module#CompanyPageModule' },
+      { path: 'shops', loadChildren: './shops/shops.module#ShopsPageModule' },
+      { path: 'products', loadChildren: './products/products.module#ProductsPageModule' },
       // { path: 'dealers/details/:id', loadChildren: './dealers/dealers-detail/dealers-detail.module#DealersDetailPageModule' },
       // { path: 'dealers/list', loadChildren: './dealers/dealers-list/dealers-list.module#DealersListPageModule' }
     ]

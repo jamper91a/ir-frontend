@@ -7,26 +7,25 @@ import {AuthGuard} from '../guards/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'superAdmin',
-    loadChildren: './superAdmin/home.module#HomePageModule',
-    canActivate: [SuperAdminGuard]
-  },
-  {
     path: 'login',
     loadChildren: './login/login.module#LoginPageModule',
     canActivate: [AuthGuard]
   },
   {
+    path: 'superAdmin',
+    loadChildren: './superAdmin/home.module#HomePageModule',
+    canActivate: [SuperAdminGuard]
+  },
+  {
     path: 'admin',
-    loadChildren: './admin/home/home.module#HomePageModule',
+    loadChildren: './admin/home.module#HomePageModule',
     canActivate: [AdminGuard]
   },
   {
     path: 'dealer',
     canActivate: [DealerGuard],
     loadChildren: './dealer/home/home.module#HomePageModule'
-  },
-  { path: 'reports', loadChildren: './dealer/reports/reports.module#ReportsPageModule' }
+  }
 ];
 
 @NgModule({

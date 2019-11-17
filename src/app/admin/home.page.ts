@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {AlertController, Events} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
-import {Util} from '../../../providers/util';
+import {Util} from '../../providers/util';
 
 @Component({
   selector: 'app-home',
