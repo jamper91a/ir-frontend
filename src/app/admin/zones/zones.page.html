@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-title>{{'shops' | translate}}</ion-title>
+        <ion-progress-bar type="indeterminate" *ngIf="!shops"></ion-progress-bar>
+        <ng-container *ngIf="shops">
+          <ion-searchbar placeholder="{{ 'shops' | translate}}" debounce="500" (ionChange)="filterItems($event)"></ion-searchbar>
+          <ion-item-sliding *ngFor="let shop of shops" (click)="goToShop(shop)">
+            <ion-item>
+              <ion-label>{{shop.name}}</ion-label>
+              <ion-note slot="end">{{shop.createdAt}}</ion-note>
+            </ion-item>
+          </ion-item-sliding>
+        </ng-container>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

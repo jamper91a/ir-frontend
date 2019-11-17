@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {InventarioReal} from '../../../providers/inventarioReal';
-import {Events, NavController, Platform} from '@ionic/angular';
-import {Util} from '../../../providers/util';
 import {Company} from '../../../pojo/Company';
 import {CreateShopRequest} from '../../../webServices/request/CreateShopRequest';
 import {Shop} from '../../../pojo/Shop';
+import {InventarioReal} from '../../../providers/inventarioReal';
+import {Events, NavController, Platform} from '@ionic/angular';
+import {Util} from '../../../providers/util';
 import {GetShopsByCompanyResponse} from '../../../webServices/response/GetShopsByCompanyResponse';
 import {NavigationExtras} from '@angular/router';
 
 @Component({
-  selector: 'app-shops',
-  templateUrl: './shops.page.html',
-  styleUrls: ['./shops.page.scss'],
+  selector: 'app-zones',
+  templateUrl: './zones.page.html',
+  styleUrls: ['./zones.page.scss'],
 })
-export class ShopsPage implements OnInit {
+export class ZonesPage implements OnInit {
 
   public company: Company;
   public request: CreateShopRequest;
@@ -29,7 +29,6 @@ export class ShopsPage implements OnInit {
 
   ngOnInit() {
   }
-
   async ionViewDidEnter() {
     const dialog = await this.util.showDialog('');
     this.inventarioReal.showDialog = false;
@@ -45,16 +44,6 @@ export class ShopsPage implements OnInit {
       // this.request.putData(this.company);
       this.events.publish('tittle', this.company.name);
     });
-  }
-  async doCreate() {
-    try {
-      this.request.validate();
-      await this.inventarioReal.createShop(this.request);
-      this.util.showToast('shop_created');
-      this.getShops();
-    } catch (e) {
-      this.util.showToast(e);
-    }
   }
 
   async getShops() {
