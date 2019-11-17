@@ -23,6 +23,7 @@ export class HomePage {
     this.events.subscribe('tittle', (tittle) => {
       translate.get(tittle).subscribe(
           value => {
+            console.log('title: ' + value);
             this.tittle = value;
           }
       );
@@ -35,7 +36,6 @@ export class HomePage {
   }
 
   async logOut() {
-    console.log('logOut');
     this.translate.get(['log_out', 'are_you_sure' , 'confirm', 'cancel']).subscribe(
         async (values) => {
           console.log(values);

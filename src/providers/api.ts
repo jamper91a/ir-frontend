@@ -58,16 +58,21 @@ export class Api {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
         }
-        //
-        // // Support easy query params for GET requests
-        // if (params) {
-        //     const p = new URLSearchParams();
-        //     for (const k in params) {
-        //         p.set(k, params[k]);
-        //     }
-        //     options.search = !options.search && p || options.search;
-        // }
         return this.http.get(this.util.url + endpoint, httpOptions);
+    }
+
+    patch(endpoint: string, body: any): any {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json'
+            })
+        };
+        const token = this.util.getPreference(this.util.constants.token);
+        if (token) {
+            httpOptions.headers =
+                httpOptions.headers.set('Authorization', 'Bearer ' + token);
+        }
+        return this.http.patch(this.util.url + endpoint, body, httpOptions);
     }
 
 }

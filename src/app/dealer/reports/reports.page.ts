@@ -6,6 +6,7 @@ import {TagsByDealerByMonthResponse} from '../../../webServices/response/TagsByD
 import {TranslateService} from '@ngx-translate/core';
 import {GetAllCompaniesByDealerResponse} from '../../../webServices/response/GetAllCompaniesByDealerResponse';
 import {Company} from '../../../pojo/Company';
+import {Dealer} from '../../../pojo/Dealer';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.page.html',
@@ -161,7 +162,7 @@ export class ReportsPage implements OnInit {
   }
   async getReportByCompany(company1: Company) {
     this.company = company1;
-    const response: TagsByDealerByMonthResponse = await this.inventarioReal.tagsByCompanyByMonth(company1.id+'');
+    const response: TagsByDealerByMonthResponse = await this.inventarioReal.tagsByCompanyByMonth(company1.id + '');
     this.translateService.get([
       'tags_sold',
       'January',
@@ -213,6 +214,19 @@ export class ReportsPage implements OnInit {
         }
       });
     });
+  }
+  filterItems(ev: CustomEvent) {
+    const val = ev.detail.value;
+
+    if (val && val.trim() !== '') {
+      this.companies = this.allCompanies.filter((company: Company ) => {
+        return (
+            company.name.toLowerCase().indexOf(val.trim().toLowerCase()) > -1 ||
+            company.user.name.toLowerCase().indexOf(val.trim().toLowerCase()) > -1);
+      });
+    } else {
+      this.companies = this.allCompanies;
+    }
   }
 
 }

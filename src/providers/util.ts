@@ -92,13 +92,12 @@ export class Util {
 
   }
 
-  public async showDialog(msg: string, showDialog = true) {
+  public async showDialog(msg: string, showDialog = true): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingCtrl.create({
         message: msg,
         keyboardClose: false
     });
     if (showDialog) {
-
         await loading.present();
     }
     return loading;

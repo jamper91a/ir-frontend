@@ -19,6 +19,8 @@ import {CreateEpcsRequest} from '../webServices/request/CreateEpcsRequest';
 import {TagsByDealerByMonthResponse} from '../webServices/response/TagsByDealerByMonthResponse';
 import {UpdateCompanyRequest} from '../webServices/request/UpdateCompanyRequest';
 import {CreateShopRequest} from '../webServices/request/CreateShopRequest';
+import {GetShopsByCompanyResponse} from '../webServices/response/GetShopsByCompanyResponse';
+import {UpdateShopRequest} from '../webServices/request/UpdateShopRequest';
 
 
 
@@ -318,6 +320,39 @@ export class InventarioReal {
         } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+
+    public async getShopsByCompany(): Promise<GetShopsByCompanyResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetShopsByCompanyResponse = await this.api.get('shops', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async updateShop(request: UpdateShopRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: TagsByDealerByMonthResponse = await this.api.patch('shops/' + request.id, request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            console.error(e);
+            await dialog.dismiss();
+            self.util.showToast('error_updating_data');
             throw e;
         }
     }
