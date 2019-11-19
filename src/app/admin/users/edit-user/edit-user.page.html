@@ -1,9 +1,77 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-user</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-row>
+    <ion-col>
+      <form (submit)="doUpdate()" *ngIf="employee">
+        <ion-list>
+          <ion-title>{{'update_user' | translate}}</ion-title>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label  position="stacked">{{ 'email' | translate }}</ion-label>
+                <ion-input type="email" [(ngModel)]="request.user.username" name="username" readonly disabled></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col >
+              <ion-item>
+                <ion-label  position="stacked">{{ 'name' | translate }}</ion-label>
+                <ion-input type="text" [(ngModel)]="request.user.name" name="name"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label  position="stacked">{{ 'password' | translate }}</ion-label>
+                <ion-input type="password" [(ngModel)]="request.user.password" name="password"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label  position="stacked">{{ 'repeat_password' | translate }}</ion-label>
+                <ion-input type="password" [(ngModel)]="request.user.rpassword" name="rpassword"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">{{'user_type' | translate}}</ion-label>
+                <ion-input type="text" [value]="employee.user.group.name" name="shop" readonly disabled></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">{{'shop' | translate}}</ion-label>
+                <ion-input type="text" [value]="employee.shop.name" name="shop" readonly disabled></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{'state' | translate}}</ion-label>
+                <ion-toggle [(ngModel)]="request.user.active" name="state"></ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div padding>
+                <ion-button type="submit" >
+                  {{ 'create' | translate }}
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </form>
+    </ion-col>
+  </ion-row>
 
 </ion-content>

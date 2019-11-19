@@ -26,6 +26,7 @@ import {CreateZoneRequest} from '../webServices/request/CreateZoneRequest';
 import {UpdateZoneRequest} from '../webServices/request/UpdateZoneRequest';
 import {GetEmployeesByCompanyResponse} from '../webServices/response/GetEmployeesByCompanyResponse';
 import {CreateEmployeeRequest} from '../webServices/request/CreateEmployeeRequest';
+import {UpdateEmployeeRequest} from '../webServices/request/UpdateEmployeeRequest';
 
 
 
@@ -441,6 +442,21 @@ export class InventarioReal {
         } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+    public async updateEmployee(request: UpdateEmployeeRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('users/modifyEmployeeByUsername', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_updating_data');
             throw e;
         }
     }

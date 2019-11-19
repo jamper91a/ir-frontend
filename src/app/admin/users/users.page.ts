@@ -99,7 +99,7 @@ export class UsersPage implements OnInit {
         employee
       }
     };
-    this.navCtrl.navigateForward(['admin/employee/edit/' + employee.id], navigationExtras);
+    this.navCtrl.navigateForward(['admin/users/edit/' + employee.id], navigationExtras);
   }
 
 }
