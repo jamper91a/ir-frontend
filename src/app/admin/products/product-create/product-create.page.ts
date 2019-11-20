@@ -4,6 +4,8 @@ import {AllEmiterService} from '../../../services/all-emiter-service';
 import {InventarioReal} from '../../../../providers/inventarioReal';
 import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
+import {GetSuppliersByCompanyResponse} from '../../../../webServices/response/GetSuppliersByCompanyResponse';
+import {Supplier} from '../../../../pojo/Supplier';
 
 @Component({
   selector: 'app-product-create',
@@ -13,6 +15,7 @@ import {Util} from '../../../../providers/util';
 export class ProductCreatePage implements OnInit {
 
   public request: CreateProductRequest = new CreateProductRequest();
+  public suppliers: Supplier[];
   public imagePath;
   imgURL: any = '/assets/no-preview-available.png';
   constructor(
@@ -30,6 +33,7 @@ export class ProductCreatePage implements OnInit {
 
   async ionViewDidEnter() {
     this.allEmiterService.onNewTitle('new_product');
+    this.getSuppliers();
   }
 
   handleFileInput(files: FileList) {
@@ -54,6 +58,15 @@ export class ProductCreatePage implements OnInit {
     reader.onload = () => {
       this.imgURL = reader.result;
     };
+  }
+
+  async getSuppliers() {
+    try {
+      const response: GetSuppliersByCompanyResponse = await this.inventarioReal.getSuppliers();
+      this.suppliers = response.data;
+    } catch (e) {
+      this.util.showToast(e);
+    }
   }
 
   async doCreate() {

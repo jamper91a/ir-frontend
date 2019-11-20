@@ -1,18 +1,17 @@
 import {Product} from '../../pojo/Product';
+import {Supplier} from '../../pojo/Supplier';
 
 export class CreateProductRequest implements InventarioRealRequest {
     public product: Product = new Product();
     public photo: File = null;
 
     constructor() {
+        this.product.supplier = new Supplier();
         this.clean();
     }
 
     getBody() {
         const formData: FormData = new FormData();
-        if (this.photo) {
-            formData.append('photo', this.photo);
-        }
         formData.append('ean' , this.product.ean);
         formData.append('plu' , this.product.plu);
         formData.append('plu2' , this.product.plu2);
@@ -22,11 +21,15 @@ export class CreateProductRequest implements InventarioRealRequest {
         formData.append('color' , this.product.color);
         formData.append('size' , this.product.size);
         formData.append('category' , this.product.category);
+        formData.append('supplier' , this.product.supplier.id + '');
         formData.append('description' , this.product.description);
         formData.append('amount' , this.product.amount + '');
         formData.append('image' , this.product.image);
         formData.append('cost_price' , this.product.cost_price + '');
         formData.append('sell_price' , this.product.sell_price + '');
+        if (this.photo) {
+            formData.append('photo', this.photo);
+        }
         return formData;
     }
 
