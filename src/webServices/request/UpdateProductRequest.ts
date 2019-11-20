@@ -27,7 +27,10 @@ export class UpdateProductRequest implements InventarioRealRequest {
         formData.append('cost_price' , this.product.cost_price + '');
         formData.append('sell_price' , this.product.sell_price + '');
         if (this.photo) {
+            formData.append('withPhoto', 'true');
             formData.append('photo', this.photo);
+        } else {
+            formData.append('withPhoto', 'false');
         }
         return formData;
     }
