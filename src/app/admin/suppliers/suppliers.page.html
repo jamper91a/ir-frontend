@@ -5,6 +5,27 @@
 </ion-header>
 
 <ion-content>
-  <ion-button [routerLink]="'create'">{{'create_supplier' | translate}}</ion-button>
+  <ion-row>
+    <ion-col>
+      <ion-button [routerLink]="'create'">{{'create_supplier' | translate}}</ion-button>
+    </ion-col>
+  </ion-row>
 
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-title>{{'suppliers' | translate}}</ion-title>
+        <ion-progress-bar type="indeterminate" *ngIf="!suppliers"></ion-progress-bar>
+        <ng-container *ngIf="suppliers">
+        <ion-searchbar placeholder="{{ 'find' | translate}}" debounce="500" (ionChange)="filterItems($event)"></ion-searchbar>
+        <ion-item-sliding *ngFor="let supplier of suppliers" (click)="goToSupplier(supplier)">
+        <ion-item>
+        <ion-label>{{supplier.name}}</ion-label>
+        <ion-note slot="end">{{supplier.createdAt}}</ion-note>
+        </ion-item>
+        </ion-item-sliding>
+        </ng-container>
+      </ion-list>
+    </ion-col>
+  </ion-row>
 </ion-content>
