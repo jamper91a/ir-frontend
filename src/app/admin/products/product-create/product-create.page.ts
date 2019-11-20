@@ -28,10 +28,15 @@ export class ProductCreatePage implements OnInit {
   ngOnInit() {
   }
 
+  async ionViewDidEnter() {
+    this.allEmiterService.onNewTitle('new_product');
+  }
+
   handleFileInput(files: FileList) {
     this.request.photo = files[0];
     this.preview(files);
   }
+
   preview(files) {
     if (files.length === 0) {
       return;

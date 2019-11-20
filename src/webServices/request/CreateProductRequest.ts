@@ -17,7 +17,7 @@ export class CreateProductRequest implements InventarioRealRequest {
         formData.append('plu' , this.product.plu);
         formData.append('plu2' , this.product.plu2);
         formData.append('plu3' , this.product.plu3);
-        formData.append('brand' , this.product.brand);
+        formData.append('branch' , this.product.branch);
         formData.append('gender' , this.product.gender);
         formData.append('color' , this.product.color);
         formData.append('size' , this.product.size);
@@ -42,7 +42,7 @@ export class CreateProductRequest implements InventarioRealRequest {
         this.product.plu = '';
         this.product.plu2 = '';
         this.product.plu3 = '';
-        this.product.brand = '';
+        this.product.branch = '';
         this.product.gender = '';
         this.product.color = '';
         this.product.size = '';

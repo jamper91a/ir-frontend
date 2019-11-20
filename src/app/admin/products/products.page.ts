@@ -17,4 +17,8 @@ export class ProductsPage implements OnInit {
   ngOnInit() {
   }
 
+  async ionViewDidEnter() {
+    this.allEmiterService.onNewTitle('products');
+  }
+
 }
