@@ -31,6 +31,7 @@ import {CreateProductRequest} from '../webServices/request/CreateProductRequest'
 import {CreateSupplierRequest} from '../webServices/request/CreateSupplierRequest';
 import {GetSuppliersByCompanyResponse} from '../webServices/response/GetSuppliersByCompanyResponse';
 import {UpdateSupplierRequest} from '../webServices/request/UpdateSupplierRequest';
+import {CreateProductsRequest} from '../webServices/request/CreateProductsRequest';
 
 
 
@@ -473,6 +474,22 @@ export class InventarioReal {
         try {
             // @ts-ignore
             const response: any = await this.api.postWithFiles('products', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+
+    public async createProducts(request: CreateProductsRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('products/import', request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
