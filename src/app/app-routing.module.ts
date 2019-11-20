@@ -25,7 +25,9 @@ const routes: Routes = [
     path: 'dealer',
     canActivate: [DealerGuard],
     loadChildren: './dealer/home/home.module#HomePageModule'
-  }
+  },
+  { path: 'suppliers', loadChildren: './admin/suppliers/suppliers.module#SuppliersPageModule' },
+  { path: 'supplier-create', loadChildren: './admin/suppliers/supplier-create/supplier-create.module#SupplierCreatePageModule' }
 ];
 
 @NgModule({

@@ -28,6 +28,7 @@ import {GetEmployeesByCompanyResponse} from '../webServices/response/GetEmployee
 import {CreateEmployeeRequest} from '../webServices/request/CreateEmployeeRequest';
 import {UpdateEmployeeRequest} from '../webServices/request/UpdateEmployeeRequest';
 import {CreateProductRequest} from '../webServices/request/CreateProductRequest';
+import {CreateSupplierRequest} from '../webServices/request/CreateSupplierRequest';
 
 
 
@@ -446,6 +447,7 @@ export class InventarioReal {
             throw e;
         }
     }
+
     public async updateEmployee(request: UpdateEmployeeRequest): Promise<any> {
         this.get_translation();
         const self = this;
@@ -469,6 +471,22 @@ export class InventarioReal {
         try {
             // @ts-ignore
             const response: any = await this.api.postWithFiles('products', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+
+    public async createSupplier(request: CreateSupplierRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('suppliers', request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
