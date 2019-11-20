@@ -5,6 +5,7 @@ import {Util} from '../../../../providers/util';
 import {Shop} from '../../../../pojo/Shop';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UpdateShopRequest} from '../../../../webServices/request/UpdateShopRequest';
+import {AllEmiterService} from '../../../services/all-emiter-service';
 
 @Component({
   selector: 'app-edit-shop',
@@ -20,7 +21,7 @@ export class EditShopPage implements OnInit {
       private inventarioReal: InventarioReal,
       public platform: Platform,
       public util: Util,
-      public events: Events,
+      private allEmiterService: AllEmiterService,
       private route: ActivatedRoute,
       private router: Router,
       private navCtrl: NavController,
@@ -29,7 +30,7 @@ export class EditShopPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.shop = this.router.getCurrentNavigation().extras.state.shop;
         this.request.putData(this.shop);
-        this.events.publish('tittle', this.shop.name);
+        this.allEmiterService.onNewTitle(this.shop.name);
       }
       this.shopId = this.route.snapshot.paramMap.get('id');
       this.request.id = this.shopId;

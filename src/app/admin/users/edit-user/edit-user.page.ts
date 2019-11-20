@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Company} from '../../../../pojo/Company';
 import {InventarioReal} from '../../../../providers/inventarioReal';
-import {Events, NavController, Platform} from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Employee} from '../../../../pojo/Employee';
 import {UpdateEmployeeRequest} from '../../../../webServices/request/UpdateEmployeeRequest';
+import {AllEmiterService} from '../../../services/all-emiter-service';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,7 +22,7 @@ export class EditUserPage implements OnInit {
       public platform: Platform,
       public util: Util,
       private navCtrl: NavController,
-      public events: Events,
+      private allEmiterService: AllEmiterService,
       private route: ActivatedRoute,
       private router: Router,
   ) {
@@ -29,7 +30,7 @@ export class EditUserPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.employee = this.router.getCurrentNavigation().extras.state.employee;
         this.request.putData(this.employee);
-        this.events.publish('tittle', this.employee.user.name);
+        this.allEmiterService.onNewTitle(this.employee.user.name);
       }
     });
   }

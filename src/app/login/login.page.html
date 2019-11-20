@@ -6,7 +6,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="ion-padding">
 
   <form (submit)="doLogin()">
     <h1>
@@ -22,7 +22,7 @@
         <ion-input type="password" [(ngModel)]="request.password" name="password"></ion-input>
       </ion-item>
 
-      <div padding>
+      <div class="ion-padding">
         <ion-button type="submit" >
           {{ 'login_button' | translate }}
         </ion-button>

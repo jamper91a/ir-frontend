@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {Company} from '../../../pojo/Company';
 import {Shop} from '../../../pojo/Shop';
 import {InventarioReal} from '../../../providers/inventarioReal';
-import {Events, NavController, Platform} from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../providers/util';
 import {GetShopsByCompanyResponse} from '../../../webServices/response/GetShopsByCompanyResponse';
 import {NavigationExtras} from '@angular/router';
 import {CreateEmployeeRequest} from '../../../webServices/request/CreateEmployeeRequest';
 import {Employee} from '../../../pojo/Employee';
 import {GetEmployeesByCompanyResponse} from '../../../webServices/response/GetEmployeesByCompanyResponse';
+import {AllEmiterService} from '../../services/all-emiter-service';
 
 @Component({
   selector: 'app-users',
@@ -26,7 +27,7 @@ export class UsersPage implements OnInit {
               public platform: Platform,
               public util: Util,
               private navCtrl: NavController,
-              public events: Events) {
+              private allEmiterService: AllEmiterService) {
     this.request = new CreateEmployeeRequest();
   }
 
@@ -47,7 +48,7 @@ export class UsersPage implements OnInit {
       const response = await this.inventarioReal.getCompanyById();
       this.company = response.data;
       this.request.employee.company = this.company.id;
-      this.events.publish('tittle', this.company.name);
+      this.allEmiterService.onNewTitle(this.company.name);
     });
   }
   async doCreate() {

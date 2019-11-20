@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {Shop} from '../../../../pojo/Shop';
 import {InventarioReal} from '../../../../providers/inventarioReal';
-import {Events, NavController, Platform} from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {CreateZoneRequest} from '../../../../webServices/request/CreateZoneRequest';
 import {Zone} from '../../../../pojo/Zone';
 import {GetZonesByShopResponse} from '../../../../webServices/response/GetZonesByShopResponse';
+import {AllEmiterService} from '../../../services/all-emiter-service';
 
 @Component({
   selector: 'app-create-zone',
@@ -25,7 +26,7 @@ export class CreateZonePage implements OnInit {
               private navCtrl: NavController,
               private route: ActivatedRoute,
               private router: Router,
-              public events: Events) {
+              private allEmiterService: AllEmiterService) {
     this.request = new CreateZoneRequest();
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -34,7 +35,7 @@ export class CreateZonePage implements OnInit {
         if (!this.shop) {
           this.navCtrl.navigateBack(['admin/zones' ]);
         }
-        this.events.publish('tittle', this.shop.name);
+        this.allEmiterService.onNewTitle(this.shop.name);
       }
     });
   }

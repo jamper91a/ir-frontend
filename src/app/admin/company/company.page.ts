@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {UpdateCompanyRequest} from '../../../webServices/request/UpdateCompanyRequest';
 import {InventarioReal} from '../../../providers/inventarioReal';
-import {Events, Platform} from '@ionic/angular';
+import {Platform} from '@ionic/angular';
 import {Company} from '../../../pojo/Company';
 import {Util} from '../../../providers/util';
+import {AllEmiterService} from '../../services/all-emiter-service';
 
 @Component({
   selector: 'app-company',
@@ -13,9 +14,9 @@ import {Util} from '../../../providers/util';
 export class CompanyPage implements OnInit {
   constructor(
       private inventarioReal: InventarioReal,
-      public events: Events,
       private platform: Platform,
-      private util: Util
+      private util: Util,
+      private allEmiterService: AllEmiterService,
   ) { }
   public request: UpdateCompanyRequest = new UpdateCompanyRequest();
   public company: Company;
@@ -50,7 +51,7 @@ export class CompanyPage implements OnInit {
       this.company = response.data;
       this.imgURL = this.util.url + this.company.photo;
       this.request.putData(this.company);
-      this.events.publish('tittle', this.company.name);
+      this.allEmiterService.onNewTitle(this.company.name);
     });
   }
   preview(files) {

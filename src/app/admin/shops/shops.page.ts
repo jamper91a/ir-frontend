@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {InventarioReal} from '../../../providers/inventarioReal';
-import {Events, NavController, Platform} from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../providers/util';
 import {Company} from '../../../pojo/Company';
 import {CreateShopRequest} from '../../../webServices/request/CreateShopRequest';
 import {Shop} from '../../../pojo/Shop';
 import {GetShopsByCompanyResponse} from '../../../webServices/response/GetShopsByCompanyResponse';
 import {NavigationExtras} from '@angular/router';
+import {AllEmiterService} from '../../services/all-emiter-service';
 
 @Component({
   selector: 'app-shops',
@@ -23,7 +24,7 @@ export class ShopsPage implements OnInit {
               public platform: Platform,
               public util: Util,
               private navCtrl: NavController,
-              public events: Events) {
+              private allEmiterService: AllEmiterService) {
     this.request = new CreateShopRequest();
   }
 
@@ -42,8 +43,7 @@ export class ShopsPage implements OnInit {
     this.platform.ready().then(async () => {
       const response = await this.inventarioReal.getCompanyById();
       this.company = response.data;
-      // this.request.putData(this.company);
-      this.events.publish('tittle', this.company.name);
+      this.allEmiterService.onNewTitle(this.company.name);
     });
   }
   async doCreate() {

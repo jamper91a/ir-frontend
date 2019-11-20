@@ -10,7 +10,7 @@
             <ion-label  position="stacked">{{ 'logo' | translate }}</ion-label>
           </ion-col>
         </ion-row>
-        <ion-row  justify-content-center align-items-center style="height: 100%">
+        <ion-row  class="ion-align-items-center ion-justify-content-center" style="height: 100%">
           <ion-col>
             <img [src]="imgURL" height="200" *ngIf="imgURL" alt="{{'logo' | translate}}">
           </ion-col>
@@ -33,7 +33,7 @@
         <ion-label  position="stacked">{{ 'name' | translate }}</ion-label>
         <ion-input type="text" [(ngModel)]="request.name" name="email"></ion-input>
       </ion-item>
-      <div padding>
+      <div class="ion-padding">
         <ion-button type="submit" >
           {{ 'update' | translate }}
         </ion-button>

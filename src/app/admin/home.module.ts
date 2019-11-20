@@ -21,6 +21,7 @@ const routes: Routes = [
       { path: 'zones/create/:id', loadChildren: './zones/create-zone/create-zone.module#CreateZonePageModule' },
       { path: 'zones/edit/:id', loadChildren: './zones/edit-zone/edit-zone.module#EditZonePageModule' },
       { path: 'products', loadChildren: './products/products.module#ProductsPageModule' },
+      { path: 'products/create', loadChildren: './products/product-create/product-create.module#ProductCreatePageModule' },
       { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
       { path: 'users/edit/:id', loadChildren: './users/edit-user/edit-user.module#EditUserPageModule' },
       // { path: 'dealers/details/:id', loadChildren: './dealers/dealers-detail/dealers-detail.module#DealersDetailPageModule' },

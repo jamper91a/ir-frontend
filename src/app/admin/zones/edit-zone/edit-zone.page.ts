@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Zone} from '../../../../pojo/Zone';
 import {InventarioReal} from '../../../../providers/inventarioReal';
-import {Events, NavController, Platform} from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UpdateZoneRequest} from '../../../../webServices/request/UpdateZoneRequest';
+import {AllEmiterService} from '../../../services/all-emiter-service';
 
 @Component({
   selector: 'app-edit-zone',
@@ -21,7 +22,7 @@ export class EditZonePage implements OnInit {
               private navCtrl: NavController,
               private route: ActivatedRoute,
               private router: Router,
-              public events: Events) {
+              private allEmiterService: AllEmiterService) {
     this.request = new UpdateZoneRequest();
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -30,7 +31,7 @@ export class EditZonePage implements OnInit {
         if (!this.zone) {
           this.navCtrl.navigateBack(['admin/zones' ]);
         }
-        this.events.publish('tittle', this.zone.name);
+        this.allEmiterService.onNewTitle(this.zone.name);
       }
     });
   }

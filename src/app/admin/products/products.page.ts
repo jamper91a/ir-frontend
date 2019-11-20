@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AllEmiterService} from '../../services/all-emiter-service';
 
 @Component({
   selector: 'app-products',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsPage implements OnInit {
 
-  constructor() { }
+  constructor(
+      private allEmiterService: AllEmiterService,
+  ) {
+    this.allEmiterService.onNewTitle('products');
+  }
 
   ngOnInit() {
   }

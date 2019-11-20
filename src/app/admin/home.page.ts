@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {AlertController, Events} from '@ionic/angular';
+import {AlertController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {Util} from '../../providers/util';
 import {Router, RouterEvent} from '@angular/router';
+import {AllEmiterService} from '../services/all-emiter-service';
 
 @Component({
   selector: 'app-home',
@@ -14,20 +15,17 @@ export class HomePage {
   tittle = '';
   public selectedPath = '';
   constructor(
-      public events: Events,
+      private allEmiterService: AllEmiterService,
       public translate: TranslateService,
       public alertController: AlertController,
       public util: Util,
       private router: Router
   ) {
-    this.events.subscribe('tittle', (tittle) => {
-      translate.get(tittle).subscribe(
-          value => {
-            console.log('title: ' + value);
-            this.tittle = value;
-          }
-      );
-    });
+    if (this.allEmiterService.subsTitleChange === undefined) {
+      this.allEmiterService.subsTitleChange = this.allEmiterService.invoketTitleChange.subscribe((data) => {
+        this.tittle = data;
+      });
+    }
     this.router.events.subscribe((event: RouterEvent) => {
       if (event && event.url) {
         // this.selectedPath = event.url;
