@@ -1,17 +1,16 @@
 import {Product} from '../../pojo/Product';
-import {Supplier} from '../../pojo/Supplier';
 
-export class CreateProductRequest implements InventarioRealRequest {
-    public product: Product = new Product();
+export class UpdateProductRequest implements InventarioRealRequest {
     public photo: File = null;
+    public product: Product;
 
     constructor() {
-        this.product.supplier = new Supplier();
-        this.clean();
     }
 
-    getBody() {
+
+    getBody(): FormData {
         const formData: FormData = new FormData();
+        formData.append('id' , this.product.id + '');
         formData.append('ean' , this.product.ean);
         formData.append('plu' , this.product.plu);
         formData.append('plu2' , this.product.plu2);
@@ -34,27 +33,33 @@ export class CreateProductRequest implements InventarioRealRequest {
     }
 
     validate(): boolean {
-        if (!this.product.ean || !this.product.plu || !this.product.plu2 || !this.product.plu3) {
-            throw Error ('identifier_omitted');
-        }
         return true;
     }
 
+    putData(product: Product) {
+        this.product = new Product();
+        this.product.id = product.id;
+        this.product.ean = product.ean;
+        this.product.plu = product.plu;
+        this.product.plu2 = product.plu2;
+        this.product.plu3 = product.plu3;
+        this.product.branch = product.branch;
+        this.product.gender = product.gender;
+        this.product.color = product.color;
+        this.product.size = product.size;
+        this.product.category = product.category;
+        this.product.description = product.description;
+        this.product.amount = product.amount;
+        this.product.imagen = product.imagen;
+        this.product.cost_price = product.cost_price;
+        this.product.sell_price = product.sell_price;
+        this.product.company = product.company;
+        this.product.supplier = product.supplier;
+    }
+
     clean() {
-        this.product.ean = '';
-        this.product.plu = '';
-        this.product.plu2 = '';
-        this.product.plu3 = '';
-        this.product.branch = '';
-        this.product.gender = '';
-        this.product.color = '';
-        this.product.size = '';
-        this.product.category = '';
-        this.product.description = '';
-        this.product.amount = 0;
-        this.product.imagen = '';
-        this.product.cost_price = 0;
-        this.product.sell_price = 0;
+        // this.name = '';
+        // this.photo = null;
     }
 
 

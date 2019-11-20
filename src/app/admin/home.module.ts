@@ -18,6 +18,8 @@ const routes: Routes = [
       { path: 'products', loadChildren: './products/products.module#ProductsPageModule' },
       { path: 'products/create', loadChildren: './products/product-create/product-create.module#ProductCreatePageModule' },
       { path: 'products/import', loadChildren: './products/products-import/products-import.module#ProductsImportPageModule' },
+      { path: 'products/edit/:id', loadChildren: './products/product-edit/product-edit.module#ProductEditPageModule' },
+      { path: 'products/list', loadChildren: './products/products-list/products-list.module#ProductsListPageModule' },
       { path: 'shops', loadChildren: './shops/shops.module#ShopsPageModule' },
       { path: 'shops/edit/:id', loadChildren: './shops/edit-shop/edit-shop.module#EditShopPageModule' },
       { path: 'suppliers', loadChildren: './suppliers/suppliers.module#SuppliersPageModule' },

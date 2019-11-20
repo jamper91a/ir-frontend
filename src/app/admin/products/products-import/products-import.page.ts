@@ -121,7 +121,7 @@ export class ProductsImportPage implements OnInit {
       pos = this.findColumnPos('amount');
       product.amount = (pos > -1) ? parseInt(auxColumns[pos], 0) : 0;
       pos = this.findColumnPos('image');
-      product.image = (pos > -1) ? auxColumns[pos] : '';
+      product.imagen = (pos > -1) ? auxColumns[pos] : '';
       pos = this.findColumnPos('cost_price');
       product.cost_price = (pos > -1) ? parseFloat(auxColumns[pos]) : 0;
       pos = this.findColumnPos('sell_price');

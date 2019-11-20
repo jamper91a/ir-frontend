@@ -32,6 +32,8 @@ import {CreateSupplierRequest} from '../webServices/request/CreateSupplierReques
 import {GetSuppliersByCompanyResponse} from '../webServices/response/GetSuppliersByCompanyResponse';
 import {UpdateSupplierRequest} from '../webServices/request/UpdateSupplierRequest';
 import {CreateProductsRequest} from '../webServices/request/CreateProductsRequest';
+import {UpdateProductRequest} from '../webServices/request/UpdateProductRequest';
+import {GetProductsResponse} from '../webServices/response/GetProductsResponse';
 
 
 
@@ -495,6 +497,39 @@ export class InventarioReal {
         } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+
+    public async updateProduct(request: UpdateProductRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
+        try {
+            // @ts-ignore
+            await this.api.postWithFiles('products/update', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return;
+        } catch (e) {
+            console.error(e);
+            await dialog.dismiss();
+            self.util.showToast('error_updating_data');
+            throw e;
+        }
+    }
+
+    public async getProducts(): Promise<GetProductsResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetProductsResponse = await this.api.get('products', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
             throw e;
         }
     }
