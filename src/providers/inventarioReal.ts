@@ -30,6 +30,7 @@ import {UpdateEmployeeRequest} from '../webServices/request/UpdateEmployeeReques
 import {CreateProductRequest} from '../webServices/request/CreateProductRequest';
 import {CreateSupplierRequest} from '../webServices/request/CreateSupplierRequest';
 import {GetSuppliersByCompanyResponse} from '../webServices/response/GetSuppliersByCompanyResponse';
+import {UpdateSupplierRequest} from '../webServices/request/UpdateSupplierRequest';
 
 
 
@@ -509,6 +510,23 @@ export class InventarioReal {
         } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async updateSupplier(request: UpdateSupplierRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
+        try {
+            // @ts-ignore
+            await this.api.patch('suppliers/' + request.id, request.getBody()).toPromise();
+            await dialog.dismiss();
+            return;
+        } catch (e) {
+            console.error(e);
+            await dialog.dismiss();
+            self.util.showToast('error_updating_data');
             throw e;
         }
     }

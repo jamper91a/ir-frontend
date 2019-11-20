@@ -21,6 +21,7 @@ const routes: Routes = [
       { path: 'shops/edit/:id', loadChildren: './shops/edit-shop/edit-shop.module#EditShopPageModule' },
       { path: 'suppliers', loadChildren: './suppliers/suppliers.module#SuppliersPageModule' },
       { path: 'suppliers/create', loadChildren: './suppliers/supplier-create/supplier-create.module#SupplierCreatePageModule' },
+      { path: 'suppliers/edit/:id', loadChildren: './suppliers/edit-supplier/edit-supplier.module#EditSupplierPageModule' },
       { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
       { path: 'users/edit/:id', loadChildren: './users/edit-user/edit-user.module#EditUserPageModule' },
       { path: 'zones', loadChildren: './zones/zones.module#ZonesPageModule' },
