@@ -1,3 +1,4 @@
+/* tslint:disable:max-line-length */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +23,15 @@ const routes: Routes = [
       { path: 'products/list', loadChildren: './products/products-list/products-list.module#ProductsListPageModule' },
       { path: 'reports', loadChildren: './reports/reports.module#ReportsPageModule' },
       { path: 'reports/inventory/total', loadChildren: './reports/inventory/total/total.module#TotalPageModule' },
+      { path: 'reports/inventory/eanplu', loadChildren: './reports/inventory/eanplu/eanplu.module#EanpluPageModule' },
+      { path: 'reports/inventory/difference', loadChildren: './reports/inventory/difference/difference.module#DifferencePageModule' },
+      { path: 'reports/inventory/differenceErp', loadChildren: './reports/inventory/differenceerp/differenceerp.module#DifferenceerpPageModule' },
+      { path: 'reports/inventory/homologue', loadChildren: './reports/inventory/homologue/homologue.module#HomologuePageModule' },
+      { path: 'reports/inventory/sold', loadChildren: './reports/inventory/sold/sold.module#SoldPageModule' },
+      { path: 'reports/inventory/rotation', loadChildren: './reports/inventory/rotation/rotation.module#RotationPageModule' },
+      { path: 'reports/inventory/clientsReturn', loadChildren: './reports/inventory/clientsreturn/clientreturn.module#ClientReturnPageModule' },
+      { path: 'reports/inventory/suppliersReturn', loadChildren: './reports/inventory/suppliersreturn/suppliersreturn.module#SuppliersReturnPageModule' },
+      { path: 'reports/inventory/rotationProjected', loadChildren: './reports/inventory/rotationprojected/rotationprojected.module#RotationProjectedPageModule' },
       { path: 'shops', loadChildren: './shops/shops.module#ShopsPageModule' },
       { path: 'shops/edit/:id', loadChildren: './shops/edit-shop/edit-shop.module#EditShopPageModule' },
       { path: 'suppliers', loadChildren: './suppliers/suppliers.module#SuppliersPageModule' },
