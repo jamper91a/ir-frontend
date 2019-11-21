@@ -5,5 +5,94 @@
 </ion-header>
 
 <ion-content>
+  <!-- Segment with default selection -->
+  <ion-segment (ionChange)="segmentChanged($event)" value="javascript">
+    <ion-segment-button value="total">
+      <ion-label>{{'total' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="ean_plu">
+      <ion-label>{{'ean_plu' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="epc">
+      <ion-label>{{'epc' | translate}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ng-container *ngIf="tab == 'total'">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" align-self-center>{{'amount_tag_readed' | translate}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" align-self-center>0000</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" align-self-center>{{'date_inventory' | translate}}</ion-col>
+      </ion-row>
+      <ion-row><ion-col size="12">11/21/2019 3:30</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+  <ng-container *ngIf="tab == 'ean_plu'">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="ion-text-end">
+              {{'visual' | translate}}
+            </ion-label>
+            <ion-toggle  slot="end"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+
+        <ion-col size="12" >
+          <ion-item>
+            <ion-label>
+              {{'date_inventory' | translate}}
+            </ion-label>
+            <p>: 11/21/2019 4:34 PM</p>
+          </ion-item></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">{{'total' | translate}}</th>
+              <th scope="col">{{'ean_plu' | translate}}</th>
+              <th scope="col">{{'description' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let country of countries">
+              <th scope="row">{{ country.id }}</th>
+              <td>
+                <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
+                {{ country.name }}
+              </td>
+              <td>{{ country.area | number}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+            </ngb-pagination>
+
+            <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+              <option [ngValue]="10">10 {{'items_per_page' | translate}}</option>
+              <option [ngValue]="50">50 {{'items_per_page' | translate}}</option>
+              <option [ngValue]="100">100 {{'items_per_page' | translate}}</option>
+            </select>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+  <ng-container *ngIf="tab == 'epc'">
+    epc
+  </ng-container>
 
 </ion-content>
