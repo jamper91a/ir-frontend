@@ -34,6 +34,7 @@ import {UpdateSupplierRequest} from '../webServices/request/UpdateSupplierReques
 import {CreateProductsRequest} from '../webServices/request/CreateProductsRequest';
 import {UpdateProductRequest} from '../webServices/request/UpdateProductRequest';
 import {GetProductsResponse} from '../webServices/response/GetProductsResponse';
+import {GetLastConsolidatedInventory} from '../webServices/response/GetLastConsolidatedInventory';
 
 
 
@@ -582,5 +583,24 @@ export class InventarioReal {
             throw e;
         }
     }
+
+    // region Reports
+    public async getLastConsolidatedInventory(): Promise<GetLastConsolidatedInventory> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetLastConsolidatedInventory = await this.api.get('inventariosConsolidados/ultimoInventario', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    // endregion
 
 }

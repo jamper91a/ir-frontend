@@ -6,6 +6,7 @@
   },
   "include": [
     "src/**/*.ts"
+//    "node_modules/zone.js/lib/zone.ts"
   ],
   "exclude": [
     "src/test.ts",

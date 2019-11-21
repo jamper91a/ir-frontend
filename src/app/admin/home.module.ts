@@ -20,6 +20,8 @@ const routes: Routes = [
       { path: 'products/import', loadChildren: './products/products-import/products-import.module#ProductsImportPageModule' },
       { path: 'products/edit/:id', loadChildren: './products/product-edit/product-edit.module#ProductEditPageModule' },
       { path: 'products/list', loadChildren: './products/products-list/products-list.module#ProductsListPageModule' },
+      { path: 'reports', loadChildren: './reports/reports.module#ReportsPageModule' },
+      { path: 'reports/inventory/total', loadChildren: './reports/inventory/total/total.module#TotalPageModule' },
       { path: 'shops', loadChildren: './shops/shops.module#ShopsPageModule' },
       { path: 'shops/edit/:id', loadChildren: './shops/edit-shop/edit-shop.module#EditShopPageModule' },
       { path: 'suppliers', loadChildren: './suppliers/suppliers.module#SuppliersPageModule' },
