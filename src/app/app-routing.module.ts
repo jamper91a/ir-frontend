@@ -25,7 +25,8 @@ const routes: Routes = [
     path: 'dealer',
     canActivate: [DealerGuard],
     loadChildren: './dealer/home/home.module#HomePageModule'
-  }
+  },
+  { path: 'find', loadChildren: './admin/reports/product/find/find.module#FindPageModule' }
 ];
 
 @NgModule({

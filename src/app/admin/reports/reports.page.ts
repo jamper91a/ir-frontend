@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AllEmiterService} from '../../services/all-emiter-service';
+import {Product} from '../../../pojo/Product';
+import {NavigationExtras} from '@angular/router';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-reports',
@@ -8,8 +11,9 @@ import {AllEmiterService} from '../../services/all-emiter-service';
 })
 export class ReportsPage implements OnInit {
 
-  constructor(
+    constructor(
       private allEmiterService: AllEmiterService,
+      private navCtrl: NavController
   ) {
     this.allEmiterService.onNewTitle('reports');
   }
@@ -19,6 +23,18 @@ export class ReportsPage implements OnInit {
 
   async ionViewDidEnter() {
     this.allEmiterService.onNewTitle('reports');
+  }
+
+  goToEanPlu() {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        data: {
+          title: 'ean_plu_inventory',
+          goTo: 'reports/inventory/eanplu'
+        }
+      }
+    };
+    this.navCtrl.navigateForward(['admin/reports/products/find'], navigationExtras);
   }
 
 }

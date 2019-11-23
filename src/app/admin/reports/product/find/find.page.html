@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'appName' | translate}}</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+  <form (submit)="doFind()">
+    <ion-list>
+      <ion-item>
+        <ion-label  position="stacked">{{ 'ean_plu' | translate }}</ion-label>
+        <ion-input type="text" [(ngModel)]="request.code" name="code"></ion-input>
+      </ion-item>
+
+      <div class="ion-padding">
+        <ion-button type="submit" >
+          {{ 'find' | translate }}
+        </ion-button>
+      </div>
+
+
+    </ion-list>
+  </form>
+  <ion-grid *ngIf="result!=null && result.data">
+    <ion-row><ion-col>{{result.data.description}}</ion-col></ion-row>
+    <ion-row><ion-col>{{result.data.category}}</ion-col></ion-row>
+    <ion-row><ion-col>{{result.data.size}}</ion-col></ion-row>
+    <ion-row><ion-col><img [src]="result.data.imagen" height="200" *ngIf="result.data.imagen" alt="{{'logo' | translate}}"></ion-col></ion-row>
+    <ion-row>
+      <ion-col>
+        {{'do_you_want_to_continue' | translate}}
+        <ion-button>{{'yes' |translate}}</ion-button>
+        <ion-button>{{'no' |translate}}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

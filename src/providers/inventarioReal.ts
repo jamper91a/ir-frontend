@@ -37,6 +37,8 @@ import {GetProductsResponse} from '../webServices/response/GetProductsResponse';
 import {GetLastConsolidatedInventory} from '../webServices/response/GetLastConsolidatedInventory';
 import {CreatePdfRequest} from '../webServices/request/CreatePdfRequest';
 import {CreatePdfResponse} from '../webServices/response/CreatePdfResponse';
+import {GetProductByEanPluRequest} from '../webServices/request/GetProductByEanPluRequest';
+import {GetProductByEanPluResponse} from '../webServices/response/GetProductByEanPluResponse';
 
 
 
@@ -602,6 +604,22 @@ export class InventarioReal {
         } catch (e) {
             await dialog.dismiss();
             self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+
+    public async getProductByEanPlu(request: GetProductByEanPluRequest): Promise<GetProductByEanPluResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetProductByEanPluResponse = await this.api.post('productos/findOne', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_consulting_data');
             throw e;
         }
     }

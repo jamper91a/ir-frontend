@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-button [routerLink]="'inventory/total'">{{'total_inventory' | translate}}</ion-button>
-  <ion-button disabled [routerLink]="'inventory/eanplu'">{{'ean_plu_inventory' | translate}}</ion-button>
+  <ion-button (click)="goToEanPlu()">{{'ean_plu_inventory' | translate}}</ion-button>
   <ion-button disabled [routerLink]="'inventory/difference'">{{'difference_inventories' | translate}}</ion-button>
   <ion-button disabled [routerLink]="'inventory/differenceErp'">{{'difference_erp_inventory' | translate}}</ion-button>
   <ion-button disabled [routerLink]="'inventory/homologue'">{{'homologue_differences' | translate}}</ion-button>

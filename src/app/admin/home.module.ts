@@ -32,6 +32,7 @@ const routes: Routes = [
       { path: 'reports/inventory/clientsReturn', loadChildren: './reports/inventory/clientsreturn/clientsreturn.module#ClientsreturnPageModule' },
       { path: 'reports/inventory/suppliersReturn', loadChildren: './reports/inventory/suppliersreturn/suppliersreturn.module#SuppliersreturnPageModule' },
       { path: 'reports/inventory/rotationProjected', loadChildren: './reports/inventory/rotationprojected/rotationprojected.module#RotationprojectedPageModule' },
+      { path: 'reports/products/find', loadChildren: './reports/product/find/find.module#FindPageModule' },
       { path: 'shops', loadChildren: './shops/shops.module#ShopsPageModule' },
       { path: 'shops/edit/:id', loadChildren: './shops/edit-shop/edit-shop.module#EditShopPageModule' },
       { path: 'suppliers', loadChildren: './suppliers/suppliers.module#SuppliersPageModule' },
