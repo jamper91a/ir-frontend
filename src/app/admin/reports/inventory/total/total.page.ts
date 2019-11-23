@@ -3,12 +3,18 @@ import {AllEmiterService} from '../../../../services/all-emiter-service';
 import {CreatePdfTotalnventoryRequest} from '../../../../../webServices/request/CreatePdfTotalnventoryRequest';
 import {TranslateService} from '@ngx-translate/core';
 import {InventarioReal} from '../../../../../providers/inventarioReal';
+import {GetLastConsolidatedInventory} from '../../../../../webServices/response/GetLastConsolidatedInventory';
+import {ProductHasZone} from '../../../../../pojo/ProductHasZone';
 @Component({
   selector: 'app-total',
   templateUrl: './total.page.html',
   styleUrls: ['./total.page.scss'],
 })
 export class TotalPage implements OnInit {
+  public products: ProductHasZone[];
+  public allProducts: ProductHasZone[];
+  public result: GetLastConsolidatedInventory;
+  public visual = false;
   constructor(
       private allEmiterService: AllEmiterService,
       private translate: TranslateService,
@@ -115,6 +121,7 @@ export class TotalPage implements OnInit {
 t;
 
   ngOnInit() {
+    this.getData();
   }
 
   async ionViewDidEnter() {
@@ -124,6 +131,35 @@ t;
   segmentChanged(ev: any) {
     this.tab = ev.detail.value;
   }
+
+  async getData() {
+     this.result = await this.inventarioReal.getLastConsolidatedInventory();
+     if (this.result.data) {
+       this.products = [];
+       this.allProducts = [];
+       for (const inventory of this.result.data.inventories) {
+         for (const phz of inventory.products) {
+           this.products.push(phz);
+           if (this.allProducts.length === 0) {
+             this.products.push(phz);
+           } else {
+             let aux2 = false;
+             for (const aux of this.products) {
+               if (aux.id === phz.id) {
+                 aux.total++;
+                 aux2 = true;
+                 return;
+               }
+             }
+             if (!aux2) {
+               this.products.push(phz);
+             }
+           }
+         }
+       }
+     }
+  }
+
   generatePdf() {
     const request: CreatePdfTotalnventoryRequest = new CreatePdfTotalnventoryRequest();
     request.title = this.pdfTitle;

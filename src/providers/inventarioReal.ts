@@ -613,7 +613,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetLastConsolidatedInventory = await this.api.get('inventariosConsolidados/ultimoInventario', {}).toPromise();
+            const response: GetLastConsolidatedInventory = await this.api.post('inventariosConsolidados/ultimoInventario', {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
