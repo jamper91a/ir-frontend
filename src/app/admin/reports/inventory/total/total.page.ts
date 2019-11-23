@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AllEmiterService} from '../../../../services/all-emiter-service';
+import {CreatePdfTotalnventoryRequest} from '../../../../../webServices/request/CreatePdfTotalnventoryRequest';
+import {TranslateService} from '@ngx-translate/core';
+import {InventarioReal} from '../../../../../providers/inventarioReal';
 @Component({
   selector: 'app-total',
   templateUrl: './total.page.html',
@@ -8,7 +11,12 @@ import {AllEmiterService} from '../../../../services/all-emiter-service';
 export class TotalPage implements OnInit {
   constructor(
       private allEmiterService: AllEmiterService,
+      private translate: TranslateService,
+      private inventarioReal: InventarioReal
   ) {
+    this.translate.get('total_inventory').subscribe((value) => {
+      this.pdfTitle = value;
+    });
     this.allEmiterService.onNewTitle('total_inventory');
   }
 
@@ -17,6 +25,7 @@ export class TotalPage implements OnInit {
         .map((country, i) => ({id: i + 1, ...country}))
         .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
+  pdfTitle = '';
 
   tab: string;
 
@@ -103,6 +112,7 @@ export class TotalPage implements OnInit {
     }
   ];
   public collectionSize = this.COUNTRIES.length;
+t;
 
   ngOnInit() {
   }
@@ -113,6 +123,18 @@ export class TotalPage implements OnInit {
 
   segmentChanged(ev: any) {
     this.tab = ev.detail.value;
+  }
+  generatePdf() {
+    const request: CreatePdfTotalnventoryRequest = new CreatePdfTotalnventoryRequest();
+    request.title = this.pdfTitle;
+    for (let i = 0; i < 1000; i++) {
+      request.rows.push({
+        total: i,
+        EPC: '123564321' + i,
+        description: 'Camisa negra' + i
+      });
+    }
+    this.inventarioReal.createPdf(request);
   }
 
 }

@@ -35,6 +35,8 @@ import {CreateProductsRequest} from '../webServices/request/CreateProductsReques
 import {UpdateProductRequest} from '../webServices/request/UpdateProductRequest';
 import {GetProductsResponse} from '../webServices/response/GetProductsResponse';
 import {GetLastConsolidatedInventory} from '../webServices/response/GetLastConsolidatedInventory';
+import {CreatePdfRequest} from '../webServices/request/CreatePdfRequest';
+import {CreatePdfResponse} from '../webServices/response/CreatePdfResponse';
 
 
 
@@ -580,6 +582,26 @@ export class InventarioReal {
             console.error(e);
             await dialog.dismiss();
             self.util.showToast('error_updating_data');
+            throw e;
+        }
+    }
+
+    public async createPdf(request: CreatePdfRequest) {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: CreatePdfResponse = await this.api.post('pdf/create', request.getBody()).toPromise();
+
+            setTimeout(async function() {
+                await dialog.dismiss();
+                window.open(self.util.url + response.data, '_blank');
+            }, 1000);
+
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
             throw e;
         }
     }

@@ -91,10 +91,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <button
-                  styleSheetFile="http://localhost:8100/admin/reports/inventory/node_modules/bootstrap/dist/css/bootstrap.min.css"
-                  printSectionId="print-section"
-                  ngxPrint>print</button>
+          <ion-button (click)="generatePdf()">Print</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
