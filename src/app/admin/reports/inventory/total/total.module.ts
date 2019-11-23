@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { TotalPage } from './total.page';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgxPrintModule} from 'ngx-print';
 const routes: Routes = [
   {
     path: '',
@@ -22,7 +23,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
-    NgbModule
+    NgbModule,
+    NgxPrintModule
   ],
   declarations: [TotalPage]
 })

@@ -32,7 +32,7 @@ export class ReportsPage implements OnInit {
 
   constructor(
       public events: Events,
-      private inventarioReal: InventarioReal,
+      public inventarioReal: InventarioReal,
       public translateService: TranslateService
   ) {
   }
