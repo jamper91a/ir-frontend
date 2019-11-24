@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TotalPage } from './total.page';
+import { FindPage } from './find.page';
 import {TranslateModule} from '@ngx-translate/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 const routes: Routes = [
   {
     path: '',
-    component: TotalPage
+    component: FindPage
   }
 ];
 
@@ -23,6 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule.forChild()
   ],
-  declarations: [TotalPage]
+  declarations: [FindPage]
 })
-export class TotalPageModule {}
+export class FindPageModule {}

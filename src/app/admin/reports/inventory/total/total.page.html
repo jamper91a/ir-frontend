@@ -7,7 +7,7 @@
 <ion-content>
   <!-- Segment with default selection -->
   <ion-segment (ionChange)="segmentChanged($event)" value="javascript">
-    <ion-segment-button value="total">
+    <ion-segment-button value="total" (selectstart)="true">
       <ion-label>{{'total' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="ean_plu">
@@ -18,21 +18,23 @@
     </ion-segment-button>
   </ion-segment>
 
+  <!--Total tab-->
   <ng-container *ngIf="tab == 'total'">
     <ion-grid>
       <ion-row>
         <ion-col size="12" align-self-center>{{'amount_tag_readed' | translate}}</ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size="12" align-self-center>0000</ion-col>
+        <ion-col size="12" align-self-center>{{result.data.total_products}}</ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12" align-self-center>{{'date_inventory' | translate}}</ion-col>
       </ion-row>
-      <ion-row><ion-col size="12">11/21/2019 3:30</ion-col>
+      <ion-row><ion-col size="12">{{result.data.createdAt}}</ion-col>
       </ion-row>
     </ion-grid>
   </ng-container>
+  <!--Ean Tab-->
   <ng-container *ngIf="tab == 'ean_plu'">
     <ion-grid>
       <ion-row>
@@ -41,66 +43,123 @@
             <ion-label class="ion-text-end">
               {{'visual' | translate}}
             </ion-label>
-            <ion-toggle  slot="end"></ion-toggle>
+            <ion-toggle  slot="end" [value]="visual"></ion-toggle>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
-
-        <ion-col size="12" >
+        <ion-col size="12">
           <ion-item>
             <ion-label>
               {{'date_inventory' | translate}}
             </ion-label>
-            <p>: 11/21/2019 4:34 PM</p>
-          </ion-item></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <table class="table table-striped" id="print-section">
-            <thead>
-            <tr>
-              <th scope="col">{{'total' | translate}}</th>
-              <th scope="col">{{'ean_plu' | translate}}</th>
-              <th scope="col">{{'description' | translate}}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let country of countries">
-              <th scope="row">{{ country.id }}</th>
-              <td>
-                <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
-                {{ country.name }}
-              </td>
-              <td>{{ country.area | number}}</td>
-            </tr>
-            </tbody>
-          </table>
-
-          <div class="d-flex justify-content-between p-2">
-            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
-            </ngb-pagination>
-
-            <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-              <option [ngValue]="10">10 {{'items_per_page' | translate}}</option>
-              <option [ngValue]="50">50 {{'items_per_page' | translate}}</option>
-              <option [ngValue]="100">100 {{'items_per_page' | translate}}</option>
-            </select>
-          </div>
+            <p>{{result.data.createdAt}}</p>
+          </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="6">
-          <button
-                  styleSheetFile="http://localhost:8100/admin/reports/inventory/node_modules/bootstrap/dist/css/bootstrap.min.css"
-                  printSectionId="print-section"
-                  ngxPrint>print</button>
-        </ion-col>
-      </ion-row>
+      <!--Epc List-->
+      <ng-container id="ean-list" *ngIf="!visual">
+        <ion-row>
+          <ion-col size="12">
+            <table class="table table-striped" id="print-section">
+              <thead>
+              <tr>
+                <th scope="col">{{'total' | translate}}</th>
+                <th scope="col">{{'ean_plu' | translate}}</th>
+                <th scope="col">{{'description' | translate}}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let product of products">
+                <th scope="row">{{ product.total }}</th>
+                <td> {{product.product.ean}}</td>
+                <td> {{product.product.description}}</td>
+              </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between p-2">
+              <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+              </ngb-pagination>
+
+              <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+                <option [ngValue]="10">10 {{'items_per_page' | translate}}</option>
+                <option [ngValue]="50">50 {{'items_per_page' | translate}}</option>
+                <option [ngValue]="100">100 {{'items_per_page' | translate}}</option>
+              </select>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button (click)="generatePdf()">{{'print' |translate}}</ion-button>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+      <!--Epc Visual-->
+      <ng-container id="ean-visual" *ngIf="visual">
+        <ion-row>
+          <ion-col *ngFor="let product of products" size="4">
+            <ion-card>
+              <img src="{{product.product.imagen}}" />
+              <ion-item href="#" class="activated">
+                <ion-icon name="resize" slot="start"></ion-icon>
+                <ion-label>XL</ion-label>
+              </ion-item>
+
+              <ion-item href="#">
+                <ion-icon name="grid" slot="start"></ion-icon>
+                <ion-label>3</ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <!--<ion-row>-->
+          <!--<ion-col size="6">-->
+            <!--<ion-button (click)="generatePdf()">Print</ion-button>-->
+          <!--</ion-col>-->
+        <!--</ion-row>-->
+      </ng-container>
     </ion-grid>
   </ng-container>
+  <!--Epc tab-->
   <ng-container *ngIf="tab == 'epc'">
-    epc
+    <ion-row>
+      <ion-col size="12">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">{{'id' | translate}}</th>
+            <th scope="col">{{'epc' | translate}}</th>
+            <th scope="col">{{'description' | translate}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let product of allProducts">
+            <th scope="row">{{ product.id }}</th>
+            <td> {{product.epc.epc}}</td>
+            <td> {{product.product.description}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+          </ngb-pagination>
+
+          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+            <option [ngValue]="10">10 {{'items_per_page' | translate}}</option>
+            <option [ngValue]="50">50 {{'items_per_page' | translate}}</option>
+            <option [ngValue]="100">100 {{'items_per_page' | translate}}</option>
+          </select>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button disabled>{{'print' |translate}}</ion-button>
+      </ion-col>
+    </ion-row>
   </ng-container>
 
 </ion-content>
