@@ -30,6 +30,7 @@ export class DifferencePage implements OnInit {
           if (this.router.getCurrentNavigation().extras.state) {
               const aux = this.router.getCurrentNavigation().extras.state.request;
               if (aux) {
+                  this.request = new GetDiferenceBetweenInventoriesRequest();
                   this.request.firstInventory = aux.initialInventory;
                   this.request.secondInventory = aux.finalInventory;
               } else {
