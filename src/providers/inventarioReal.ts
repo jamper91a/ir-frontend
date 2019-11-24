@@ -39,6 +39,8 @@ import {CreatePdfRequest} from '../webServices/request/CreatePdfRequest';
 import {CreatePdfResponse} from '../webServices/response/CreatePdfResponse';
 import {GetProductByEanPluRequest} from '../webServices/request/GetProductByEanPluRequest';
 import {GetProductByEanPluResponse} from '../webServices/response/GetProductByEanPluResponse';
+import {GetProductInShopByEanPluResponse} from '../webServices/response/getProductInShopByEanPluResponse';
+import {GetProductInShopByEanPluRequest} from '../webServices/request/GetProductInShopByEanPluRequest';
 
 
 
@@ -588,6 +590,23 @@ export class InventarioReal {
         }
     }
 
+    public async getProductInShopByEanPlu(request: GetProductInShopByEanPluRequest): Promise<GetProductInShopByEanPluResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetProductInShopByEanPluResponse = await this.api.post('productos/findProductInLocalByEanPlu',
+                request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
     public async createPdf(request: CreatePdfRequest) {
         this.get_translation();
         const self = this;
@@ -596,6 +615,7 @@ export class InventarioReal {
             // @ts-ignore
             const response: CreatePdfResponse = await this.api.post('pdf/create', request.getBody()).toPromise();
 
+            // tslint:disable-next-line:only-arrow-functions
             setTimeout(async function() {
                 await dialog.dismiss();
                 window.open(self.util.url + response.data, '_blank');
@@ -607,6 +627,8 @@ export class InventarioReal {
             throw e;
         }
     }
+
+
 
     public async getProductByEanPlu(request: GetProductByEanPluRequest): Promise<GetProductByEanPluResponse> {
         this.get_translation();

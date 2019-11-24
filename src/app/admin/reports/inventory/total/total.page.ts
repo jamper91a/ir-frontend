@@ -34,7 +34,6 @@ export class TotalPage implements OnInit {
 
   page = 1;
   pageSize = 4;
-t;
 
   ngOnInit() {
     this.getData();
@@ -93,15 +92,5 @@ t;
     }
     this.inventarioReal.createPdf(request);
   }
-
-}
-interface Country {
-  id?: number;
-  name: string;
-  flag: string;
-  area: number;
-  population: number;
-
-
 
 }
