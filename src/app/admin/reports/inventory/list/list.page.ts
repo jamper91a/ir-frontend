@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {AllEmiterService} from '../../../../services/all-emiter-service';
 import {TranslateService} from '@ngx-translate/core';
 import {InventarioReal} from '../../../../../providers/inventarioReal';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {GetAllConsolidatedInventoriesResponse} from '../../../../../webServices/response/GetAllConsolidatedInventoriesResponse';
 import {ConsolidatedInventory} from '../../../../../pojo/ConsolidatedInventory';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-list',
@@ -14,20 +15,30 @@ import {ConsolidatedInventory} from '../../../../../pojo/ConsolidatedInventory';
 export class ListPage implements OnInit {
 
   public result: GetAllConsolidatedInventoriesResponse;
-  public data: {
+  public request: {
     initialInventory: ConsolidatedInventory,
     finalInventory: ConsolidatedInventory,
   } = {
     initialInventory: null,
     finalInventory: null
   };
-
+  public data: any;
   public step = 1;
   constructor(private allEmiterService: AllEmiterService,
               private translate: TranslateService,
               private inventarioReal: InventarioReal,
+              private router: Router,
+              private navCtrl: NavController,
               private route: ActivatedRoute) {
-    this.allEmiterService.onNewTitle('difference_inventories');
+    this.route.queryParams.subscribe(() => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.data = this.router.getCurrentNavigation().extras.state.data;
+        if (!this.data) {
+          this.navCtrl.navigateBack('admin/reports');
+        }
+        this.allEmiterService.onNewTitle(this.data.title);
+      }
+    });
   }
 
   ngOnInit() {
@@ -48,11 +59,23 @@ export class ListPage implements OnInit {
 
   selectInventory(inventory: ConsolidatedInventory) {
     if (this.step === 1) {
-      this.data.initialInventory = inventory;
+      this.request.initialInventory = inventory;
       this.step = 2;
     } else {
-      this.data.finalInventory = inventory;
+      this.request.finalInventory = inventory;
+      // Go to next page and send the data
+      this.goToNextPage();
     }
+  }
+
+  goToNextPage() {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        request: this.request
+      }
+    };
+    this.navCtrl.navigateForward([this.data.goTo], navigationExtras);
+
   }
 
 }

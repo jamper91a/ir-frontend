@@ -42,6 +42,8 @@ import {GetProductByEanPluResponse} from '../webServices/response/GetProductByEa
 import {GetProductInShopByEanPluResponse} from '../webServices/response/getProductInShopByEanPluResponse';
 import {GetProductInShopByEanPluRequest} from '../webServices/request/GetProductInShopByEanPluRequest';
 import {GetAllConsolidatedInventoriesResponse} from '../webServices/response/GetAllConsolidatedInventoriesResponse';
+import {GetDiferenceBetweenInventoriesRequest} from '../webServices/request/GetDiferenceBetweenInventoriesRequest';
+import {GetDiferenceBetweenInventoriesResponse} from '../webServices/response/GetDiferenceBetweenInventoriesResponse';
 
 
 @Injectable()
@@ -618,6 +620,27 @@ export class InventarioReal {
             // @ts-ignore
             const response: GetAllConsolidatedInventoriesResponse = await this.api.post('inventariosConsolidados/listarTodos',
                 {}).toPromise();
+            await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getDiferenceBetweenInventories(request: GetDiferenceBetweenInventoriesRequest):
+        Promise<GetDiferenceBetweenInventoriesResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetDiferenceBetweenInventoriesResponse = await this.api.post('reportes/diferenceBetweenInventories',
+                request.getBody()).toPromise();
             await dialog.dismiss();
             if (response.data.length === 0) {
                 self.util.showToast('no_data');
