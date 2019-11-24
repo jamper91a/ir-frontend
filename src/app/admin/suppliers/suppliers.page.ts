@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AllEmiterService} from '../../services/all-emiter-service';
 import {Supplier} from '../../../pojo/Supplier';
-import {GetShopsByCompanyResponse} from '../../../webServices/response/GetShopsByCompanyResponse';
 import {GetSuppliersByCompanyResponse} from '../../../webServices/response/GetSuppliersByCompanyResponse';
 import {InventarioReal} from '../../../providers/inventarioReal';
 import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../providers/util';
-import {Shop} from '../../../pojo/Shop';
 import {NavigationExtras} from '@angular/router';
 
 @Component({
@@ -34,10 +32,14 @@ export class SuppliersPage implements OnInit {
   async ionViewDidEnter() {
     this.allEmiterService.onNewTitle('suppliers');
     const dialog = await this.util.showDialog('');
-    this.inventarioReal.showDialog = false;
-    await this.getSuppliers();
-    this.inventarioReal.showDialog = true;
-    await dialog.dismiss();
+    try {
+      this.inventarioReal.showDialog = false;
+      await this.getSuppliers();
+      this.inventarioReal.showDialog = true;
+      await dialog.dismiss();
+    } catch (e) {
+      await dialog.dismiss();
+    }
   }
 
   async getSuppliers() {

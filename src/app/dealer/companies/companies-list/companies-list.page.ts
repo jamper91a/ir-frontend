@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {InventarioReal} from '../../../../providers/inventarioReal';
 import {Events, NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
@@ -24,14 +24,14 @@ export class CompaniesListPage {
       private navCtrl: NavController,
       public events: Events,
   ) {
-    this.events.publish('tittle', 'current_dealers');
+      this.events.publish('tittle', 'current_companies');
   }
 
   async ionViewDidEnter() {
     this.platform.ready().then(async () => {
       await this.getCompanies();
     });
-    this.events.publish('tittle', 'current_dealers');
+      this.events.publish('tittle', 'current_companies');
   }
 
   async getCompanies() {

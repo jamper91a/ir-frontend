@@ -1,4 +1,3 @@
-import {ProductHasZone} from '../../pojo/ProductHasZone';
 import {InventarioRealResponse} from './InventarioRealResponse';
 import {ConsolidatedInventory} from '../../pojo/ConsolidatedInventory';
 

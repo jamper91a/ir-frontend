@@ -1,7 +1,7 @@
 /* tslint:disable:forin */
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Util } from './util';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Util} from './util';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
@@ -68,6 +68,9 @@ export class Api {
                 p.set(k, params[k]);
             }
             fields = '?' + p.toString();
+            if (fields === '?') {
+                fields = '';
+            }
         }
         console.log(this.util.url + endpoint + fields);
         return this.http.get(this.util.url + endpoint + fields, httpOptions);

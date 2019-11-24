@@ -28,14 +28,25 @@ export class CreateProductRequest implements InventarioRealRequest {
         formData.append('cost_price' , this.product.cost_price + '');
         formData.append('sell_price' , this.product.sell_price + '');
         if (this.photo) {
+            formData.append('withPhoto', 'true');
             formData.append('photo', this.photo);
+        } else {
+            formData.append('withPhoto', 'false');
         }
         return formData;
     }
 
     validate(): boolean {
-        if (!this.product.ean || !this.product.plu || !this.product.plu2 || !this.product.plu3) {
-            throw Error ('identifier_omitted');
+        const error = new Error();
+        // @ts-ignore
+        error.code = 'VAL_FAIL';
+        if (!this.product.ean && !this.product.plu && !this.product.plu2 && !this.product.plu3) {
+            error.message = 'identifier_omitted';
+            throw error;
+        }
+        if (!this.product.supplier.id) {
+            error.message = 'supplier_required';
+            throw error;
         }
         return true;
     }

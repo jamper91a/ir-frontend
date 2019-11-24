@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InventarioReal} from '../../../../providers/inventarioReal';
 import {AlertController, NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
@@ -47,10 +47,9 @@ export class ProductsImportPage implements OnInit {
 
   readDocument() {
     const fileReader = new FileReader();
-
     try {
       fileReader.readAsText(this.file);
-      fileReader.onloadend = (e) => {
+      fileReader.onloadend = () => {
 
         // By lines
         // @ts-ignore

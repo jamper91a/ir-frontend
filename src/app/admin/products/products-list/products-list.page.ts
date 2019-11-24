@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {Supplier} from '../../../../pojo/Supplier';
+import {Component, OnInit} from '@angular/core';
 import {AllEmiterService} from '../../../services/all-emiter-service';
 import {InventarioReal} from '../../../../providers/inventarioReal';
 import {NavController, Platform} from '@ionic/angular';
@@ -45,7 +44,7 @@ export class ProductsListPage implements OnInit {
       this.products = response.data;
       this.allProducts = response.data;
     } catch (e) {
-      this.util.showToast(e);
+      // this.util.showToast(e);
     }
   }
 

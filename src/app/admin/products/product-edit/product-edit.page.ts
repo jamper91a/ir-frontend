@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {Zone} from '../../../../pojo/Zone';
-import {UpdateZoneRequest} from '../../../../webServices/request/UpdateZoneRequest';
+import {Component, OnInit} from '@angular/core';
 import {InventarioReal} from '../../../../providers/inventarioReal';
 import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
@@ -32,7 +30,7 @@ export class ProductEditPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.product = this.router.getCurrentNavigation().extras.state.product;
         this.request.putData(this.product);
-        this.imgURL = this.product.imagen;
+        this.imgURL = this.util.url + this.product.imagen;
         console.log(this.imgURL);
         if (!this.product) {
           this.navCtrl.navigateBack(['admin/products' ]);

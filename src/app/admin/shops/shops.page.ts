@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InventarioReal} from '../../../providers/inventarioReal';
 import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../providers/util';
@@ -53,7 +53,11 @@ export class ShopsPage implements OnInit {
       this.util.showToast('shop_created');
       this.getShops();
     } catch (e) {
-      this.util.showToast(e);
+      if (e.code && e.code === 'VAL_FAIL') {
+        this.util.showToast(e.message);
+      } else {
+        this.util.showToast(e.toString());
+      }
     }
   }
 
@@ -63,7 +67,7 @@ export class ShopsPage implements OnInit {
       this.shops = response.data;
       this.allShops = response.data;
     } catch (e) {
-      this.util.showToast(e);
+      // this.util.showToast(e);
     }
   }
 

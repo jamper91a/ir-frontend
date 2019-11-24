@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AllEmiterService} from '../../../../services/all-emiter-service';
 import {TranslateService} from '@ngx-translate/core';
 import {InventarioReal} from '../../../../../providers/inventarioReal';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NavController} from '@ionic/angular';
-import {Util} from '../../../../../providers/util';
+import {ActivatedRoute} from '@angular/router';
 import {GetAllConsolidatedInventoriesResponse} from '../../../../../webServices/response/GetAllConsolidatedInventoriesResponse';
 import {ConsolidatedInventory} from '../../../../../pojo/ConsolidatedInventory';
 
@@ -15,7 +13,7 @@ import {ConsolidatedInventory} from '../../../../../pojo/ConsolidatedInventory';
 })
 export class ListPage implements OnInit {
 
-  public result: GetAllConsolidatedInventoriesResponse = new GetAllConsolidatedInventoriesResponse();
+  public result: GetAllConsolidatedInventoriesResponse;
   public data: {
     initialInventory: ConsolidatedInventory,
     finalInventory: ConsolidatedInventory,
@@ -25,14 +23,10 @@ export class ListPage implements OnInit {
   };
 
   public step = 1;
-
   constructor(private allEmiterService: AllEmiterService,
               private translate: TranslateService,
               private inventarioReal: InventarioReal,
-              private route: ActivatedRoute,
-              private router: Router,
-              private navCtrl: NavController,
-              private util: Util) {
+              private route: ActivatedRoute) {
     this.allEmiterService.onNewTitle('difference_inventories');
   }
 
