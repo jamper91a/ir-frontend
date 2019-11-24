@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AllEmiterService} from '../../services/all-emiter-service';
-import {Product} from '../../../pojo/Product';
 import {NavigationExtras} from '@angular/router';
 import {NavController} from '@ionic/angular';
 
@@ -48,5 +47,17 @@ export class ReportsPage implements OnInit {
     };
     this.navCtrl.navigateForward(['admin/reports/inventory/list'], navigationExtras);
   }
+
+    goToSoldUnits() {
+        const navigationExtras: NavigationExtras = {
+            state: {
+                data: {
+                    title: 'sold_units',
+                    goTo: 'admin/reports/inventory/sold'
+                }
+            }
+        };
+        this.navCtrl.navigateForward(['admin/reports/inventory/list'], navigationExtras);
+    }
 
 }

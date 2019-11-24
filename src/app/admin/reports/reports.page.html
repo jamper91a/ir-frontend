@@ -10,7 +10,8 @@
   <ion-button (click)="goToDifference()">{{'difference_inventories' | translate}}</ion-button><br>
   <ion-button disabled [routerLink]="'inventory/differenceErp'">{{'difference_erp_inventory' | translate}}</ion-button><br>
   <ion-button disabled [routerLink]="'inventory/homologue'">{{'homologue_differences' | translate}}</ion-button><br>
-  <ion-button disabled [routerLink]="'inventory/sold'">{{'sold_units' | translate}}</ion-button><br>
+  <ion-button disabled (click)="goToSoldUnits()">{{'sold_units' | translate}}</ion-button>
+  <br>
   <ion-button disabled [routerLink]="'inventory/rotation'">{{'rotation_inventory' | translate}}</ion-button><br>
   <ion-button disabled [routerLink]="'inventory/clientsReturn'">{{'clients_return' | translate}}</ion-button><br>
   <ion-button disabled [routerLink]="'inventory/suppliersReturn'">{{'suppliers_return' | translate}}</ion-button><br>
