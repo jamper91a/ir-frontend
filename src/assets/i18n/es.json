@@ -10,6 +10,8 @@
   "category": "Categoria",
   "choose_field": "Escoge columna",
   "choose_logo": "Escoge el logo",
+  "choose_initial_inventory": "Escoge inventario inicial",
+  "choose_final_inventory": "Escoge inventario final",
   "consulting": "Consultando",
   "color": "Color",
   "column": "Columna",

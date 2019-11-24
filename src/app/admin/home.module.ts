@@ -27,6 +27,7 @@ const routes: Routes = [
       { path: 'reports/inventory/difference', loadChildren: './reports/inventory/difference/difference.module#DifferencePageModule' },
       { path: 'reports/inventory/differenceErp', loadChildren: './reports/inventory/differenceerp/differenceerp.module#DifferenceerpPageModule' },
       { path: 'reports/inventory/homologue', loadChildren: './reports/inventory/homologue/homologue.module#HomologuePageModule' },
+      { path: 'reports/inventory/list', loadChildren: './reports/inventory/list/list.module#ListPageModule' },
       { path: 'reports/inventory/sold', loadChildren: './reports/inventory/sold/sold.module#SoldPageModule' },
       { path: 'reports/inventory/rotation', loadChildren: './reports/inventory/rotation/rotation.module#RotationPageModule' },
       { path: 'reports/inventory/clientsReturn', loadChildren: './reports/inventory/clientsreturn/clientsreturn.module#ClientsreturnPageModule' },

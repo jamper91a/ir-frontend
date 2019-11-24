@@ -37,4 +37,16 @@ export class ReportsPage implements OnInit {
     this.navCtrl.navigateForward(['admin/reports/products/find'], navigationExtras);
   }
 
+  goToDifference() {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        data: {
+          title: 'difference_inventories',
+          goTo: 'admin/reports/inventory/difference'
+        }
+      }
+    };
+    this.navCtrl.navigateForward(['admin/reports/inventory/list'], navigationExtras);
+  }
+
 }

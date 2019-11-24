@@ -21,7 +21,6 @@ export class EanpluPage implements OnInit {
   public result: GetProductInShopByEanPluResponse = new GetProductInShopByEanPluResponse();
 
   page = 1;
-  pageSize = 4;
   constructor(
       private allEmiterService: AllEmiterService,
       private translate: TranslateService,
@@ -49,7 +48,7 @@ export class EanpluPage implements OnInit {
       try {
         this.result = await this.inventarioReal.getProductInShopByEanPlu(this.request);
       } catch (e) {
-        this.util.showToast(e);
+        // this.util.showToast(e);
       }
     }
 

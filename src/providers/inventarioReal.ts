@@ -41,6 +41,7 @@ import {GetProductByEanPluRequest} from '../webServices/request/GetProductByEanP
 import {GetProductByEanPluResponse} from '../webServices/response/GetProductByEanPluResponse';
 import {GetProductInShopByEanPluResponse} from '../webServices/response/getProductInShopByEanPluResponse';
 import {GetProductInShopByEanPluRequest} from '../webServices/request/GetProductInShopByEanPluRequest';
+import {GetAllConsolidatedInventoriesResponse} from '../webServices/response/GetAllConsolidatedInventoriesResponse';
 
 
 
@@ -599,6 +600,29 @@ export class InventarioReal {
             const response: GetProductInShopByEanPluResponse = await this.api.post('productos/findProductInLocalByEanPlu',
                 request.getBody()).toPromise();
             await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getAllConsolidatedInventories(): Promise<GetAllConsolidatedInventoriesResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetAllConsolidatedInventoriesResponse = await this.api.post('inventariosConsolidados/listarTodos',
+                {}).toPromise();
+            await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
             return response;
         } catch (e) {
             await dialog.dismiss();
