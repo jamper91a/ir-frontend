@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
 import {Util} from '../providers/util';
 import {User} from '../pojo/User';
 
@@ -19,7 +19,7 @@ export class SuperAdminGuard implements CanActivate {
       next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    const data = this.util.getPreference('user');
+    const data = Util.getPreference('user');
     if (data) {
       const user: User = JSON.parse(data);
       return user.group.id === 1;

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Api } from './api';
-import { Util } from './util';
+import {Injectable} from '@angular/core';
+import {Api} from './api';
+import {Util} from './util';
 import {TranslateService} from '@ngx-translate/core';
-import { Platform } from '@ionic/angular';
+import {Platform} from '@ionic/angular';
 import {LoginRequest} from '../webServices/request/LoginRequest';
 import {LoginResponse} from '../webServices/response/LoginResponse';
 import {AllDealersResponse} from '../webServices/response/AllDealersResponse';
@@ -42,7 +42,6 @@ import {GetProductByEanPluResponse} from '../webServices/response/GetProductByEa
 import {GetProductInShopByEanPluResponse} from '../webServices/response/getProductInShopByEanPluResponse';
 import {GetProductInShopByEanPluRequest} from '../webServices/request/GetProductInShopByEanPluRequest';
 import {GetAllConsolidatedInventoriesResponse} from '../webServices/response/GetAllConsolidatedInventoriesResponse';
-
 
 
 @Injectable()
@@ -95,10 +94,10 @@ export class InventarioReal {
         const response: LoginResponse = await this.api.post('loginWeb', request.getBody()).toPromise();
         await dialog.dismiss();
         if (response) {
-          this.util.savePreference('token', response.data.token);
-          this.util.savePreference('employee', JSON.stringify(response.data.employee));
-          this.util.savePreference('user', JSON.stringify(response.data.user));
-          this.util.savePreference('dealer', JSON.stringify(response.data.dealer));
+            Util.savePreference('token', response.data.token);
+            Util.savePreference('employee', JSON.stringify(response.data.employee));
+            Util.savePreference('user', JSON.stringify(response.data.user));
+            Util.savePreference('dealer', JSON.stringify(response.data.dealer));
       }
       // @ts-ignore
         return response;

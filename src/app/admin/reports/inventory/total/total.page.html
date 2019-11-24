@@ -7,7 +7,7 @@
 <ion-content>
   <!-- Segment with default selection -->
   <ion-segment (ionChange)="segmentChanged($event)" value="javascript">
-    <ion-segment-button value="total" (selectstart)="true">
+    <ion-segment-button value="total">
       <ion-label>{{'total' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="ean_plu">
@@ -77,17 +77,6 @@
               </tr>
               </tbody>
             </table>
-
-            <div class="d-flex justify-content-between p-2">
-              <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
-              </ngb-pagination>
-
-              <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-                <option [ngValue]="10">10 {{'items_per_page' | translate}}</option>
-                <option [ngValue]="50">50 {{'items_per_page' | translate}}</option>
-                <option [ngValue]="100">100 {{'items_per_page' | translate}}</option>
-              </select>
-            </div>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -101,7 +90,8 @@
         <ion-row>
           <ion-col *ngFor="let product of products" size="4">
             <ion-card>
-              <img src="{{product.product.imagen}}" />
+              <!--suppress HtmlUnknownTarget -->
+              <img src="{{product.product.imagen}}" alt="{{'logo' | translate}}"/>
               <ion-item href="#" class="activated">
                 <ion-icon name="resize" slot="start"></ion-icon>
                 <ion-label>XL</ion-label>
@@ -143,16 +133,6 @@
           </tbody>
         </table>
 
-        <div class="d-flex justify-content-between p-2">
-          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
-          </ngb-pagination>
-
-          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-            <option [ngValue]="10">10 {{'items_per_page' | translate}}</option>
-            <option [ngValue]="50">50 {{'items_per_page' | translate}}</option>
-            <option [ngValue]="100">100 {{'items_per_page' | translate}}</option>
-          </select>
-        </div>
       </ion-col>
     </ion-row>
     <ion-row>

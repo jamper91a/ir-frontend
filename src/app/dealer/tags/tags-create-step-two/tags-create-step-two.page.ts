@@ -112,7 +112,7 @@ export class TagsCreateStepTwoPage implements OnInit {
 
   async addTags(tags) {
     const epcs: Epc[] = [];
-    const dealer = JSON.parse(this.util.getPreference('dealer'));
+    const dealer = JSON.parse(Util.getPreference('dealer'));
     console.log(this.data);
     for (const tag of tags) {
       const auxEpc: Epc = new Epc();
