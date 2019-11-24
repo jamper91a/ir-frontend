@@ -30,7 +30,7 @@ export class ReportsPage implements OnInit {
       state: {
         data: {
           title: 'ean_plu_inventory',
-          goTo: 'reports/inventory/eanplu'
+          goTo: 'admin/reports/inventory/eanplu'
         }
       }
     };
