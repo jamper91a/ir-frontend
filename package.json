@@ -1,7 +1,7 @@
 {
-  "name": "myApp",
+  "name": "Inventario Real",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Jorge Moreno",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -32,6 +32,7 @@
     "chart.js": "^2.9.3",
     "cordova-browser": "6.0.0",
     "core-js": "^2.5.4",
+    "ionic": "^5.4.13",
     "ngx-print": "^1.2.0-beta.3",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",

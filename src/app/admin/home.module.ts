@@ -16,6 +16,7 @@ const routes: Routes = [
     children: [
       { path: '', loadChildren: './company/company.module#CompanyPageModule' },
       { path: 'company', loadChildren: './company/company.module#CompanyPageModule' },
+      { path: 'erp', loadChildren: './erp/erp.module#ErpPageModule' },
       { path: 'products', loadChildren: './products/products.module#ProductsPageModule' },
       { path: 'products/create', loadChildren: './products/product-create/product-create.module#ProductCreatePageModule' },
       { path: 'products/import', loadChildren: './products/products-import/products-import.module#ProductsImportPageModule' },

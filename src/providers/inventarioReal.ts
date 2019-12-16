@@ -47,6 +47,8 @@ import {GetDiferenceBetweenInventoriesResponse} from '../webServices/response/Ge
 import {GetDiferenceInventoryErpResponse} from '../webServices/response/GetDiferenceInventoryErpResponse';
 import {SaleUnitsReportRequest} from '../webServices/request/SaleUnitsReportRequest';
 import {GetSoldUnitsResponse} from '../webServices/response/GetSoldUnitsResponse';
+import {CreateErpReportRequest} from '../webServices/request/CreateErpReportRequest';
+
 
 
 @Injectable()
@@ -755,5 +757,22 @@ export class InventarioReal {
     }
 
     // endregion
+
+    public async createErpReport(request: CreateErpReportRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('inventoryErp/create', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+
 
 }
