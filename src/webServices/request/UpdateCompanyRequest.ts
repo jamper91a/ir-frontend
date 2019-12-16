@@ -10,15 +10,14 @@ export class UpdateCompanyRequest implements InventarioRealRequest {
 
     getBody(): FormData {
         const formData: FormData = new FormData();
-        if (this.photo) {
-            formData.append('photo', this.photo);
-        }
         formData.append('name', this.name);
+        if (this.photo) {
+            formData.append('withPhoto', 'true');
+            formData.append('photo', this.photo);
+        } else {
+            formData.append('withPhoto', 'false');
+        }
         return formData;
-        // return {
-        //     photo: this.photo,
-        //     name: this.name
-        // };
     }
 
     validate(): boolean {

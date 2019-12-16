@@ -1,5 +1,5 @@
 /* tslint:disable:variable-name */
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InventarioReal} from '../../../../providers/inventarioReal';
 import {AlertController, NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
@@ -47,10 +47,9 @@ export class ProductsImportPage implements OnInit {
 
   readDocument() {
     const fileReader = new FileReader();
-
     try {
       fileReader.readAsText(this.file);
-      fileReader.onloadend = (e) => {
+      fileReader.onloadend = () => {
 
         // By lines
         // @ts-ignore
@@ -121,7 +120,7 @@ export class ProductsImportPage implements OnInit {
       pos = this.findColumnPos('amount');
       product.amount = (pos > -1) ? parseInt(auxColumns[pos], 0) : 0;
       pos = this.findColumnPos('image');
-      product.image = (pos > -1) ? auxColumns[pos] : '';
+      product.imagen = (pos > -1) ? auxColumns[pos] : '';
       pos = this.findColumnPos('cost_price');
       product.cost_price = (pos > -1) ? parseFloat(auxColumns[pos]) : 0;
       pos = this.findColumnPos('sell_price');

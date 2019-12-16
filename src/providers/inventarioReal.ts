@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Api } from './api';
-import { Util } from './util';
+import {Injectable} from '@angular/core';
+import {Api} from './api';
+import {Util} from './util';
 import {TranslateService} from '@ngx-translate/core';
-import { Platform } from '@ionic/angular';
+import {Platform} from '@ionic/angular';
 import {LoginRequest} from '../webServices/request/LoginRequest';
 import {LoginResponse} from '../webServices/response/LoginResponse';
 import {AllDealersResponse} from '../webServices/response/AllDealersResponse';
@@ -32,6 +32,21 @@ import {CreateSupplierRequest} from '../webServices/request/CreateSupplierReques
 import {GetSuppliersByCompanyResponse} from '../webServices/response/GetSuppliersByCompanyResponse';
 import {UpdateSupplierRequest} from '../webServices/request/UpdateSupplierRequest';
 import {CreateProductsRequest} from '../webServices/request/CreateProductsRequest';
+import {UpdateProductRequest} from '../webServices/request/UpdateProductRequest';
+import {GetProductsResponse} from '../webServices/response/GetProductsResponse';
+import {GetLastConsolidatedInventory} from '../webServices/response/GetLastConsolidatedInventory';
+import {CreatePdfRequest} from '../webServices/request/CreatePdfRequest';
+import {CreatePdfResponse} from '../webServices/response/CreatePdfResponse';
+import {GetProductByEanPluRequest} from '../webServices/request/GetProductByEanPluRequest';
+import {GetProductByEanPluResponse} from '../webServices/response/GetProductByEanPluResponse';
+import {GetProductInShopByEanPluResponse} from '../webServices/response/getProductInShopByEanPluResponse';
+import {GetProductInShopByEanPluRequest} from '../webServices/request/GetProductInShopByEanPluRequest';
+import {GetAllConsolidatedInventoriesResponse} from '../webServices/response/GetAllConsolidatedInventoriesResponse';
+import {GetDiferenceBetweenInventoriesRequest} from '../webServices/request/GetDiferenceBetweenInventoriesRequest';
+import {GetDiferenceBetweenInventoriesResponse} from '../webServices/response/GetDiferenceBetweenInventoriesResponse';
+import {GetDiferenceInventoryErpResponse} from '../webServices/response/GetDiferenceInventoryErpResponse';
+import {SaleUnitsReportRequest} from '../webServices/request/SaleUnitsReportRequest';
+import {GetSoldUnitsResponse} from '../webServices/response/GetSoldUnitsResponse';
 import {CreateErpReportRequest} from '../webServices/request/CreateErpReportRequest';
 
 
@@ -86,10 +101,10 @@ export class InventarioReal {
         const response: LoginResponse = await this.api.post('loginWeb', request.getBody()).toPromise();
         await dialog.dismiss();
         if (response) {
-          this.util.savePreference('token', response.data.token);
-          this.util.savePreference('employee', JSON.stringify(response.data.employee));
-          this.util.savePreference('user', JSON.stringify(response.data.user));
-          this.util.savePreference('dealer', JSON.stringify(response.data.dealer));
+            Util.savePreference('token', response.data.token);
+            Util.savePreference('employee', JSON.stringify(response.data.employee));
+            Util.savePreference('user', JSON.stringify(response.data.user));
+            Util.savePreference('dealer', JSON.stringify(response.data.dealer));
       }
       // @ts-ignore
         return response;
@@ -500,6 +515,39 @@ export class InventarioReal {
         }
     }
 
+    public async updateProduct(request: UpdateProductRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
+        try {
+            // @ts-ignore
+            await this.api.postWithFiles('products/update', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return;
+        } catch (e) {
+            console.error(e);
+            await dialog.dismiss();
+            self.util.showToast('error_updating_data');
+            throw e;
+        }
+    }
+
+    public async getProducts(): Promise<GetProductsResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetProductsResponse = await this.api.get('products', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
     public async createSupplier(request: CreateSupplierRequest): Promise<any> {
         this.get_translation();
         const self = this;
@@ -549,6 +597,167 @@ export class InventarioReal {
         }
     }
 
+    public async getProductInShopByEanPlu(request: GetProductInShopByEanPluRequest): Promise<GetProductInShopByEanPluResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetProductInShopByEanPluResponse = await this.api.post('productos/findProductInLocalByEanPlu',
+                request.getBody()).toPromise();
+            await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getAllConsolidatedInventories(): Promise<GetAllConsolidatedInventoriesResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetAllConsolidatedInventoriesResponse = await this.api.post('inventariosConsolidados/listarTodos',
+                {}).toPromise();
+            await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getDiferenceBetweenInventories(request: GetDiferenceBetweenInventoriesRequest):
+        Promise<GetDiferenceBetweenInventoriesResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetDiferenceBetweenInventoriesResponse = await this.api.post('reportes/diferenceBetweenInventories',
+                request.getBody()).toPromise();
+            await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getDiferenceInventoryErp():
+        Promise<GetDiferenceInventoryErpResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetDiferenceInventoryErpResponse = await this.api.post('reportes/diferenceWithInventoryErp',
+                {}).toPromise();
+            await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getSoldUnits(request: SaleUnitsReportRequest):
+        Promise<GetSoldUnitsResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetSoldUnitsResponse = await this.api.post('reportes/saleUnits',
+                request.getBody()).toPromise();
+            await dialog.dismiss();
+            if (response.data.saleUnits.length === 0 || response.data.returnedUnits.length === 0) {
+                self.util.showToast('no_data');
+            }
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async createPdf(request: CreatePdfRequest) {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: CreatePdfResponse = await this.api.post('pdf/create', request.getBody()).toPromise();
+
+            // tslint:disable-next-line:only-arrow-functions
+            setTimeout(async function() {
+                await dialog.dismiss();
+                window.open(self.util.url + response.data, '_blank');
+            }, 1000);
+
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
+            throw e;
+        }
+    }
+
+
+
+    public async getProductByEanPlu(request: GetProductByEanPluRequest): Promise<GetProductByEanPluResponse> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetProductByEanPluResponse = await this.api.post('productos/findOne', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_consulting_data');
+            throw e;
+        }
+    }
+
+    // region Reports
+    public async getLastConsolidatedInventory(): Promise<GetLastConsolidatedInventory> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetLastConsolidatedInventory = await this.api.post('inventariosConsolidados/ultimoInventario', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    // endregion
+
     public async createErpReport(request: CreateErpReportRequest): Promise<any> {
         this.get_translation();
         const self = this;
@@ -564,5 +773,6 @@ export class InventarioReal {
             throw e;
         }
     }
+
 
 }

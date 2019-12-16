@@ -1,3 +1,4 @@
+/* tslint:disable:max-line-length */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +20,21 @@ const routes: Routes = [
       { path: 'products', loadChildren: './products/products.module#ProductsPageModule' },
       { path: 'products/create', loadChildren: './products/product-create/product-create.module#ProductCreatePageModule' },
       { path: 'products/import', loadChildren: './products/products-import/products-import.module#ProductsImportPageModule' },
+      { path: 'products/edit/:id', loadChildren: './products/product-edit/product-edit.module#ProductEditPageModule' },
+      { path: 'products/list', loadChildren: './products/products-list/products-list.module#ProductsListPageModule' },
+      { path: 'reports', loadChildren: './reports/reports.module#ReportsPageModule' },
+      { path: 'reports/inventory/total', loadChildren: './reports/inventory/total/total.module#TotalPageModule' },
+      { path: 'reports/inventory/eanplu', loadChildren: './reports/inventory/eanplu/eanplu.module#EanpluPageModule' },
+      { path: 'reports/inventory/difference', loadChildren: './reports/inventory/difference/difference.module#DifferencePageModule' },
+      { path: 'reports/inventory/differenceErp', loadChildren: './reports/inventory/differenceerp/differenceerp.module#DifferenceerpPageModule' },
+      { path: 'reports/inventory/homologue', loadChildren: './reports/inventory/homologue/homologue.module#HomologuePageModule' },
+      { path: 'reports/inventory/list', loadChildren: './reports/inventory/list/list.module#ListPageModule' },
+      { path: 'reports/inventory/sold', loadChildren: './reports/inventory/sold/sold.module#SoldPageModule' },
+      { path: 'reports/inventory/rotation', loadChildren: './reports/inventory/rotation/rotation.module#RotationPageModule' },
+      { path: 'reports/inventory/clientsReturn', loadChildren: './reports/inventory/clientsreturn/clientsreturn.module#ClientsreturnPageModule' },
+      { path: 'reports/inventory/suppliersReturn', loadChildren: './reports/inventory/suppliersreturn/suppliersreturn.module#SuppliersreturnPageModule' },
+      { path: 'reports/inventory/rotationProjected', loadChildren: './reports/inventory/rotationprojected/rotationprojected.module#RotationprojectedPageModule' },
+      { path: 'reports/products/find', loadChildren: './reports/product/find/find.module#FindPageModule' },
       { path: 'shops', loadChildren: './shops/shops.module#ShopsPageModule' },
       { path: 'shops/edit/:id', loadChildren: './shops/edit-shop/edit-shop.module#EditShopPageModule' },
       { path: 'suppliers', loadChildren: './suppliers/suppliers.module#SuppliersPageModule' },

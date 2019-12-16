@@ -1,7 +1,7 @@
 /* tslint:disable:forin */
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Util } from './util';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Util} from './util';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
@@ -25,7 +25,7 @@ export class Api {
                 'Content-Type':  'application/json'
             })
         };
-        const token = this.util.getPreference('token');
+        const token = Util.getPreference('token');
         if (token) {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
@@ -39,7 +39,7 @@ export class Api {
                 // 'Content-Type':  'multipart/form-data'
             })
         };
-        const token = this.util.getPreference('token');
+        const token = Util.getPreference('token');
         if (token) {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
@@ -54,7 +54,7 @@ export class Api {
                 'Content-Type':  'application/json'
             })
         };
-        const token = this.util.getPreference(this.util.constants.token);
+        const token = Util.getPreference(this.util.constants.token);
         if (token) {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
@@ -65,9 +65,13 @@ export class Api {
         if (params) {
             const p = new URLSearchParams();
             for (const k in params) {
+                // noinspection JSUnfilteredForInLoop
                 p.set(k, params[k]);
             }
             fields = '?' + p.toString();
+            if (fields === '?') {
+                fields = '';
+            }
         }
         console.log(this.util.url + endpoint + fields);
         return this.http.get(this.util.url + endpoint + fields, httpOptions);
@@ -79,7 +83,7 @@ export class Api {
                 'Content-Type':  'application/json'
             })
         };
-        const token = this.util.getPreference(this.util.constants.token);
+        const token = Util.getPreference(this.util.constants.token);
         if (token) {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);

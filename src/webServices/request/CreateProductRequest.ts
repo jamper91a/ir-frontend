@@ -24,18 +24,29 @@ export class CreateProductRequest implements InventarioRealRequest {
         formData.append('supplier' , this.product.supplier.id + '');
         formData.append('description' , this.product.description);
         formData.append('amount' , this.product.amount + '');
-        formData.append('image' , this.product.image);
+        formData.append('image' , this.product.imagen);
         formData.append('cost_price' , this.product.cost_price + '');
         formData.append('sell_price' , this.product.sell_price + '');
         if (this.photo) {
+            formData.append('withPhoto', 'true');
             formData.append('photo', this.photo);
+        } else {
+            formData.append('withPhoto', 'false');
         }
         return formData;
     }
 
     validate(): boolean {
-        if (!this.product.ean || !this.product.plu || !this.product.plu2 || !this.product.plu3) {
-            throw Error ('identifier_omitted');
+        const error = new Error();
+        // @ts-ignore
+        error.code = 'VAL_FAIL';
+        if (!this.product.ean && !this.product.plu && !this.product.plu2 && !this.product.plu3) {
+            error.message = 'identifier_omitted';
+            throw error;
+        }
+        if (!this.product.supplier.id) {
+            error.message = 'supplier_required';
+            throw error;
         }
         return true;
     }
@@ -52,7 +63,7 @@ export class CreateProductRequest implements InventarioRealRequest {
         this.product.category = '';
         this.product.description = '';
         this.product.amount = 0;
-        this.product.image = '';
+        this.product.imagen = '';
         this.product.cost_price = 0;
         this.product.sell_price = 0;
     }

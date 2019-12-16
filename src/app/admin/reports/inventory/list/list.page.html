@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>list</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngIf="result.data.length === 0">
+      <ion-col>
+        <ion-progress-bar type="indeterminate" ></ion-progress-bar>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="result.data.length>0">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label *ngIf="step===1">
+              {{'choose_initial_inventory' | translate}}
+            </ion-label>
+            <ion-label *ngIf="step===2">
+              {{'choose_final_inventory' | translate}}
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <table class="table table-striped" id="print-section">
+            <thead>
+            <tr>
+              <th scope="col">{{'id' | translate}}</th>
+              <th scope="col">{{'zone' | translate}}</th>
+              <th scope="col">{{'date' | translate}}</th>
+              <th scope="col">{{'hour' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let inventory of result.data" (click)="selectInventory(inventory)">
+              <th scope="row">{{ inventory.id}}</th>
+              <td> {{inventory.name}}</td>
+              <td> {{inventory.createdAt | date:'shortDate'}}</td>
+              <td> {{inventory.createdAt | date: 'shortTime'}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <!--<ion-button (click)="generatePdf()" disabled>{{'print' |translate}}</ion-button>-->
+          <ion-button disabled>{{'print' |translate}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-content>

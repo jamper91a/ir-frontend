@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UpdateCompanyRequest} from '../../../webServices/request/UpdateCompanyRequest';
 import {InventarioReal} from '../../../providers/inventarioReal';
 import {Platform} from '@ionic/angular';
@@ -40,6 +40,7 @@ export class CompanyPage implements OnInit {
   async doUpdate() {
     try {
       await this.inventarioReal.updateCompany(this.request);
+      this.util.showToast('company_updated');
     } catch (e) {
       console.error(e);
     }
@@ -49,7 +50,9 @@ export class CompanyPage implements OnInit {
     this.platform.ready().then(async () => {
       const response = await this.inventarioReal.getCompanyById();
       this.company = response.data;
-      this.imgURL = this.util.url + this.company.photo;
+      if (this.company && this.company.photo) {
+        this.imgURL = this.util.url + this.company.photo;
+      }
       this.request.putData(this.company);
       this.allEmiterService.onNewTitle(this.company.name);
     });

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Company} from '../../../../pojo/Company';
-import {UpdateAdminRequest} from '../../../../webServices/request/UpdateAdminRequest';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Util} from '../../../../providers/util';
 import {InventarioReal} from '../../../../providers/inventarioReal';
@@ -34,7 +33,7 @@ export class TagsCreateStepTwoPage implements OnInit {
       public alertController: AlertController,
       private navCtrl: NavController,
   ) {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.data = this.router.getCurrentNavigation().extras.state.company;
         this.events.publish('tittle', this.data.name);
@@ -65,24 +64,26 @@ export class TagsCreateStepTwoPage implements OnInit {
   }
 
   async validateTags() {
-    // try {
-    //   this.request.validate();
-    //   await this.inventarioReal.updateAdmin(this.request);
-    //   this.util.showToast('dealer_updated');
-    //   this.navCtrl.navigateBack('dealer/companies/list');
-    // } catch (e) {
-    //   this.util.showToast(e.toString());
-    // }
     this.disabled = true;
+    this.tags = this.tags.replace(/\n/ig, '');
     const allTags = this.tags.split(this.separator);
+    // Remove duplicate items
     const auxSet = new Set(allTags);
     const finalTags = Array.from(auxSet);
+    let pos = 0;
+    for (let epc of finalTags) {
+      epc = epc.replace(/[^A-Za-z0-9]/gi, '');
+      if (!epc) {
+        finalTags.splice(pos, 1);
+      }
+      pos++;
+    }
 
     this.translate.get(['add_tags_tittle', 'add_tags_message' , 'confirm', 'cancel']).subscribe(
         async (values) => {
           let message = values.add_tags_message;
-          message = message.replace('{tags}', (allTags.length - 1));
-          message = message.replace('{finalTags}', (finalTags.length - 1));
+          message = message.replace('{tags}', (allTags.length));
+          message = message.replace('{finalTags}', (finalTags.length));
           message = message.replace('{company}', this.data.name);
           const alert = await this.alertController.create({
             header: values.add_tags_tittle,
@@ -111,7 +112,7 @@ export class TagsCreateStepTwoPage implements OnInit {
 
   async addTags(tags) {
     const epcs: Epc[] = [];
-    const dealer = JSON.parse(this.util.getPreference('dealer'));
+    const dealer = JSON.parse(Util.getPreference('dealer'));
     console.log(this.data);
     for (const tag of tags) {
       const auxEpc: Epc = new Epc();
@@ -131,7 +132,7 @@ export class TagsCreateStepTwoPage implements OnInit {
       this.request.validate();
       await this.inventarioReal.createEpc(this.request);
       this.util.showToast('epcs_created');
-      this.navCtrl.navigateBack('dealer/tags/create');
+      this.navCtrl.navigateBack('dealer/tags/create/step-1');
     } catch (e) {
       this.util.showToast(e.toString());
     }

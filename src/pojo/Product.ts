@@ -15,7 +15,7 @@ export class Product extends InventarioRealPojo {
     public category: string;
     public description: string;
     public amount: number;
-    public image: string;
+    public imagen: string;
     public cost_price: number;
     public sell_price: number;
     public company: Company;

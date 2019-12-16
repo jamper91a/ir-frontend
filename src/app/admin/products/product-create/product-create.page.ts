@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CreateProductRequest} from '../../../../webServices/request/CreateProductRequest';
 import {AllEmiterService} from '../../../services/all-emiter-service';
 import {InventarioReal} from '../../../../providers/inventarioReal';
@@ -65,18 +65,24 @@ export class ProductCreatePage implements OnInit {
       const response: GetSuppliersByCompanyResponse = await this.inventarioReal.getSuppliers();
       this.suppliers = response.data;
     } catch (e) {
-      this.util.showToast(e);
+      // this.util.showToast(e);
     }
   }
 
   async doCreate() {
     try {
+      console.log(this.request.product);
       this.request.validate();
       await this.inventarioReal.createProduct(this.request);
       this.util.showToast('product_created');
       this.navCtrl.navigateBack(['admin/products' ]);
     } catch (e) {
-      this.util.showToast(e);
+      if (e.code && e.code === 'VAL_FAIL') {
+        this.util.showToast(e.message);
+      } else {
+        this.util.showToast(e.toString());
+      }
+
     }
   }
 

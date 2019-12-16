@@ -1,8 +1,8 @@
 import {LoadingController, ToastController} from '@ionic/angular';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
-
+import {environment} from '../environments/environment';
 
 /**
  * Created by Usuario on 02/06/2017.
@@ -56,8 +56,8 @@ export class Util {
       find_touristic: 'find_touristic',
       exporter: 'exporter'
     };
-      this.url = 'http://localhost:1337/';
-      this.version = '2.7.5';
+      this.url = environment.url;
+      this.version = '1.0.0';
   }
 
   public constants;
@@ -65,16 +65,15 @@ export class Util {
   public version: string;
 
 
-
-
-  public savePreference(key: string, value: any) {
+    public static savePreference(key: string, value: any) {
     localStorage.setItem(key, value);
   }
-  public getPreference(key): any {
+
+    public static getPreference(key): any {
     return localStorage.getItem(key);
   }
 
-  public clearAllData() {
+    public static clearAllData() {
     localStorage.clear();
   }
 
@@ -103,40 +102,23 @@ export class Util {
     return loading;
 
   }
-  public isUrlValid(userInput: string) {
-    if (userInput != null) {
-      const res = userInput.match(/http(s)?:\/\/.?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-      if (res == null) {
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
-    }
-
-  }
 
   public setLogs(msn: string) {
-    let logs = this.getPreference(this.constants.logs);
-    if (logs) {
-      logs = logs + '\n' + msn + ';';
-    } else {
-      logs = msn + ';';
-    }
-    this.savePreference(this.constants.logs, logs);
+      let logs = Util.getPreference(this.constants.logs);
+      logs = logs ? logs + '\n' + msn + ';' : msn + ';';
+      Util.savePreference(this.constants.logs, logs);
   }
 
   public clearLogs() {
-    this.savePreference(this.constants.logs, '');
+      Util.savePreference(this.constants.logs, '');
   }
 
   public getLogs() {
-    return this.getPreference(this.constants.logs);
+      return Util.getPreference(this.constants.logs);
   }
 
   public logOut() {
-      this.clearAllData();
+      Util.clearAllData();
       this.router.navigateByUrl('/');
   }
 }

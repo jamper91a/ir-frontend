@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-title>{{'products' | translate}}</ion-title>
+        <ion-progress-bar type="indeterminate" *ngIf="!products"></ion-progress-bar>
+        <ng-container *ngIf="products">
+          <ion-searchbar placeholder="{{ 'find' | translate}}" debounce="500" (ionChange)="filterItems($event)"></ion-searchbar>
+          <ion-item-sliding *ngFor="let product of products" (click)="goToProduct(product)">
+            <ion-item>
+              <ion-label>{{product.description}}</ion-label>
+              <ion-note slot="end">{{product.createdAt}}</ion-note>
+            </ion-item>
+          </ion-item-sliding>
+        </ng-container>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-content>

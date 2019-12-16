@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AllDealersResponse} from '../../../../webServices/response/AllDealersResponse';
 import {Dealer} from '../../../../pojo/Dealer';
 import {InventarioReal} from '../../../../providers/inventarioReal';
@@ -48,7 +48,7 @@ export class DealersListPage implements OnInit {
     const val = ev.detail.value;
 
     if (val && val.trim() !== '') {
-      this.dealers.data = this.allDealers.filter((dealer: Dealer ) => {
+      this.dealers.data = this.allDealers.filter((dealer: Dealer) => {
         return (
             dealer.name.toLowerCase().indexOf(val.trim().toLowerCase()) > -1 ||
             dealer.user.name.toLowerCase().indexOf(val.trim().toLowerCase()) > -1);
