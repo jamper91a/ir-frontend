@@ -32,6 +32,7 @@ import {CreateSupplierRequest} from '../webServices/request/CreateSupplierReques
 import {GetSuppliersByCompanyResponse} from '../webServices/response/GetSuppliersByCompanyResponse';
 import {UpdateSupplierRequest} from '../webServices/request/UpdateSupplierRequest';
 import {CreateProductsRequest} from '../webServices/request/CreateProductsRequest';
+import {CreateErpReportRequest} from '../webServices/request/CreateErpReportRequest';
 
 
 
@@ -544,6 +545,22 @@ export class InventarioReal {
             console.error(e);
             await dialog.dismiss();
             self.util.showToast('error_updating_data');
+            throw e;
+        }
+    }
+
+    public async createErpReport(request: CreateErpReportRequest): Promise<any> {
+        this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: any = await this.api.post('inventoryErp/create', request.getBody()).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_creating_data');
             throw e;
         }
     }
