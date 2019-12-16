@@ -48,13 +48,13 @@ export class DealersListPage implements OnInit {
     const val = ev.detail.value;
 
     if (val && val.trim() !== '') {
-      this.dealers.request = this.allDealers.filter((dealer: Dealer) => {
+      this.dealers.data = this.allDealers.filter((dealer: Dealer) => {
         return (
             dealer.name.toLowerCase().indexOf(val.trim().toLowerCase()) > -1 ||
             dealer.user.name.toLowerCase().indexOf(val.trim().toLowerCase()) > -1);
       });
     } else {
-      this.dealers.request = this.allDealers;
+      this.dealers.data = this.allDealers;
     }
   }
 
