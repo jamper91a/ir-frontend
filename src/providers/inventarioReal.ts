@@ -64,7 +64,7 @@ export class InventarioReal {
     public platform: Platform
   ) {
 
-    this.get_translation();
+     this.get_translation();
 
 
 
@@ -73,26 +73,31 @@ export class InventarioReal {
 
     public get_translation() {
       const self = this;
-      if (!this.messages) {
-          this.platform.ready().then(() => {
-            self.translate.get(
-              [
-                'consulting',
-                'creating',
-                'updating'
-              ]
-            ).subscribe(
-              (values) => {
-                  self.messages = values;
-              });
-          });
-        } else {
-        }
+      return new Promise(resolve => {
+            if (!this.messages) {
+                this.platform.ready().then(() => {
+                    self.translate.get(
+                        [
+                            'consulting',
+                            'creating',
+                            'updating'
+                        ]
+                    ).subscribe(
+                        (values) => {
+                            self.messages = values;
+                            resolve();
+                        });
+                });
+            } else {
+                resolve();
+            }
+        });
+
     }
 
 
     public async login(request: LoginRequest): Promise<LoginResponse> {
-      this.get_translation();
+      await this.get_translation();
       const self = this;
       console.log(this.messages);
       const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
@@ -117,7 +122,7 @@ export class InventarioReal {
   }
 
     public async allDealers(justActiveDealers: boolean = false): Promise<AllDealersResponse> {
-      this.get_translation();
+      await this.get_translation();
       const request: AllDealersRequest = new AllDealersRequest();
       request.justActiveDealers = justActiveDealers;
       const self = this;
@@ -137,7 +142,7 @@ export class InventarioReal {
     }
 
     public async createDealer(request: CreateDealerRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         console.log(this.messages);
         const dialog = await this.util.showDialog(this.messages.creating);
@@ -155,7 +160,7 @@ export class InventarioReal {
     }
 
     public async createAdmin(request: CreateAdminRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         console.log(this.messages);
         const dialog = await this.util.showDialog(this.messages.creating);
@@ -173,7 +178,7 @@ export class InventarioReal {
     }
 
     public async updateDealer(request: UpdateDealerRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         console.log(this.messages);
         const dialog = await this.util.showDialog(this.messages.updating);
@@ -191,7 +196,7 @@ export class InventarioReal {
     }
 
     public async changeUserState(request: UpdateDealerRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         console.log(this.messages);
         const dialog = await this.util.showDialog(this.messages.updating);
@@ -209,7 +214,7 @@ export class InventarioReal {
     }
 
     public async getAllCompaniesByDealer(justActive: boolean = false): Promise<GetAllCompaniesByDealerResponse> {
-        this.get_translation();
+        await this.get_translation();
         const request: GetAllCompaniesByDealerRequest = new GetAllCompaniesByDealerRequest();
         request.justActive = justActive;
         const self = this;
@@ -231,7 +236,7 @@ export class InventarioReal {
     }
 
     public async updateAdmin(request: UpdateAdminRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.updating);
         try {
@@ -248,7 +253,7 @@ export class InventarioReal {
     }
 
     public async getCompanyById(id: string = ''): Promise<GetCompanyByIdResponse> {
-        this.get_translation();
+        await this.get_translation();
         const request: GetByIdRequest = new GetByIdRequest();
         request.id = id;
         const self = this;
@@ -267,7 +272,7 @@ export class InventarioReal {
     }
 
     public async createEpc(request: CreateEpcsRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating);
         try {
@@ -284,7 +289,7 @@ export class InventarioReal {
     }
 
     public async tagsByDealerByMonth(): Promise<TagsByDealerByMonthResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -301,7 +306,7 @@ export class InventarioReal {
     }
 
     public async tagsByCompanyByMonth(companyId: string): Promise<TagsByDealerByMonthResponse> {
-        this.get_translation();
+        await this.get_translation();
         const request: GetByIdRequest = new GetByIdRequest();
         request.id = companyId;
         const self = this;
@@ -320,7 +325,7 @@ export class InventarioReal {
     }
 
     public async updateCompany(request: UpdateCompanyRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -336,7 +341,7 @@ export class InventarioReal {
     }
 
     public async createShop(request: CreateShopRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
@@ -352,7 +357,7 @@ export class InventarioReal {
     }
 
     public async getShopsByCompany(): Promise<GetShopsByCompanyResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -368,7 +373,7 @@ export class InventarioReal {
     }
 
     public async updateShop(request: UpdateShopRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
@@ -385,7 +390,7 @@ export class InventarioReal {
     }
 
     public async getZonesByShop(id: string): Promise<GetZonesByShopResponse> {
-        this.get_translation();
+        await this.get_translation();
         const request: GetByIdRequest = new GetByIdRequest();
         request.id = id;
         const self = this;
@@ -403,7 +408,7 @@ export class InventarioReal {
     }
 
     public async createZone(request: CreateZoneRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
@@ -419,7 +424,7 @@ export class InventarioReal {
     }
 
     public async updateZone(request: UpdateZoneRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
@@ -436,7 +441,7 @@ export class InventarioReal {
     }
 
     public async getEmployeesByCompany(): Promise<GetEmployeesByCompanyResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -452,7 +457,7 @@ export class InventarioReal {
     }
 
     public async createEmployee(request: CreateEmployeeRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
@@ -468,7 +473,7 @@ export class InventarioReal {
     }
 
     public async updateEmployee(request: UpdateEmployeeRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
@@ -484,7 +489,7 @@ export class InventarioReal {
     }
 
     public async createProduct(request: CreateProductRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
@@ -500,7 +505,7 @@ export class InventarioReal {
     }
 
     public async createProducts(request: CreateProductsRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
@@ -516,7 +521,7 @@ export class InventarioReal {
     }
 
     public async updateProduct(request: UpdateProductRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
@@ -533,7 +538,7 @@ export class InventarioReal {
     }
 
     public async getProducts(): Promise<GetProductsResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -549,7 +554,7 @@ export class InventarioReal {
     }
 
     public async createSupplier(request: CreateSupplierRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
@@ -565,7 +570,7 @@ export class InventarioReal {
     }
 
     public async getSuppliers(): Promise<GetSuppliersByCompanyResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -581,7 +586,7 @@ export class InventarioReal {
     }
 
     public async updateSupplier(request: UpdateSupplierRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
@@ -598,7 +603,7 @@ export class InventarioReal {
     }
 
     public async getProductInShopByEanPlu(request: GetProductInShopByEanPluRequest): Promise<GetProductInShopByEanPluResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -618,7 +623,7 @@ export class InventarioReal {
     }
 
     public async getAllConsolidatedInventories(): Promise<GetAllConsolidatedInventoriesResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -639,7 +644,7 @@ export class InventarioReal {
 
     public async getDiferenceBetweenInventories(request: GetDiferenceBetweenInventoriesRequest):
         Promise<GetDiferenceBetweenInventoriesResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -660,7 +665,7 @@ export class InventarioReal {
 
     public async getDiferenceInventoryErp():
         Promise<GetDiferenceInventoryErpResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -681,7 +686,7 @@ export class InventarioReal {
 
     public async getSoldUnits(request: SaleUnitsReportRequest):
         Promise<GetSoldUnitsResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -701,7 +706,7 @@ export class InventarioReal {
     }
 
     public async createPdf(request: CreatePdfRequest) {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
@@ -724,7 +729,7 @@ export class InventarioReal {
 
 
     public async getProductByEanPlu(request: GetProductByEanPluRequest): Promise<GetProductByEanPluResponse> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
@@ -741,10 +746,10 @@ export class InventarioReal {
 
     // region Reports
     public async getLastConsolidatedInventory(): Promise<GetLastConsolidatedInventory> {
-        this.get_translation();
-        const self = this;
-        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
-        try {
+      await this.get_translation();
+      const self = this;
+      const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+      try {
             // @ts-ignore
             const response: GetLastConsolidatedInventory = await this.api.post('inventariosConsolidados/ultimoInventario', {}).toPromise();
             await dialog.dismiss();
@@ -759,7 +764,7 @@ export class InventarioReal {
     // endregion
 
     public async createErpReport(request: CreateErpReportRequest): Promise<any> {
-        this.get_translation();
+        await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {

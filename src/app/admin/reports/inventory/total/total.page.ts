@@ -76,7 +76,8 @@ export class TotalPage implements OnInit {
         }
       }
     } catch (e) {
-      this.util.showToast(e);
+      console.error(e);
+      // this.util.showToast(e);
     }
   }
 
