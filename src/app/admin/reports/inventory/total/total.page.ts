@@ -9,6 +9,7 @@ import {Util} from '../../../../../providers/util';
 import {Employee} from '../../../../../pojo/Employee';
 import {NavController} from '@ionic/angular';
 import {Shop} from '../../../../../pojo/Shop';
+import {CreatePdfTotalnventoryEpcRequest} from '../../../../../webServices/request/CreatePdfTotalnventoryEpcRequest';
 @Component({
   selector: 'app-total',
   templateUrl: './total.page.html',
@@ -130,12 +131,12 @@ export class TotalPage implements OnInit {
     this.inventarioReal.createPdf(request);
   }
   generatePdfEpc() {
-    const request: CreatePdfTotalnventoryRequest = new CreatePdfTotalnventoryRequest();
+    const request: CreatePdfTotalnventoryEpcRequest = new CreatePdfTotalnventoryEpcRequest();
     request.title = this.pdfTitle;
     request.shop = this.pdfTitle;
     for (const product of this.allProducts) {
       request.rows.push({
-        EPC: product.product.ean,
+        epc: product.epc.epc,
         description: product.product.description
       });
     }
