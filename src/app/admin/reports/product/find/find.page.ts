@@ -25,7 +25,7 @@ export class FindPage implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private navCtrl: NavController,
-              private util: Util) {
+              public util: Util) {
 
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {

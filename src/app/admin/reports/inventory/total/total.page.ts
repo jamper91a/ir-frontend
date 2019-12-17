@@ -30,7 +30,7 @@ export class TotalPage implements OnInit {
       private translate: TranslateService,
       private inventarioReal: InventarioReal,
       private navCtrl: NavController,
-      private util: Util
+      public util: Util
   ) {
     this.translate.get(['total_inventory', 'total', 'ean_plu', 'description', 'epc']).subscribe((values) => {
       this.pdfTitle = values.total_inventory;

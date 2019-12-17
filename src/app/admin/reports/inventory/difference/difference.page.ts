@@ -34,7 +34,7 @@ export class DifferencePage implements OnInit {
       private router: Router,
       private navCtrl: NavController,
       private route: ActivatedRoute,
-      private util: Util
+      public util: Util
   ) {
     this.allEmiterService.onNewTitle('difference_physical_inventories');
       this.route.queryParams.subscribe(() => {
