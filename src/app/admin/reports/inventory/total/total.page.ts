@@ -24,6 +24,7 @@ export class TotalPage implements OnInit {
   public shop: Shop;
   public employees: Employee[] = [];
   public allEmployees: Employee[] = [];
+  public columnNames;
   constructor(
       private allEmiterService: AllEmiterService,
       private translate: TranslateService,
@@ -31,8 +32,9 @@ export class TotalPage implements OnInit {
       private navCtrl: NavController,
       private util: Util
   ) {
-    this.translate.get('total_inventory').subscribe((value) => {
-      this.pdfTitle = value;
+    this.translate.get(['total_inventory', 'total', 'ean_plu', 'description', 'epc']).subscribe((values) => {
+      this.pdfTitle = values.total_inventory;
+      this.columnNames = values;
     });
     this.allEmiterService.onNewTitle('total_inventory');
   }
@@ -117,9 +119,9 @@ export class TotalPage implements OnInit {
     request.title = this.pdfTitle;
     request.shop = this.shop.name;
     request.rows.push({
-      total: 'Total',
-      ean: 'Ean',
-      description: 'Description'
+      total: this.columnNames.total,
+      ean: this.columnNames.ean_plu,
+      description: this.columnNames.description
     });
     for (const product of this.products) {
       request.rows.push({
@@ -134,6 +136,10 @@ export class TotalPage implements OnInit {
     const request: CreatePdfTotalnventoryEpcRequest = new CreatePdfTotalnventoryEpcRequest();
     request.title = this.pdfTitle;
     request.shop = this.pdfTitle;
+    request.rows.push({
+      epc: this.columnNames.epc,
+      description: this.columnNames.description
+    });
     for (const product of this.allProducts) {
       request.rows.push({
         epc: product.epc.epc,

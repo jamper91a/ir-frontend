@@ -28,7 +28,9 @@
     <ion-row><ion-col>{{result.data.description}}</ion-col></ion-row>
     <ion-row><ion-col>{{result.data.category}}</ion-col></ion-row>
     <ion-row><ion-col>{{result.data.size}}</ion-col></ion-row>
-    <ion-row><ion-col><img [src]="result.data.imagen" height="200" *ngIf="result.data.imagen" alt="{{'logo' | translate}}"></ion-col></ion-row>
+    <ion-row><ion-col>
+      <img src="{{util.imagenUrl}}{{result.data.imagen}}" *ngIf="result.data.imagen"  alt="{{'logo' | translate}}"/>
+    </ion-col></ion-row>
     <ion-row>
       <ion-col>
         {{'do_you_want_to_continue' | translate}}

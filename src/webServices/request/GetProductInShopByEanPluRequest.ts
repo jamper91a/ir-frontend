@@ -1,5 +1,8 @@
+import {Employee} from '../../pojo/Employee';
+
 export class GetProductInShopByEanPluRequest implements InventarioRealRequest {
     public product: string;
+    public employee: Employee;
 
 
     constructor() {
@@ -8,7 +11,8 @@ export class GetProductInShopByEanPluRequest implements InventarioRealRequest {
 
     getBody() {
         return {
-            product: this.product
+            product: this.product,
+            employee: this.employee
         };
     }
 

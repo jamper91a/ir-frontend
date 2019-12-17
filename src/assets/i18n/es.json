@@ -117,6 +117,7 @@
   "users": "Usuarios",
   "user_name": "Nombre del usuario",
   "user_type": "Tipo de usuario",
+  "units_total": "Total Unidades",
   "update": "Actualizar",
   "update_shop": "Actualizar local",
   "update_supplier": "Actualizar Proveedor",
@@ -126,6 +127,7 @@
   "warehouse": "Bodega",
   "zone_created": "Zona creada",
   "zone_updated": "Zona actualizada",
+  "zone": "Zona",
   "zones": "Zonas",
 
 
