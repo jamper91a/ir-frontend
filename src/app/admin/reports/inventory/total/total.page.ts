@@ -6,6 +6,9 @@ import {InventarioReal} from '../../../../../providers/inventarioReal';
 import {GetLastConsolidatedInventory} from '../../../../../webServices/response/GetLastConsolidatedInventory';
 import {ProductHasZone} from '../../../../../pojo/ProductHasZone';
 import {Util} from '../../../../../providers/util';
+import {Employee} from '../../../../../pojo/Employee';
+import {NavController} from '@ionic/angular';
+import {Shop} from '../../../../../pojo/Shop';
 @Component({
   selector: 'app-total',
   templateUrl: './total.page.html',
@@ -16,10 +19,15 @@ export class TotalPage implements OnInit {
   public allProducts: ProductHasZone[];
   public result: GetLastConsolidatedInventory;
   public visual = false;
+  public step = 1;
+  public shop: Shop;
+  public employees: Employee[] = [];
+  public allEmployees: Employee[] = [];
   constructor(
       private allEmiterService: AllEmiterService,
       private translate: TranslateService,
       private inventarioReal: InventarioReal,
+      private navCtrl: NavController,
       private util: Util
   ) {
     this.translate.get('total_inventory').subscribe((value) => {
@@ -47,33 +55,55 @@ export class TotalPage implements OnInit {
     this.tab = ev.detail.value;
   }
 
-
   async getData() {
     try {
-      this.result = await this.inventarioReal.getLastConsolidatedInventory();
+      const aux = await this.inventarioReal.getEmployeesByAdmin();
+      if (aux) {
+        this.employees = aux.data;
+        this.allEmployees = aux.data;
+      } else {
+        this.employees = [];
+        this.navCtrl.navigateBack('admin/reports');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async getReport(employee: Employee) {
+    this.step = 2;
+    this.shop = employee.shop;
+    try {
+      this.result = await this.inventarioReal.getLastConsolidatedInventoryByAdmin(employee.id + '');
       if (this.result.data) {
         this.products = [];
         this.allProducts = [];
         for (const inventory of this.result.data.inventories) {
           for (const phz of inventory.products) {
-            this.products.push(phz);
-            if (this.allProducts.length === 0) {
-              this.products.push(phz);
-            } else {
+            // this.products.push(phz);
+              phz.total = 1;
+              this.allProducts.push(phz);
               let aux2 = false;
+              let auxPos = 0;
               for (const aux of this.products) {
-                if (aux.id === phz.id) {
-                  aux.total++;
+                if (aux.product.id === phz.product.id) {
+                  if (aux.total) {
+                    aux.total = aux.total + 1;
+                  } else {
+                    aux.total = 0;
+                  }
+
+                  // this.products[auxPos] = aux;
                   aux2 = true;
-                  return;
                 }
+                auxPos++;
               }
               if (!aux2) {
                 this.products.push(phz);
               }
-            }
           }
         }
+        this.tab = 'total';
       }
     } catch (e) {
       console.error(e);
@@ -81,17 +111,48 @@ export class TotalPage implements OnInit {
     }
   }
 
-  generatePdf() {
+  generatePdfEan() {
     const request: CreatePdfTotalnventoryRequest = new CreatePdfTotalnventoryRequest();
     request.title = this.pdfTitle;
-    for (let i = 0; i < 1000; i++) {
+    request.shop = this.shop.name;
+    request.rows.push({
+      total: 'Total',
+      ean: 'Ean',
+      description: 'Description'
+    });
+    for (const product of this.products) {
       request.rows.push({
-        total: i,
-        EPC: '123564321' + i,
-        description: 'Camisa negra' + i
+        total: product.total,
+        ean: product.product.ean,
+        description: product.product.description
       });
     }
     this.inventarioReal.createPdf(request);
+  }
+  generatePdfEpc() {
+    const request: CreatePdfTotalnventoryRequest = new CreatePdfTotalnventoryRequest();
+    request.title = this.pdfTitle;
+    request.shop = this.pdfTitle;
+    for (const product of this.allProducts) {
+      request.rows.push({
+        EPC: product.product.ean,
+        description: product.product.description
+      });
+    }
+    this.inventarioReal.createPdf(request);
+  }
+
+  filterEmployees(ev: CustomEvent) {
+    const val = ev.detail.value;
+
+    if (val && val.trim() !== '') {
+      this.employees = this.allEmployees.filter((employee: Employee ) => {
+        return (
+            employee.user.name.toLowerCase().indexOf(val.trim().toLowerCase()) > -1);
+      });
+    } else {
+      this.employees = this.allEmployees;
+    }
   }
 
 }

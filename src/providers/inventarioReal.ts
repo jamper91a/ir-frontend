@@ -48,6 +48,7 @@ import {GetDiferenceInventoryErpResponse} from '../webServices/response/GetDifer
 import {SaleUnitsReportRequest} from '../webServices/request/SaleUnitsReportRequest';
 import {GetSoldUnitsResponse} from '../webServices/response/GetSoldUnitsResponse';
 import {CreateErpReportRequest} from '../webServices/request/CreateErpReportRequest';
+import {GetEmployeesByAdminResponse} from '../webServices/response/GetEmployeesByAdminResponse';
 
 
 
@@ -744,6 +745,22 @@ export class InventarioReal {
         }
     }
 
+    public async getEmployeesByAdmin(): Promise<GetEmployeesByAdminResponse> {
+        await this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetEmployeesByAdminResponse = await this.api.post('companies/getEmployeesByAdmin', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
     // region Reports
     public async getLastConsolidatedInventory(): Promise<GetLastConsolidatedInventory> {
       await this.get_translation();
@@ -752,6 +769,24 @@ export class InventarioReal {
       try {
             // @ts-ignore
             const response: GetLastConsolidatedInventory = await this.api.post('inventariosConsolidados/ultimoInventario', {}).toPromise();
+            await dialog.dismiss();
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+    public async getLastConsolidatedInventoryByAdmin(employeeId: string): Promise<GetLastConsolidatedInventory> {
+        await this.get_translation();
+        const request: GetByIdRequest = new GetByIdRequest();
+        request.id = employeeId;
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            // tslint:disable-next-line:max-line-length
+            const response: GetLastConsolidatedInventory = await this.api.post('inventariosConsolidados/ultimoInventarioAdmin', request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {

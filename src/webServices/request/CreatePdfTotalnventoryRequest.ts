@@ -1,14 +1,22 @@
 import {CreatePdfRequest} from './CreatePdfRequest';
 
 export class CreatePdfTotalnventoryRequest extends CreatePdfRequest {
+    public shop: string;
     constructor() {
         super();
         this.templateId = '63425';
-        this.header = [{
-            col1: 'Total',
-            col2: 'EPC',
-            col3: 'Description'
-        }];
+    }
+
+    getBody() {
+        return {
+            templateId: this.templateId,
+            data: {
+                title: this.title,
+                rows: this.rows,
+                shop: this.shop
+            }
+
+        };
     }
 
 
