@@ -1,9 +1,114 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>differenceerp</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ng-container *ngIf="step==1">
+    <ion-list>
+      <ion-title>{{'employees' | translate}}</ion-title>
+      <ion-progress-bar *ngIf="!employees" type="indeterminate"></ion-progress-bar>
+      <ng-container *ngIf="employees.length>0">
+        <ion-searchbar (ionChange)="filterEmployees($event)" debounce="500"
+                       placeholder="{{ 'employee' | translate}}"></ion-searchbar>
+        <ion-item-sliding (click)="getReportDifferenceErp(employee)" *ngFor="let employee of employees">
+          <ion-item>
+            <ion-label>{{employee.user.name}}</ion-label>
+            <ion-note slot="end">{{employee.shop.name}}</ion-note>
+          </ion-item>
+        </ion-item-sliding>
+      </ng-container>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="step==2"><!-- Segment with default selection -->
+    <ion-segment value="javascript">
+      <ion-segment-button value="total">
+        <ion-label>{{'total' | translate}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!--Ean Tab-->
+    <ng-container *ngIf="tab == 'total'">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label class="ion-text-end">
+                {{'visual' | translate}}
+              </ion-label>
+              <ion-toggle [(ngModel)]="visual" slot="end"></ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label>
+                {{'date' | translate}}
+              </ion-label>
+              <p>{{ date | date: 'dd/MM/yyyy'}}</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <!--Epc List-->
+        <ng-container *ngIf="!visual" id="ean-list">
+          <ion-row>
+            <ion-col size="12">
+              <table class="table table-striped" id="print-section">
+                <thead>
+                <tr>
+                  <th scope="col">{{'total_physic' | translate}}</th>
+                  <th scope="col">{{'total_erp' | translate}}</th>
+                  <th scope="col">{{'difference' | translate}}</th>
+                  <th scope="col">{{'ean_plu' | translate}}</th>
+                  <th scope="col">{{'description' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let product of products">
+                  <td>{{ product.total }}</td>
+                  <td> {{product.erp}}</td>
+                  <td> {{product.total - product.erp}}</td>
+                  <td> {{product.ean}}</td>
+                  <td> {{product.description}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-button (click)="generatePdfDifferenceErp()">{{'print' |translate}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+        <!--Epc Visual-->
+        <ng-container *ngIf="visual" id="ean-visual">
+          <ion-row>
+            <ion-col *ngFor="let product of products" size="4">
+              <ion-card>
+                <!--suppress HtmlUnknownTarget -->
+                <img alt="{{'logo' | translate}}" src="{{util.imagenUrl}}{{product.imagen}}"/>
+                <ion-item class="activated" href="#">
+                  <ion-icon name="resize" slot="start"></ion-icon>
+                  <ion-label>{{product.size}}</ion-label>
+                </ion-item>
+
+                <ion-item href="#">
+                  <ion-icon name="grid" slot="start"></ion-icon>
+                  <ion-label>{{product.ean}}</ion-label>
+                </ion-item>
+                <ion-item href="#">
+                  <ion-icon name="stats" slot="start"></ion-icon>
+                  <ion-label>{{product.total}}</ion-label>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ion-grid>
+    </ng-container>
+  </ng-container>
 
 </ion-content>

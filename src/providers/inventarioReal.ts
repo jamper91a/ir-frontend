@@ -49,28 +49,28 @@ import {SaleUnitsReportRequest} from '../webServices/request/SaleUnitsReportRequ
 import {GetSoldUnitsResponse} from '../webServices/response/GetSoldUnitsResponse';
 import {CreateErpReportRequest} from '../webServices/request/CreateErpReportRequest';
 import {GetEmployeesByAdminResponse} from '../webServices/response/GetEmployeesByAdminResponse';
-
+import {Employee} from '../pojo/Employee';
+import {GetByEmployeeRequest} from '../webServices/request/GetByEmployeeRequest';
 
 
 @Injectable()
 export class InventarioReal {
 
 
-  private messages: any;
-  public showDialog = true;
-  constructor(
-    private api: Api,
-    private util: Util,
-    private translate: TranslateService,
-    public platform: Platform
-  ) {
+    public showDialog = true;
+    private messages: any;
 
-     this.get_translation();
+    constructor(
+        private api: Api,
+        private util: Util,
+        private translate: TranslateService,
+        public platform: Platform
+    ) {
+
+        this.get_translation();
 
 
-
-
-  }
+    }
 
     public get_translation() {
       const self = this;
@@ -664,15 +664,17 @@ export class InventarioReal {
         }
     }
 
-    public async getDiferenceInventoryErp():
+    public async getDiferenceInventoryErp(employee: Employee):
         Promise<GetDiferenceInventoryErpResponse> {
+        const request: GetByEmployeeRequest = new GetByEmployeeRequest();
+        request.employee = employee;
         await this.get_translation();
         const self = this;
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
             const response: GetDiferenceInventoryErpResponse = await this.api.post('reportes/diferenceWithInventoryErp',
-                {}).toPromise();
+                request.getBody()).toPromise();
             await dialog.dismiss();
             if (response.data.length === 0) {
                 self.util.showToast('no_data');
