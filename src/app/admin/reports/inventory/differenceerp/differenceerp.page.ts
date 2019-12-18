@@ -8,8 +8,9 @@ import {GetDiferenceInventoryErpResponse} from '../../../../../webServices/respo
 import {Shop} from '../../../../../pojo/Shop';
 import {Employee} from '../../../../../pojo/Employee';
 import {DiferenceInventoryErp} from '../../../../../pojo/DiferenceInventoryErp';
-import {CreatePdfTotalnventoryRequest} from '../../../../../webServices/request/CreatePdfTotalnventoryRequest';
 import {Util} from '../../../../../providers/util';
+// tslint:disable-next-line:max-line-length
+import {CreatePdfDifferencePhysicalErpInventoryRequest} from '../../../../../webServices/request/CreatePdfDifferencePhysicalErpInventoryRequest';
 
 @Component({
   selector: 'app-differenceerp',
@@ -94,7 +95,7 @@ export class DifferenceerpPage implements OnInit {
   }
 
   generatePdfDifferenceErp() {
-    const request: CreatePdfTotalnventoryRequest = new CreatePdfTotalnventoryRequest();
+    const request: CreatePdfDifferencePhysicalErpInventoryRequest = new CreatePdfDifferencePhysicalErpInventoryRequest();
     request.title = this.columnNames.difference_physical_and_erp_inventories;
     request.shop = this.shop.name;
     request.rows.push({
