@@ -5,7 +5,23 @@
 </ion-header>
 
 <ion-content>
-  <ion-progress-bar type="indeterminate" *ngIf="result.data.length === 0"></ion-progress-bar>
+  <ng-container *ngIf="step==1">
+    <ion-list>
+      <ion-title>{{'employees' | translate}}</ion-title>
+      <ion-progress-bar type="indeterminate" *ngIf="!employees"></ion-progress-bar>
+      <ng-container *ngIf="employees.length>0">
+        <ion-searchbar placeholder="{{ 'employee' | translate}}" debounce="500" (ionChange)="filterEmployees($event)"></ion-searchbar>
+        <ion-item-sliding *ngFor="let employee of employees" (click)="getReport(employee)">
+          <ion-item>
+            <ion-label>{{employee.user.name}}</ion-label>
+            <ion-note slot="end">{{employee.shop.name}}</ion-note>
+          </ion-item>
+        </ion-item-sliding>
+      </ng-container>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="step==2">
+    <ion-progress-bar type="indeterminate" *ngIf="result.data.length === 0"></ion-progress-bar>
     <ion-grid *ngIf="result.data.length>0">
       <ion-row>
         <ion-col size="12">
@@ -40,8 +56,9 @@
       <ion-row>
         <ion-col size="6">
           <!--<ion-button (click)="generatePdf()" disabled>{{'print' |translate}}</ion-button>-->
-          <ion-button disabled>{{'print' |translate}}</ion-button>
+          <ion-button (click)="generateEanPluPdf()">{{'print' |translate}}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
+  </ng-container>
 </ion-content>

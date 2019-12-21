@@ -1,10 +1,11 @@
 import {CreatePdfRequest} from './CreatePdfRequest';
 
-export class CreatePdfTotalnventoryRequest extends CreatePdfRequest {
+export class CreatePdfDifferencePhysicalErpInventoryRequest extends CreatePdfRequest {
     public shop: string;
+
     constructor() {
         super();
-        this.templateId = '63425';
+        this.templateId = '65409';
     }
 
     getBody() {

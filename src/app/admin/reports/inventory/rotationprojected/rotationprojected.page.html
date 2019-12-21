@@ -1,9 +1,51 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>rotationprojected</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <form (submit)="getReport()" *ngIf="step == 1">
+      <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 80vh;">
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">{{ 'rotation_days' | translate }}</ion-label>
+            <ion-input [(ngModel)]="request.days" autofocus="true" name="code" type="number"></ion-input>
+          </ion-item>
+
+          <div class="ion-padding">
+            <ion-button type="submit">
+              {{ 'continue' | translate }}
+            </ion-button>
+          </div>
+        </ion-list>
+
+      </ion-row>
+    </form>
+    <ion-row *ngIf="step==2" class="ion-align-items-center ion-justify-content-center">
+      <ion-list>
+        <ion-item>
+          <ion-card>
+            <!--suppress HtmlUnknownTarget -->
+            <img alt="{{'logo' | translate}}" src="{{util.imagenUrl}}{{product.imagen}}"/>
+            <ion-item class="activated" href="#">
+              <ion-icon name="resize" slot="start"></ion-icon>
+              <ion-label>{{product.size}}</ion-label>
+            </ion-item>
+
+            <ion-item href="#">
+              <ion-icon name="grid" slot="start"></ion-icon>
+              <ion-label>{{product.ean}}</ion-label>
+            </ion-item>
+            <ion-card-content>
+              {{'total_suggested_units' | translate}}: {{result.data.length}}
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+  </ion-grid>
+
 
 </ion-content>

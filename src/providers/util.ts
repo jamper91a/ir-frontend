@@ -57,11 +57,13 @@ export class Util {
       exporter: 'exporter'
     };
       this.url = environment.url;
+      this.imagenUrl = environment.imagenUrl;
       this.version = '1.0.0';
   }
 
   public constants;
   public url: string;
+  public imagenUrl: string;
   public version: string;
 
 

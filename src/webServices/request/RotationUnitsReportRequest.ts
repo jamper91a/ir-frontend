@@ -1,18 +1,19 @@
 import {Employee} from '../../pojo/Employee';
 
-export class GetProductInShopByEanPluRequest implements InventarioRealRequest {
-    public product: string;
+export class RotationUnitsReportRequest implements InventarioRealRequest {
+    public firstDate: string;
+    public secondDate: string;
     public employee: Employee;
 
 
     constructor() {
-        this.product = '';
     }
 
     getBody() {
         return {
-            product: this.product,
-            employee: this.employee
+            firstDate: this.firstDate,
+            secondDate: this.secondDate,
+            employee: this.employee,
         };
     }
 
@@ -20,7 +21,7 @@ export class GetProductInShopByEanPluRequest implements InventarioRealRequest {
         const error = new Error();
         // @ts-ignore
         error.code = 'VAL_FAIL';
-        if (!this.product) {
+        if (!this.firstDate || !this.secondDate) {
             error.message = 'fields_empty';
             throw error;
         }
@@ -29,7 +30,6 @@ export class GetProductInShopByEanPluRequest implements InventarioRealRequest {
 
     clean() {
     }
-
 
 
 }

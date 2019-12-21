@@ -54,7 +54,7 @@ export class ListPage implements OnInit {
   }
 
   async ionViewDidEnter() {
-    this.allEmiterService.onNewTitle('difference_inventories');
+    this.allEmiterService.onNewTitle(this.data.title);
   }
 
   selectInventory(inventory: ConsolidatedInventory) {

@@ -60,4 +60,52 @@ export class ReportsPage implements OnInit {
         this.navCtrl.navigateForward(['admin/reports/inventory/list'], navigationExtras);
     }
 
+    goToRotationUnits() {
+        const navigationExtras: NavigationExtras = {
+            state: {
+                data: {
+                    title: 'rotation_inventory',
+                    goTo: 'admin/reports/inventory/rotation'
+                }
+            }
+        };
+        this.navCtrl.navigateForward(['admin/reports/dates'], navigationExtras);
+    }
+
+    goToClientsReturn() {
+        const navigationExtras: NavigationExtras = {
+            state: {
+                data: {
+                    title: 'clients_return',
+                    goTo: 'admin/reports/inventory/clientsReturn'
+                }
+            }
+        };
+        this.navCtrl.navigateForward(['admin/reports/dates'], navigationExtras);
+    }
+
+    goToSuppliersReturn() {
+        const navigationExtras: NavigationExtras = {
+            state: {
+                data: {
+                    title: 'suppliers_return',
+                    goTo: 'admin/reports/inventory/suppliersReturn'
+                }
+            }
+        };
+        this.navCtrl.navigateForward(['admin/reports/dates'], navigationExtras);
+    }
+
+    goToRotationProjected() {
+        const navigationExtras: NavigationExtras = {
+            state: {
+                data: {
+                    title: 'rotation_projected',
+                    goTo: 'admin/reports/inventory/rotationProjected'
+                }
+            }
+        };
+        this.navCtrl.navigateForward(['admin/reports/products/find'], navigationExtras);
+    }
+
 }
