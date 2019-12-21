@@ -86,7 +86,8 @@ const routes: Routes = [
     loadChildren: './dealer/tags/tags-create-step-two/tags-create-step-two.module#TagsCreateStepTwoPageModule'
   },
   {path: 'dealer/reports', loadChildren: './dealer/reports/reports.module#ReportsPageModule'},
-  {path: 'dates', loadChildren: './admin/reports/dates/dates.module#DatesPageModule'}
+  {path: 'dates', loadChildren: './admin/reports/dates/dates.module#DatesPageModule'},
+  {path: 'stats', loadChildren: './admin/stats/stats.module#StatsPageModule'}
 
 ];
 

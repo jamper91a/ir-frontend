@@ -14,7 +14,7 @@ const routes: Routes = [
     path: '',
     component: HomePage,
     children: [
-      {path: '', loadChildren: './company/company.module#CompanyPageModule'},
+      {path: '', loadChildren: './stats/stats.module#StatsPageModule'},
       {path: 'company', loadChildren: './company/company.module#CompanyPageModule'},
       {path: 'erp', loadChildren: './erp/erp.module#ErpPageModule'},
       {path: 'products', loadChildren: './products/products.module#ProductsPageModule'},
