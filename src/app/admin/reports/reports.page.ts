@@ -84,4 +84,16 @@ export class ReportsPage implements OnInit {
         this.navCtrl.navigateForward(['admin/reports/dates'], navigationExtras);
     }
 
+    goToSuppliersReturn() {
+        const navigationExtras: NavigationExtras = {
+            state: {
+                data: {
+                    title: 'suppliers_return',
+                    goTo: 'admin/reports/inventory/suppliersReturn'
+                }
+            }
+        };
+        this.navCtrl.navigateForward(['admin/reports/dates'], navigationExtras);
+    }
+
 }
