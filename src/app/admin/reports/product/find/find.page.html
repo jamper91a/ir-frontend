@@ -8,35 +8,66 @@
 
 <ion-content class="ion-padding">
 
+
   <form (submit)="doFind()" *ngIf="step == 1">
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 80vh;">
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked">{{ 'ean_plu' | translate }}</ion-label>
+          <ion-input [(ngModel)]="request.code" autofocus="true" name="code" placeholder="{{'code' | translate}}"
+                     type="text"></ion-input>
+        </ion-item>
+
+        <div class="ion-padding">
+          <ion-button type="submit">
+            {{ 'find' | translate }}
+          </ion-button>
+        </div>
+      </ion-list>
+    </ion-row>
+
+  </form>
+  <ion-row *ngIf="step==2" class="ion-align-items-center ion-justify-content-center">
     <ion-list>
       <ion-item>
-        <ion-label  position="stacked">{{ 'ean_plu' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="request.code" name="code"></ion-input>
+        <ion-card>
+          <!--suppress HtmlUnknownTarget -->
+          <img *ngIf="result.data.imagen" alt="{{'logo' | translate}}" src="{{util.imagenUrl}}{{result.data.imagen}}"/>
+          <ion-item class="activated" href="#">
+            <ion-icon name="resize" slot="start"></ion-icon>
+            <ion-label>{{result.data.size}}</ion-label>
+          </ion-item>
+
+          <ion-item href="#">
+            <ion-icon name="grid" slot="start"></ion-icon>
+            <ion-label>{{result.data.category}}</ion-label>
+          </ion-item>
+          <ion-item href="#">
+            <ion-icon name="stats" slot="start"></ion-icon>
+            <ion-label>{{this.result.data.description}}</ion-label>
+          </ion-item>
+          <ion-card-content>
+            {{'do_you_want_to_continue' | translate}}
+            <ion-button (click)="yes()">{{'yes' |translate}}</ion-button>
+            <ion-button (click)="no()">{{'no' |translate}}</ion-button>
+          </ion-card-content>
+        </ion-card>
       </ion-item>
-
-      <div class="ion-padding">
-        <ion-button type="submit" >
-          {{ 'find' | translate }}
-        </ion-button>
-      </div>
-
-
     </ion-list>
-  </form>
-  <ion-grid *ngIf="step == 2">
-    <ion-row><ion-col>{{result.data.description}}</ion-col></ion-row>
-    <ion-row><ion-col>{{result.data.category}}</ion-col></ion-row>
-    <ion-row><ion-col>{{result.data.size}}</ion-col></ion-row>
-    <ion-row><ion-col>
-      <img src="{{util.imagenUrl}}{{result.data.imagen}}" *ngIf="result.data.imagen"  alt="{{'logo' | translate}}"/>
-    </ion-col></ion-row>
-    <ion-row>
-      <ion-col>
-        {{'do_you_want_to_continue' | translate}}
-        <ion-button (click)="yes()">{{'yes' |translate}}</ion-button>
-        <ion-button (click)="no()">{{'no' |translate}}</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  </ion-row>
+  <!--  <ion-grid *ngIf="step == 2">-->
+  <!--    <ion-row><ion-col>{{result.data.description}}</ion-col></ion-row>-->
+  <!--    <ion-row><ion-col>{{result.data.category}}</ion-col></ion-row>-->
+  <!--    <ion-row><ion-col>{{result.data.size}}</ion-col></ion-row>-->
+  <!--    <ion-row><ion-col>-->
+  <!--      <img src="{{util.imagenUrl}}{{result.data.imagen}}" *ngIf="result.data.imagen"  alt="{{'logo' | translate}}"/>-->
+  <!--    </ion-col></ion-row>-->
+  <!--    <ion-row>-->
+  <!--      <ion-col>-->
+  <!--        {{'do_you_want_to_continue' | translate}}-->
+  <!--        <ion-button (click)="yes()">{{'yes' |translate}}</ion-button>-->
+  <!--        <ion-button (click)="no()">{{'no' |translate}}</ion-button>-->
+  <!--      </ion-col>-->
+  <!--    </ion-row>-->
+  <!--  </ion-grid>-->
 </ion-content>

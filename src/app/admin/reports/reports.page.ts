@@ -96,4 +96,16 @@ export class ReportsPage implements OnInit {
         this.navCtrl.navigateForward(['admin/reports/dates'], navigationExtras);
     }
 
+    goToRotationProjected() {
+        const navigationExtras: NavigationExtras = {
+            state: {
+                data: {
+                    title: 'rotation_projected',
+                    goTo: 'admin/reports/inventory/rotationProjected'
+                }
+            }
+        };
+        this.navCtrl.navigateForward(['admin/reports/products/find'], navigationExtras);
+    }
+
 }

@@ -55,6 +55,8 @@ import {RotationUnitsReportRequest} from '../webServices/request/RotationUnitsRe
 import {GetRotationUnitsResponse} from '../webServices/response/GetRotationUnitsResponse';
 import {ReturnReportRequest} from '../webServices/request/ReturnReportRequest';
 import {GetReturnReportResponse} from '../webServices/response/GetReturnReportResponse';
+import {GetRotationProjectedRequest} from '../webServices/request/GetRotationProjectedRequest';
+import {GetRotationProjectedResponse} from '../webServices/response/GetRotationProjectedResponse';
 
 
 @Injectable()
@@ -725,8 +727,27 @@ export class InventarioReal {
             if (response.data.length === 0) {
                 self.util.showToast('no_data');
             }
-            console.log('ws');
-            console.log(response);
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getRotationProjected(request: GetRotationProjectedRequest):
+        Promise<GetRotationProjectedResponse> {
+        await this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetRotationProjectedResponse = await this.api.post('reportes/rotationProyectedByEanPlu',
+                request.getBody()).toPromise();
+            await dialog.dismiss();
+            // if (response.data.length === 0) {
+            //     self.util.showToast('no_data');
+            // }
             return response;
         } catch (e) {
             await dialog.dismiss();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AllEmiterService} from '../../../../services/all-emiter-service';
 import {TranslateService} from '@ngx-translate/core';
 import {InventarioReal} from '../../../../../providers/inventarioReal';
@@ -34,10 +34,10 @@ export class EanpluPage implements OnInit {
       private router: Router,
       private navCtrl: NavController
   ) {
+    this.allEmiterService.onNewTitle('ean_plu_inventory');
     this.translate.get(['ean_plu_inventory', 'id', 'epc', 'zone']).subscribe((values) => {
       this.columnNames = values;
     });
-    this.allEmiterService.onNewTitle('ean_plu_inventory');
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.product = this.router.getCurrentNavigation().extras.state.product;
@@ -73,6 +73,7 @@ export class EanpluPage implements OnInit {
         this.request.employee = employee;
         this.result = await this.inventarioReal.getProductInShopByEanPlu(this.request);
       } catch (e) {
+        this.navCtrl.navigateBack('admin/reports');
         // this.util.showToast(e);
       }
     }
