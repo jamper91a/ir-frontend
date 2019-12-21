@@ -51,6 +51,8 @@ import {CreateErpReportRequest} from '../webServices/request/CreateErpReportRequ
 import {GetEmployeesByAdminResponse} from '../webServices/response/GetEmployeesByAdminResponse';
 import {Employee} from '../pojo/Employee';
 import {GetByEmployeeRequest} from '../webServices/request/GetByEmployeeRequest';
+import {RotationUnitsReportRequest} from '../webServices/request/RotationUnitsReportRequest';
+import {GetRotationUnitsResponse} from '../webServices/response/GetRotationUnitsResponse';
 
 
 @Injectable()
@@ -700,6 +702,29 @@ export class InventarioReal {
             if (response.data.saleUnits.length === 0 || response.data.returnedUnits.length === 0) {
                 self.util.showToast('no_data');
             }
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getRotationUnits(request: RotationUnitsReportRequest):
+        Promise<GetRotationUnitsResponse> {
+        await this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetRotationUnitsResponse = await this.api.post('reportes/rotationUnits',
+                request.getBody()).toPromise();
+            await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
+            console.log('ws');
+            console.log(response);
             return response;
         } catch (e) {
             await dialog.dismiss();
