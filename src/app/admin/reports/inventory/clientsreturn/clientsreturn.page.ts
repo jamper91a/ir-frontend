@@ -9,8 +9,8 @@ import {InventarioReal} from '../../../../../providers/inventarioReal';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import {Util} from '../../../../../providers/util';
-import {CreatePdfRotationInventoryRequest} from '../../../../../webServices/request/CreatePdfRotationInventoryRequest';
 import {ReturnReportRequest} from '../../../../../webServices/request/ReturnReportRequest';
+import {CreatePdfReturnUnitsRequest} from '../../../../../webServices/request/CreatePdfReturnUnitsRequest';
 
 @Component({
   selector: 'app-clientsreturn',
@@ -43,7 +43,7 @@ export class ClientsreturnPage implements OnInit {
   ) {
     this.allEmiterService.onNewTitle('clients_return');
     this.translate.get(['clients_return', 'total',
-      'ean_plu', 'description', 'dealer']).subscribe((values) => {
+      'ean_plu', 'description', 'supplier']).subscribe((values) => {
       this.columnNames = values;
     });
     this.route.queryParams.subscribe(() => {
@@ -139,23 +139,21 @@ export class ClientsreturnPage implements OnInit {
   }
 
   generatePdfClientsReturn() {
-    const request: CreatePdfRotationInventoryRequest = new CreatePdfRotationInventoryRequest();
-    request.title = this.columnNames.rotation_inventory;
+    const request: CreatePdfReturnUnitsRequest = new CreatePdfReturnUnitsRequest();
+    request.title = this.columnNames.clients_return;
     request.shop = this.shop.name;
     request.rows.push({
-      total_physic: this.columnNames.total_physic,
-      sold: this.columnNames.sold,
-      difference: this.columnNames.difference,
+      total: this.columnNames.total,
       ean_plu: this.columnNames.ean_plu,
-      description: this.columnNames.description
+      description: this.columnNames.description,
+      supplier: this.columnNames.supplier
     });
     for (const product of this.allProducts) {
       request.rows.push({
-        total_physic: product.total,
-        sold: product.vendidas,
-        difference: product.total - product.vendidas,
+        total: product.total,
         ean_plu: product.product.ean,
-        description: product.product.description
+        description: product.product.description,
+        supplier: product.product.supplier.name,
       });
     }
     this.inventarioReal.createPdf(request);
