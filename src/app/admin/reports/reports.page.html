@@ -5,15 +5,25 @@
 </ion-header>
 
 <ion-content>
-  <ion-button [routerLink]="'inventory/total'">{{'total_inventory' | translate}}</ion-button><br>
-  <ion-button (click)="goToEanPlu()">{{'ean_plu_inventory' | translate}}</ion-button><br>
-  <ion-button (click)="goToDifference()">{{'difference_inventories' | translate}}</ion-button><br>
-  <ion-button [routerLink]="'inventory/differenceErp'">{{'difference_erp_inventory' | translate}}</ion-button><br>
-  <ion-button [routerLink]="'inventory/homologue'">{{'homologue_differences' | translate}}</ion-button><br>
+  <ion-button [routerLink]="'inventory/total'">{{'total_inventory' | translate}}</ion-button>
+  <br>
+  <ion-button (click)="goToEanPlu()">{{'ean_plu_inventory' | translate}}</ion-button>
+  <br>
+  <ion-button (click)="goToDifference()">{{'difference_inventories' | translate}}</ion-button>
+  <br>
+  <ion-button [routerLink]="'inventory/differenceErp'">{{'difference_erp_inventory' | translate}}</ion-button>
+  <br>
+  <ion-button [routerLink]="'inventory/homologue'" disabled="true">{{'homologue_differences' | translate}}</ion-button>
+  <br>
   <ion-button (click)="goToSoldUnits()">{{'sold_units' | translate}}</ion-button>
   <br>
-  <ion-button [routerLink]="'inventory/rotation'">{{'rotation_inventory' | translate}}</ion-button><br>
-  <ion-button [routerLink]="'inventory/clientsReturn'">{{'clients_return' | translate}}</ion-button><br>
-  <ion-button [routerLink]="'inventory/suppliersReturn'">{{'suppliers_return' | translate}}</ion-button><br>
-  <ion-button [routerLink]="'inventory/rotationProjected'">{{'rotation_projected' | translate}}</ion-button><br>
+  <ion-button (click)="goToRotationUnits()" disabled="false">{{'rotation_inventory' | translate}}</ion-button>
+  <br>
+  <ion-button [routerLink]="'inventory/clientsReturn'" disabled="true">{{'clients_return' | translate}}</ion-button>
+  <br>
+  <ion-button [routerLink]="'inventory/suppliersReturn'" disabled="true">{{'suppliers_return' | translate}}</ion-button>
+  <br>
+  <ion-button [routerLink]="'inventory/rotationProjected'"
+              disabled="true">{{'rotation_projected' | translate}}</ion-button>
+  <br>
 </ion-content>

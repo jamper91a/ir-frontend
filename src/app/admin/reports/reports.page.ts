@@ -60,4 +60,16 @@ export class ReportsPage implements OnInit {
         this.navCtrl.navigateForward(['admin/reports/inventory/list'], navigationExtras);
     }
 
+    goToRotationUnits() {
+        const navigationExtras: NavigationExtras = {
+            state: {
+                data: {
+                    title: 'rotation_inventory',
+                    goTo: 'admin/reports/inventory/rotation'
+                }
+            }
+        };
+        this.navCtrl.navigateForward(['admin/reports/dates'], navigationExtras);
+    }
+
 }

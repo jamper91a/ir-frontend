@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>erp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 80vh;">
+
+      <ion-col *ngIf="monthNames != null" align="center">
+        <ion-item>
+          <ion-label>{{'initial_date' | translate}}</ion-label>
+          <ion-datetime
+                  [(ngModel)]="request.initialDate"
+                  [monthNames]="monthNames"
+                  displayFormat="YYYY-MM-DD"
+                  pickerFormat="DD MMMM YYYY"
+                  placeholder="{{'select_date' | translate}}">
+          </ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'final_date' | translate}}</ion-label>
+          <ion-datetime
+                  [(ngModel)]="request.finalDate"
+                  [min]="request.initialDate"
+                  [monthNames]="monthNames"
+                  displayFormat="YYYY-MM-DD"
+                  pickerFormat="DD MMMM YYYY"
+                  placeholder="{{'select_date' | translate}}">
+          </ion-datetime>
+        </ion-item>
+        <ion-button (click)="goToNextPage()">{{'continue' | translate}}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>
