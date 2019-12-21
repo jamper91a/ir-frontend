@@ -5,24 +5,48 @@
 </ion-header>
 
 <ion-content>
-  <ion-button [routerLink]="'inventory/total'">{{'total_inventory' | translate}}</ion-button>
-  <br>
-  <ion-button (click)="goToEanPlu()">{{'ean_plu_inventory' | translate}}</ion-button>
-  <br>
-  <ion-button (click)="goToDifference()">{{'difference_inventories' | translate}}</ion-button>
-  <br>
-  <ion-button [routerLink]="'inventory/differenceErp'">{{'difference_erp_inventory' | translate}}</ion-button>
-  <br>
-  <ion-button [routerLink]="'inventory/homologue'" disabled="true">{{'homologue_differences' | translate}}</ion-button>
-  <br>
-  <ion-button (click)="goToSoldUnits()">{{'sold_units' | translate}}</ion-button>
-  <br>
-  <ion-button (click)="goToRotationUnits()" disabled="false">{{'rotation_inventory' | translate}}</ion-button>
-  <br>
-  <ion-button (click)="goToClientsReturn()">{{'clients_return' | translate}}</ion-button>
-  <br>
-  <ion-button (click)="goToSuppliersReturn()">{{'suppliers_return' | translate}}</ion-button>
-  <br>
-  <ion-button (click)="goToRotationProjected()">{{'rotation_projected' | translate}}</ion-button>
-  <br>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 20vh;">
+      <ion-col>
+        <ion-button [routerLink]="'inventory/total'" expand="full">{{'total_inventory' | translate}}</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="goToEanPlu()" expand="full">{{'ean_plu_inventory' | translate}}</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="goToDifference()" expand="full">{{'difference_inventories' | translate}}</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 20vh;">
+      <ion-col>
+        <ion-button [routerLink]="'inventory/differenceErp'"
+                    expand="full">{{'difference_erp_inventory' | translate}}</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button [routerLink]="'inventory/homologue'" disabled="true"
+                    expand="full">{{'homologue_differences' | translate}}</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="goToSoldUnits()" expand="full">{{'sold_units' | translate}}</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 20vh;">
+      <ion-col>
+        <ion-button (click)="goToRotationUnits()" disabled="false"
+                    expand="full">{{'rotation_inventory' | translate}}</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="goToClientsReturn()" expand="full">{{'clients_return' | translate}}</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="goToSuppliersReturn()" expand="full">{{'suppliers_return' | translate}}</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 20vh;">
+      <ion-col>
+        <ion-button (click)="goToRotationProjected()" expand="full">{{'rotation_projected' | translate}}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
