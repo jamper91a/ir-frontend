@@ -10,6 +10,7 @@ import {GetRotationUnitsResponse} from '../../../../../webServices/response/GetR
 import {Shop} from '../../../../../pojo/Shop';
 import {Employee} from '../../../../../pojo/Employee';
 import {Util} from '../../../../../providers/util';
+import {CreatePdfRotationInventoryRequest} from '../../../../../webServices/request/CreatePdfRotationInventoryRequest';
 
 @Component({
   selector: 'app-rotation',
@@ -41,10 +42,13 @@ export class RotationPage implements OnInit {
       public util: Util
   ) {
     this.allEmiterService.onNewTitle('rotation_inventory');
+    this.translate.get(['rotation_inventory', 'total_physic',
+      'sold', 'difference', 'ean_plu', 'description']).subscribe((values) => {
+      this.columnNames = values;
+    });
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
         const aux = this.router.getCurrentNavigation().extras.state.request;
-        console.log(aux);
         if (aux) {
           this.request = new RotationUnitsReportRequest();
           this.request.firstDate = aux.initialDate;
@@ -137,27 +141,27 @@ export class RotationPage implements OnInit {
     }
   }
 
-  generatePdfDifferenceErp() {
-    // const request: CreatePdfDifferencePhysicalErpInventoryRequest = new CreatePdfDifferencePhysicalErpInventoryRequest();
-    // request.title = this.columnNames.difference_physical_and_erp_inventories;
-    // request.shop = this.shop.name;
-    // request.rows.push({
-    //   total_physic: this.columnNames.total_physic,
-    //   total_erp: this.columnNames.total_erp,
-    //   difference: this.columnNames.difference,
-    //   ean_plu: this.columnNames.ean_plu,
-    //   description: this.columnNames.description
-    // });
-    // for (const product of this.products) {
-    //   request.rows.push({
-    //     total_physic: product.total,
-    //     total_erp: product.erp,
-    //     difference: product.total - product.erp,
-    //     ean_plu: product.ean,
-    //     description: product.description
-    //   });
-    // }
-    // this.inventarioReal.createPdf(request);
+  generatePdfRotationUnits() {
+    const request: CreatePdfRotationInventoryRequest = new CreatePdfRotationInventoryRequest();
+    request.title = this.columnNames.rotation_inventory;
+    request.shop = this.shop.name;
+    request.rows.push({
+      total_physic: this.columnNames.total_physic,
+      sold: this.columnNames.sold,
+      difference: this.columnNames.difference,
+      ean_plu: this.columnNames.ean_plu,
+      description: this.columnNames.description
+    });
+    for (const product of this.allProducts) {
+      request.rows.push({
+        total_physic: product.total,
+        sold: product.vendidas,
+        difference: product.total - product.vendidas,
+        ean_plu: product.product.ean,
+        description: product.product.description
+      });
+    }
+    this.inventarioReal.createPdf(request);
   }
 
 }
