@@ -53,6 +53,8 @@ import {Employee} from '../pojo/Employee';
 import {GetByEmployeeRequest} from '../webServices/request/GetByEmployeeRequest';
 import {RotationUnitsReportRequest} from '../webServices/request/RotationUnitsReportRequest';
 import {GetRotationUnitsResponse} from '../webServices/response/GetRotationUnitsResponse';
+import {ReturnReportRequest} from '../webServices/request/ReturnReportRequest';
+import {GetReturnReportResponse} from '../webServices/response/GetReturnReportResponse';
 
 
 @Injectable()
@@ -725,6 +727,27 @@ export class InventarioReal {
             }
             console.log('ws');
             console.log(response);
+            return response;
+        } catch (e) {
+            await dialog.dismiss();
+            self.util.showToast('error_getting_data');
+            throw e;
+        }
+    }
+
+    public async getReturnsByType(request: ReturnReportRequest):
+        Promise<GetReturnReportResponse> {
+        await this.get_translation();
+        const self = this;
+        const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
+        try {
+            // @ts-ignore
+            const response: GetReturnReportResponse = await this.api.post('reportes/devolutionsByType',
+                request.getBody()).toPromise();
+            await dialog.dismiss();
+            if (response.data.length === 0) {
+                self.util.showToast('no_data');
+            }
             return response;
         } catch (e) {
             await dialog.dismiss();

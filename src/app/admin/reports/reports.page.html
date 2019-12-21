@@ -19,7 +19,7 @@
   <br>
   <ion-button (click)="goToRotationUnits()" disabled="false">{{'rotation_inventory' | translate}}</ion-button>
   <br>
-  <ion-button [routerLink]="'inventory/clientsReturn'" disabled="true">{{'clients_return' | translate}}</ion-button>
+  <ion-button (click)="goToClientsReturn()">{{'clients_return' | translate}}</ion-button>
   <br>
   <ion-button [routerLink]="'inventory/suppliersReturn'" disabled="true">{{'suppliers_return' | translate}}</ion-button>
   <br>
