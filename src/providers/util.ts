@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
 import {environment} from '../environments/environment';
-
+import faker from 'faker';
 /**
  * Created by Usuario on 02/06/2017.
  */
@@ -122,5 +122,17 @@ export class Util {
   public logOut() {
       Util.clearAllData();
       this.router.navigateByUrl('/');
+  }
+
+  public generateName() {
+    return  faker.name.firstName();
+  }
+  public generateEmail() {
+      const email = faker.internet.email();
+      console.log(email);
+      return  email;
+  }
+  public generatePassword() {
+        return '12345';
   }
 }

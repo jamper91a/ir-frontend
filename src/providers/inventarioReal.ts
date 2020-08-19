@@ -57,6 +57,7 @@ import {ReturnReportRequest} from '../webServices/request/ReturnReportRequest';
 import {GetReturnReportResponse} from '../webServices/response/GetReturnReportResponse';
 import {GetRotationProjectedRequest} from '../webServices/request/GetRotationProjectedRequest';
 import {GetRotationProjectedResponse} from '../webServices/response/GetRotationProjectedResponse';
+import {UrlWebServices} from '../webServices/UrlWebServices';
 
 
 @Injectable()
@@ -65,7 +66,6 @@ export class InventarioReal {
 
     public showDialog = true;
     private messages: any;
-
     constructor(
         private api: Api,
         private util: Util,
@@ -109,17 +109,19 @@ export class InventarioReal {
       console.log(this.messages);
       const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
       try {
-      // @ts-ignore
-        const response: LoginResponse = await this.api.post(UrlWebServices.User.loginWeb, request.getBody()).toPromise();
-        await dialog.dismiss();
-        if (response) {
+
+          console.log(UrlWebServices);
+          // @ts-ignore
+          const response: LoginResponse = await this.api.post(UrlWebServices.User.loginWeb, request.getBody()).toPromise();
+          await dialog.dismiss();
+          if (response) {
             Util.savePreference('token', response.data.token);
             Util.savePreference('employee', JSON.stringify(response.data.employee));
             Util.savePreference('user', JSON.stringify(response.data.user));
             Util.savePreference('dealer', JSON.stringify(response.data.dealer));
       }
       // @ts-ignore
-        return response;
+          return response;
       } catch (e) {
         console.log('catch');
         await dialog.dismiss();
@@ -159,7 +161,6 @@ export class InventarioReal {
             await dialog.dismiss();
             return response;
         } catch (e) {
-            console.log('catch');
             await dialog.dismiss();
             self.util.showToast('error_getting_data');
             throw e;

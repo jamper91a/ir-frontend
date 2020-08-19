@@ -1,6 +1,6 @@
-class UrlWebServices {
+export class UrlWebServices {
 
-    private static readonly companyPreFix = ' /company/';
+    private static readonly companyPreFix = '/company/';
     private static readonly dealerPreFix = '/dealer/';
     private static readonly devolutionPreFix = '/devolution/';
     private static readonly epcPreFix = '/epc/';

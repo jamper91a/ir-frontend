@@ -30,6 +30,7 @@ export class Api {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
         }
+        console.log(this.util.url + endpoint);
         return this.http.post(this.util.url + endpoint, body, httpOptions);
     }
     postWithFiles( endpoint: string, body: FormData) {
