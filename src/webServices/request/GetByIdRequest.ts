@@ -8,7 +8,7 @@ export class GetByIdRequest implements InventarioRealRequest {
 
     getBody() {
         return {
-            id: this.id
+            id: parseInt(this.id, 0)
         };
     }
 

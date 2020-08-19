@@ -53,6 +53,7 @@ export class EditSupplierPage implements OnInit {
       this.util.showToast('supplier_updated');
       this.navCtrl.navigateBack(['admin/suppliers' ]);
     } catch (e) {
+      console.log(e);
       this.util.showToast(e);
     }
   }

@@ -260,7 +260,7 @@ export class InventarioReal {
         }
     }
 
-    public async getCompanyById(id: string = ''): Promise<GetCompanyByIdResponse> {
+    public async getCompanyById(id: string = '0'): Promise<GetCompanyByIdResponse> {
         await this.get_translation();
         const request: GetByIdRequest = new GetByIdRequest();
         request.id = id;

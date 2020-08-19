@@ -51,7 +51,7 @@ export class CompanyPage implements OnInit {
       const response = await this.inventarioReal.getCompanyById();
       this.company = response.data;
       if (this.company && this.company.photo) {
-        this.imgURL = this.util.url + this.company.photo;
+        this.imgURL = this.util.url + '/' + this.company.photo;
       }
       this.request.putData(this.company);
       this.allEmiterService.onNewTitle(this.company.name);
