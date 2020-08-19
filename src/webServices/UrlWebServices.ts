@@ -35,8 +35,8 @@ export class UrlWebServices {
     };
     static readonly Epc = {
         create:                  UrlWebServices.epcPreFix + 'create',
-        tagsByCompanyByMonth:    UrlWebServices.epcPreFix + 'getAllActiveDealers',
-        tagsByDealerByMonth:     UrlWebServices.epcPreFix + 'getAllDealers'
+        tagsByCompanyByMonth:    UrlWebServices.epcPreFix + 'tagsByCompanyByMonth',
+        tagsByDealerByMonth:     UrlWebServices.epcPreFix + 'tagsByDealerByMonth'
     };
     static readonly Inventory = {
         attach:                         UrlWebServices.inventoryPreFix + 'attach',
