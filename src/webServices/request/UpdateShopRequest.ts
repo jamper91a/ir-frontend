@@ -13,6 +13,7 @@ export class UpdateShopRequest implements InventarioRealRequest {
 
     getBody() {
         return {
+            id: parseInt(this.id, 0),
             name: this.name
 
         };

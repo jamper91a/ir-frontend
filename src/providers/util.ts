@@ -135,4 +135,19 @@ export class Util {
   public generatePassword() {
         return '12345';
   }
+  public generateUuid() {
+        return faker.random.uuid();
+  }
+  public generateColor() {
+        return faker.commerce.color();
+  }
+    public generateText() {
+        return faker.lorem.paragraph();
+    }
+    public generateNumber() {
+        return faker.random.number();
+    }
+    public generateWord() {
+        return faker.lorem.word();
+    }
 }

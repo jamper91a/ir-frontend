@@ -1,21 +1,21 @@
 export class UrlWebServices {
 
-    private static readonly companyPreFix = '/company/';
-    private static readonly dealerPreFix = '/dealer/';
-    private static readonly devolutionPreFix = '/devolution/';
-    private static readonly epcPreFix = '/epc/';
-    private static readonly inventoryPreFix = '/inventory/';
-    private static readonly consolidatedInventoryPreFix = '/ci/';
-    private static readonly inventoryErpPreFix = '/inventory-erp/';
-    private static readonly pdfPreFix = '/pdf/';
-    private static readonly productPreFix = '/product/';
-    private static readonly reportPreFix = '/report/';
-    private static readonly sellPreFix = '/sell/';
-    private static readonly shopPreFix = '/shop/';
-    private static readonly supplierPreFix = '/supplier/';
-    private static readonly transferPreFix = '/transfer/';
-    private static readonly userPreFix = '/user/';
-    private static readonly zonePreFix = '/zone/';
+    private static readonly companyPreFix = 'company/';
+    private static readonly dealerPreFix = 'dealer/';
+    private static readonly devolutionPreFix = 'devolution/';
+    private static readonly epcPreFix = 'epc/';
+    private static readonly inventoryPreFix = 'inventory/';
+    private static readonly consolidatedInventoryPreFix = 'ci/';
+    private static readonly inventoryErpPreFix = 'inventory-erp/';
+    private static readonly pdfPreFix = 'pdf/';
+    private static readonly productPreFix = 'product/';
+    private static readonly reportPreFix = 'report/';
+    private static readonly sellPreFix = 'sell/';
+    private static readonly shopPreFix = 'shop/';
+    private static readonly supplierPreFix = 'supplier/';
+    private static readonly transferPreFix = 'transfer/';
+    private static readonly userPreFix = 'user/';
+    private static readonly zonePreFix = 'zone/';
 
 
     static readonly Company = {
@@ -85,7 +85,8 @@ export class UrlWebServices {
     };
     static readonly Shop = {
         createShop:              UrlWebServices.shopPreFix + 'create-shop',
-        findShopsByCompany:    UrlWebServices.shopPreFix + 'find-shops-by-company',
+        findShopsByCompany:     UrlWebServices.shopPreFix + 'find-shops-by-company',
+        updateShop:             UrlWebServices.shopPreFix + 'update-shop',
     };
     static readonly Supplier = {
         createSupplier:            UrlWebServices.supplierPreFix + 'create-supplier',

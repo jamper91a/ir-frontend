@@ -6,6 +6,7 @@ import {NavController, Platform} from '@ionic/angular';
 import {Util} from '../../../../providers/util';
 import {GetSuppliersByCompanyResponse} from '../../../../webServices/response/GetSuppliersByCompanyResponse';
 import {Supplier} from '../../../../pojo/Supplier';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-product-create',
@@ -29,6 +30,20 @@ export class ProductCreatePage implements OnInit {
   }
 
   ngOnInit() {
+    if (environment.test) {
+      this.request.product.ean = this.util.generateUuid();
+      this.request.product.plu = this.util.generateUuid();
+      this.request.product.plu2 = this.util.generateUuid();
+      this.request.product.plu3 = this.util.generateUuid();
+      this.request.product.branch = this.util.generateName();
+      this.request.product.gender = this.util.generateName();
+      this.request.product.color = this.util.generateColor();
+      this.request.product.size = this.util.generateName();
+      this.request.product.category = this.util.generateName();
+      this.request.product.description = this.util.generateWord();
+      this.request.product.cost_price = this.util.generateNumber();
+      this.request.product.sell_price = this.util.generateNumber();
+    }
   }
 
   async ionViewDidEnter() {

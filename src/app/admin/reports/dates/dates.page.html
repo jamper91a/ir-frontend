@@ -16,6 +16,7 @@
                   [monthNames]="monthNames"
                   displayFormat="YYYY-MM-DD"
                   pickerFormat="DD MMMM YYYY"
+                  (ionChange)="formatInitialDate(request.initialDate)"
                   placeholder="{{'select_date' | translate}}">
           </ion-datetime>
         </ion-item>
@@ -27,6 +28,7 @@
                   [monthNames]="monthNames"
                   displayFormat="YYYY-MM-DD"
                   pickerFormat="DD MMMM YYYY"
+                  (ionChange)="formatFinalDate(request.finalDate)"
                   placeholder="{{'select_date' | translate}}">
           </ion-datetime>
         </ion-item>

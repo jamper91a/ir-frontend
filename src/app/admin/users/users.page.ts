@@ -10,6 +10,7 @@ import {CreateEmployeeRequest} from '../../../webServices/request/CreateEmployee
 import {Employee} from '../../../pojo/Employee';
 import {GetEmployeesByCompanyResponse} from '../../../webServices/response/GetEmployeesByCompanyResponse';
 import {AllEmiterService} from '../../services/all-emiter-service';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-users',
@@ -32,6 +33,12 @@ export class UsersPage implements OnInit {
   }
 
   ngOnInit() {
+    if (environment.test) {
+      this.request.user.username = this.util.generateEmail();
+      this.request.user.password = this.util.generatePassword();
+      this.request.user.rpassword = this.util.generatePassword();
+      this.request.user.name = this.util.generateName();
+    }
   }
 
   async ionViewDidEnter() {
@@ -42,6 +49,7 @@ export class UsersPage implements OnInit {
     await this.getEmployees();
     this.inventarioReal.showDialog = true;
     await dialog.dismiss();
+
   }
   async getCompany() {
     this.platform.ready().then(async () => {

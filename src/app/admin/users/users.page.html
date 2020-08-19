@@ -14,13 +14,13 @@
             <ion-col>
               <ion-item>
                 <ion-label  position="stacked">{{ 'email' | translate }}</ion-label>
-                <ion-input type="email" [(ngModel)]="request.user.username" name="username"></ion-input>
+                <ion-input type="email" [(ngModel)]="request.user.username" name="email" autocomplete="off"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col >
               <ion-item>
                 <ion-label  position="stacked">{{ 'name' | translate }}</ion-label>
-                <ion-input type="text" [(ngModel)]="request.user.name" name="name"></ion-input>
+                <ion-input type="text" [(ngModel)]="request.user.name" name="name" autocomplete="off"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -28,13 +28,13 @@
             <ion-col>
               <ion-item>
                 <ion-label  position="stacked">{{ 'password' | translate }}</ion-label>
-                <ion-input type="password" [(ngModel)]="request.user.password" name="password"></ion-input>
+                <ion-input type="password" [(ngModel)]="request.user.password" name="password" autocomplete="off"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
                 <ion-label  position="stacked">{{ 'repeat_password' | translate }}</ion-label>
-                <ion-input type="password" [(ngModel)]="request.user.rpassword" name="rpassword"></ion-input>
+                <ion-input type="password" [(ngModel)]="request.user.rpassword" name="rpassword" autocomplete="off"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -49,9 +49,9 @@
                         value="6"
                         okText="{{'confirm' | translate}}"
                         cancelText="{{'cancel' | translate}}">
-                  <ion-select-option value="6">{{'shop_manager' | translate}}</ion-select-option>
-                  <ion-select-option value="3">{{'cashier' | translate}}</ion-select-option>
-                  <ion-select-option value="4">{{'warehouse' | translate}}</ion-select-option>
+                  <ion-select-option value=6>{{'shop_manager' | translate}}</ion-select-option>
+                  <ion-select-option value=3>{{'cashier' | translate}}</ion-select-option>
+                  <ion-select-option value=4>{{'warehouse' | translate}}</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>
@@ -64,7 +64,7 @@
                         [(ngModel)]="request.employee.shop"
                         okText="{{'confirm' | translate}}"
                         cancelText="{{'cancel' | translate}}">
-                  <ion-select-option value="{{shop.id}}" *ngFor="let shop of shops">{{shop.name}}</ion-select-option>
+                  <ion-select-option value={{shop.id}} *ngFor="let shop of shops">{{shop.name}}</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>

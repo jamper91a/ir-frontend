@@ -62,10 +62,13 @@ export class DatesPage implements OnInit {
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.data = this.router.getCurrentNavigation().extras.state.data;
-        if (!this.data) {
+        console.log(this.data);
+        if (!this.data || !this.data.goTo) {
           this.navCtrl.navigateBack('admin/reports');
         }
         this.allEmiterService.onNewTitle(this.data.title);
+      } else {
+        this.navCtrl.navigateBack('admin/reports');
       }
     });
   }
@@ -74,6 +77,7 @@ export class DatesPage implements OnInit {
   }
 
   goToNextPage() {
+    console.log(this.request);
     const navigationExtras: NavigationExtras = {
       state: {
         request: this.request
@@ -81,6 +85,16 @@ export class DatesPage implements OnInit {
     };
     this.navCtrl.navigateForward([this.data.goTo], navigationExtras);
 
+  }
+
+  formatInitialDate(date) {
+    date = date.split('T')[0];
+    this.request.initialDate = date;
+  }
+
+  formatFinalDate(date) {
+    date = date.split('T')[0];
+    this.request.finalDate = date;
   }
 
 }

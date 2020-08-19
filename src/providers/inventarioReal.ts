@@ -357,7 +357,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('shops', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Shop.createShop, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -373,7 +373,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetShopsByCompanyResponse = await this.api.get('shops', {}).toPromise();
+            const response: GetShopsByCompanyResponse = await this.api.get(UrlWebServices.Shop.findShopsByCompany, {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -389,7 +389,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
             // @ts-ignore
-            await this.api.post(UrlWebServices.Shop.createShop, request.getBody()).toPromise();
+            await this.api.post(UrlWebServices.Shop.updateShop, request.getBody()).toPromise();
             await dialog.dismiss();
             return;
         } catch (e) {
