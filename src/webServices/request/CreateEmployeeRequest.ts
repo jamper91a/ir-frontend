@@ -4,20 +4,20 @@ export class CreateEmployeeRequest implements InventarioRealRequest {
         password: string,
         rpassword: string,
         name: string,
-        group: number
+        group: any
     } = {
         username: '',
         password: '',
         rpassword: '',
         name: '',
-        group: 0
+        group: '0'
     };
     public employee: {
-        shop: number,
-        company: number
+        shop: any,
+        company: any
     } = {
-        shop: 0,
-        company: 0
+        shop: '0',
+        company: '0'
     };
     constructor() {
     }
@@ -42,6 +42,9 @@ export class CreateEmployeeRequest implements InventarioRealRequest {
             error.message = 'password_do_not_match';
             throw error;
         }
+        this.user.group = parseInt(this.user.group, 0);
+        this.employee.shop = parseInt(this.employee.shop, 0);
+        this.employee.company = parseInt(this.employee.company, 0);
         return true;
     }
 

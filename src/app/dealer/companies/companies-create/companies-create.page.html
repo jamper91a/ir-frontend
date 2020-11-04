@@ -12,13 +12,13 @@
         <ion-col size="6">
           <ion-item>
             <ion-label  position="stacked">{{ 'password' | translate }}</ion-label>
-            <ion-input type="password" [(ngModel)]="request.user.password" name="email"></ion-input>
+            <ion-input type="password" [(ngModel)]="request.user.password" name="password"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label position="stacked">{{ 'repeat_password' | translate }}</ion-label>
-            <ion-input type="password" [(ngModel)]="request.user.rpassword" name="password"></ion-input>
+            <ion-input type="password" [(ngModel)]="request.user.rpassword" name="rpassword"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -32,7 +32,7 @@
         <ion-col size="6">
           <ion-item>
             <ion-label position="stacked">{{ 'company_name' | translate }}</ion-label>
-            <ion-input type="text" [(ngModel)]="request.employee.company.name" name="dealer_name"></ion-input>
+            <ion-input type="text" [(ngModel)]="request.employee.company.name" name="company_name"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

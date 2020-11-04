@@ -57,6 +57,7 @@ import {ReturnReportRequest} from '../webServices/request/ReturnReportRequest';
 import {GetReturnReportResponse} from '../webServices/response/GetReturnReportResponse';
 import {GetRotationProjectedRequest} from '../webServices/request/GetRotationProjectedRequest';
 import {GetRotationProjectedResponse} from '../webServices/response/GetRotationProjectedResponse';
+import {UrlWebServices} from '../webServices/UrlWebServices';
 
 
 @Injectable()
@@ -65,7 +66,6 @@ export class InventarioReal {
 
     public showDialog = true;
     private messages: any;
-
     constructor(
         private api: Api,
         private util: Util,
@@ -109,17 +109,19 @@ export class InventarioReal {
       console.log(this.messages);
       const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
       try {
-      // @ts-ignore
-        const response: LoginResponse = await this.api.post('loginWeb', request.getBody()).toPromise();
-        await dialog.dismiss();
-        if (response) {
+
+          console.log(UrlWebServices);
+          // @ts-ignore
+          const response: LoginResponse = await this.api.post(UrlWebServices.User.loginWeb, request.getBody()).toPromise();
+          await dialog.dismiss();
+          if (response) {
             Util.savePreference('token', response.data.token);
             Util.savePreference('employee', JSON.stringify(response.data.employee));
             Util.savePreference('user', JSON.stringify(response.data.user));
             Util.savePreference('dealer', JSON.stringify(response.data.dealer));
       }
       // @ts-ignore
-        return response;
+          return response;
       } catch (e) {
         console.log('catch');
         await dialog.dismiss();
@@ -137,7 +139,7 @@ export class InventarioReal {
       const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
       try {
             // @ts-ignore
-            const response: AllDealersResponse = await this.api.post('dealers/getAllDealers', request.getBody()).toPromise();
+            const response: AllDealersResponse = await this.api.post(UrlWebServices.Dealer.getAllDealers, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -155,11 +157,10 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('dealers/create', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Dealer.create, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
-            console.log('catch');
             await dialog.dismiss();
             self.util.showToast('error_getting_data');
             throw e;
@@ -173,7 +174,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('createAdmin', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.User.createAdmin, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -191,7 +192,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('dealers/update', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Dealer.update, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -209,7 +210,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('dealers/update', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Dealer.update, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -230,7 +231,7 @@ export class InventarioReal {
         try {
             // @ts-ignore
             const response: GetAllCompaniesByDealerResponse = await this.api.post(
-                'companies/getCompaniesByDealer',
+                UrlWebServices.Company.getCompaniesByDealer,
                 request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
@@ -248,7 +249,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('updateAdmin', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.User.updateAdmin, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -259,7 +260,7 @@ export class InventarioReal {
         }
     }
 
-    public async getCompanyById(id: string = ''): Promise<GetCompanyByIdResponse> {
+    public async getCompanyById(id: string = '0'): Promise<GetCompanyByIdResponse> {
         await this.get_translation();
         const request: GetByIdRequest = new GetByIdRequest();
         request.id = id;
@@ -267,7 +268,8 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetCompanyByIdResponse = await this.api.post('companies/getCompaniesById', request.getBody()).toPromise();
+            const response: GetCompanyByIdResponse = await this.api.post(UrlWebServices.Company.getCompanyById,
+                request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -284,7 +286,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('epcs/create', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Epc.create, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -301,7 +303,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: TagsByDealerByMonthResponse = await this.api.post('epcs/tagsByDealerByMonth', {}).toPromise();
+            const response: TagsByDealerByMonthResponse = await this.api.post(UrlWebServices.Epc.tagsByDealerByMonth, {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -320,7 +322,8 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: TagsByDealerByMonthResponse = await this.api.post('epcs/tagsByCompanyByMonth', request.getBody()).toPromise();
+            const response: TagsByDealerByMonthResponse = await this.api.post(UrlWebServices.Epc.tagsByCompanyByMonth,
+                request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -337,7 +340,8 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: TagsByDealerByMonthResponse = await this.api.postWithFiles('companies/update', request.getBody()).toPromise();
+            const response: TagsByDealerByMonthResponse = await this.api.postWithFiles(UrlWebServices.Company.update,
+                request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -353,7 +357,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('shops', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Shop.createShop, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -369,7 +373,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetShopsByCompanyResponse = await this.api.get('shops', {}).toPromise();
+            const response: GetShopsByCompanyResponse = await this.api.get(UrlWebServices.Shop.findShopsByCompany, {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -385,7 +389,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
             // @ts-ignore
-            await this.api.patch('shops/' + request.id, request.getBody()).toPromise();
+            await this.api.post(UrlWebServices.Shop.updateShop, request.getBody()).toPromise();
             await dialog.dismiss();
             return;
         } catch (e) {
@@ -404,7 +408,8 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetZonesByShopResponse = await this.api.post('zones/find', request.getBody()).toPromise();
+            const response: GetZonesByShopResponse = await this.api.post(
+                UrlWebServices.Zone.findZonesByShop, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -420,7 +425,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('zones', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Zone.createZone, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -436,7 +441,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
             // @ts-ignore
-            await this.api.patch('zones/' + request.id, request.getBody()).toPromise();
+            await this.api.post(UrlWebServices.Zone.updateZone, request.getBody()).toPromise();
             await dialog.dismiss();
             return;
         } catch (e) {
@@ -453,7 +458,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetEmployeesByCompanyResponse = await this.api.post('users/listEmployeesByCompany', {}).toPromise();
+            const response: GetEmployeesByCompanyResponse = await this.api.post(UrlWebServices.User.listEmployeesByCompany, {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -469,7 +474,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('users', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.User.createEmployee, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -485,7 +490,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('users/modifyEmployeeByUsername', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.User.modifyEmployeeByUsername, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -501,7 +506,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.postWithFiles('products', request.getBody()).toPromise();
+            const response: any = await this.api.postWithFiles(UrlWebServices.Product.create, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -517,7 +522,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('products/import', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Product.import, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -533,7 +538,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
             // @ts-ignore
-            await this.api.postWithFiles('products/update', request.getBody()).toPromise();
+            await this.api.postWithFiles(UrlWebServices.Product.update, request.getBody()).toPromise();
             await dialog.dismiss();
             return;
         } catch (e) {
@@ -550,7 +555,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetProductsResponse = await this.api.get('products', {}).toPromise();
+            const response: GetProductsResponse = await this.api.get(UrlWebServices.Product.findAll, {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -566,7 +571,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('suppliers', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.Supplier.createSupplier, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -582,7 +587,8 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetSuppliersByCompanyResponse = await this.api.get('suppliers', {}).toPromise();
+            // tslint:disable-next-line:max-line-length
+            const response: GetSuppliersByCompanyResponse = await this.api.get(UrlWebServices.Supplier.findSuppliersByCompany, {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -598,7 +604,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.updating, this.showDialog);
         try {
             // @ts-ignore
-            await this.api.patch('suppliers/' + request.id, request.getBody()).toPromise();
+            await this.api.post(UrlWebServices.Supplier.updateSupplier, request.getBody()).toPromise();
             await dialog.dismiss();
             return;
         } catch (e) {
@@ -615,7 +621,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetProductInShopByEanPluResponse = await this.api.post('productos/findProductInLocalByEanPlu',
+            const response: GetProductInShopByEanPluResponse = await this.api.post(UrlWebServices.Product.findProductsInLocalById,
                 request.getBody()).toPromise();
             await dialog.dismiss();
             if (response.data.length === 0) {
@@ -635,7 +641,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetAllConsolidatedInventoriesResponse = await this.api.post('inventariosConsolidados/listarTodos',
+            const response: GetAllConsolidatedInventoriesResponse = await this.api.post(UrlWebServices.ConsolidateInventory.listAll,
                 {}).toPromise();
             await dialog.dismiss();
             if (response.data.length === 0) {
@@ -656,7 +662,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetDiferenceBetweenInventoriesResponse = await this.api.post('reportes/diferenceBetweenInventories',
+            const response: GetDiferenceBetweenInventoriesResponse = await this.api.post(UrlWebServices.Report.differenceBetweenInventories,
                 request.getBody()).toPromise();
             await dialog.dismiss();
             if (response.data.length === 0) {
@@ -679,7 +685,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetDiferenceInventoryErpResponse = await this.api.post('reportes/diferenceWithInventoryErp',
+            const response: GetDiferenceInventoryErpResponse = await this.api.post(UrlWebServices.Report.differenceWithInventoryErp,
                 request.getBody()).toPromise();
             await dialog.dismiss();
             if (response.data.length === 0) {
@@ -700,7 +706,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetSoldUnitsResponse = await this.api.post('reportes/saleUnits',
+            const response: GetSoldUnitsResponse = await this.api.post(UrlWebServices.Report.saleUnits,
                 request.getBody()).toPromise();
             await dialog.dismiss();
             if (response.data.saleUnits.length === 0 || response.data.returnedUnits.length === 0) {
@@ -721,7 +727,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetRotationUnitsResponse = await this.api.post('reportes/rotationUnits',
+            const response: GetRotationUnitsResponse = await this.api.post(UrlWebServices.Report.rotationUnits,
                 request.getBody()).toPromise();
             await dialog.dismiss();
             if (response.data.length === 0) {
@@ -742,7 +748,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetRotationProjectedResponse = await this.api.post('reportes/rotationProyectedByEanPlu',
+            const response: GetRotationProjectedResponse = await this.api.post(UrlWebServices.Report.rotationProyectedByEanPlu,
                 request.getBody()).toPromise();
             await dialog.dismiss();
             // if (response.data.length === 0) {
@@ -763,7 +769,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetReturnReportResponse = await this.api.post('reportes/devolutionsByType',
+            const response: GetReturnReportResponse = await this.api.post(UrlWebServices.Report.devolutionsByType,
                 request.getBody()).toPromise();
             await dialog.dismiss();
             if (response.data.length === 0) {
@@ -783,7 +789,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: CreatePdfResponse = await this.api.post('pdf/create', request.getBody()).toPromise();
+            const response: CreatePdfResponse = await this.api.post(UrlWebServices.Pdf.createPdf, request.getBody()).toPromise();
 
             // tslint:disable-next-line:only-arrow-functions
             setTimeout(async function() {
@@ -806,7 +812,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetProductByEanPluResponse = await this.api.post('productos/findOne', request.getBody()).toPromise();
+            const response: GetProductByEanPluResponse = await this.api.post(UrlWebServices.Product.findOne, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -822,7 +828,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
         try {
             // @ts-ignore
-            const response: GetEmployeesByAdminResponse = await this.api.post('companies/getEmployeesByAdmin', {}).toPromise();
+            const response: GetEmployeesByAdminResponse = await this.api.post(UrlWebServices.Company.getEmployeesByAdmin, {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -839,7 +845,8 @@ export class InventarioReal {
       const dialog = await this.util.showDialog(this.messages.consulting, this.showDialog);
       try {
             // @ts-ignore
-            const response: GetLastConsolidatedInventory = await this.api.post('inventariosConsolidados/ultimoInventario', {}).toPromise();
+          // tslint:disable-next-line:max-line-length
+            const response: GetLastConsolidatedInventory = await this.api.post(UrlWebServices.ConsolidateInventory.lastInventory, {}).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -857,7 +864,7 @@ export class InventarioReal {
         try {
             // @ts-ignore
             // tslint:disable-next-line:max-line-length
-            const response: GetLastConsolidatedInventory = await this.api.post('inventariosConsolidados/ultimoInventarioAdmin', request.getBody()).toPromise();
+            const response: GetLastConsolidatedInventory = await this.api.post(UrlWebServices.ConsolidateInventory.lastInventoryByEmployee, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {
@@ -875,7 +882,7 @@ export class InventarioReal {
         const dialog = await this.util.showDialog(this.messages.creating, this.showDialog);
         try {
             // @ts-ignore
-            const response: any = await this.api.post('inventoryErp/create', request.getBody()).toPromise();
+            const response: any = await this.api.post(UrlWebServices.InventoryErp.create, request.getBody()).toPromise();
             await dialog.dismiss();
             return response;
         } catch (e) {

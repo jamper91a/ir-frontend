@@ -8,6 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Epc} from '../../../../pojo/Epc';
 import {CreateEpcsRequest} from '../../../../webServices/request/CreateEpcsRequest';
 import {Dealer} from '../../../../pojo/Dealer';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-tags-create-step-two',
@@ -55,6 +56,12 @@ export class TagsCreateStepTwoPage implements OnInit {
   }
 
   ngOnInit() {
+    this.tags = this.util.generateUuid() + ';';
+    if (environment.test) {
+      for (let i = 0; i < 20; i++) {
+        this.tags = this.tags + this.util.generateUuid() + ';';
+      }
+    }
   }
 
   async ionViewDidEnter() {

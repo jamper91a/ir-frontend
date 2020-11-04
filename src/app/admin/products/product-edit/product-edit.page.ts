@@ -31,7 +31,7 @@ export class ProductEditPage implements OnInit {
         this.product = this.router.getCurrentNavigation().extras.state.product;
         this.request.putData(this.product);
         this.imgURL = this.util.url + this.product.imagen;
-        console.log(this.imgURL);
+        console.log('imgURL', this.imgURL);
         if (!this.product) {
           this.navCtrl.navigateBack(['admin/products' ]);
         }

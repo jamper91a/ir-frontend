@@ -53,9 +53,11 @@ export class RotationPage implements OnInit {
           this.request = new RotationUnitsReportRequest();
           this.request.firstDate = aux.initialDate;
           this.request.secondDate = aux.finalDate;
+          console.log(this.request);
         } else {
           this.navCtrl.navigateBack('admin/reports');
         }
+        console.log(this.request);
       }
     });
   }
